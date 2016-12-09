@@ -1,3 +1,3 @@
-module OscRuby
-  VERSION = "0.0.1"
+class OSCRuby
+  VERSION = "0.0.2"
 end

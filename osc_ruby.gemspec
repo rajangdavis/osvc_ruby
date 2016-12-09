@@ -5,7 +5,7 @@ require 'osc_ruby/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "osc_ruby"
-  spec.version       = OscRuby::VERSION
+  spec.version       = OSCRuby::VERSION
   spec.authors       = ["Rajan Davis"]
   spec.email         = ["rajangdavis@gmail.com"]
   spec.summary       = %q{Making the best of opensource and enterprise technology}
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency 'rspec'
 end
