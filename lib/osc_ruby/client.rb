@@ -8,6 +8,9 @@ module OSCRuby
 	
 	class Client
 	# The top-level class that handles configuration and connection to the Oracle Service Cloud REST API.
+		
+		# @return [Configuration] Config instance
+    	attr_reader :config
 
 		def initialize
 	        raise ArgumentError, "block not given" unless block_given?
