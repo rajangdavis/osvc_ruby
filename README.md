@@ -1,6 +1,10 @@
-# OscRuby
+# OSCRuby
 
-TODO: Write a gem description
+Still developing this; will let ya know when this happens.
+
+The basic idea is to be able to do something simple like import a csv of information and post it into an Oracle Service Cloud site.
+
+The ultimate goal is to use this gem to make a Rails app for advanced administration/development that cannot be done with Oracle Service Cloud alone
 
 ## Installation
 
@@ -17,15 +21,3 @@ And then execute:
 Or install it yourself as:
 
     $ gem install osc_ruby
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/osc_ruby/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
