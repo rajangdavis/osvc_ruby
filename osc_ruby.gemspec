@@ -1,0 +1,23 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'osc_ruby/version'
+
+Gem::Specification.new do |spec|
+  spec.name          = "osc_ruby"
+  spec.version       = OscRuby::VERSION
+  spec.authors       = ["Rajan Davis"]
+  spec.email         = ["rajangdavis@gmail.com"]
+  spec.summary       = %q{Making the best of opensource and enterprise technology}
+  spec.description   = %q{An unofficial Ruby wrapper for the Oracle Cloud Services (fka RightNow Technologies) REST API}
+  spec.homepage      = ""
+  spec.license       = "MIT"
+
+  spec.files         = `git ls-files -z`.split("\x0")
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "bundler", "~> 1.7"
+  spec.add_development_dependency "rake", "~> 10.0"
+end
