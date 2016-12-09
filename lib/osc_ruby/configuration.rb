@@ -13,5 +13,9 @@ module OSCRuby
 
 	    # @return [String] The resource that is being connected to .
 	    attr_accessor :resource
+
+	    def initialize
+	    	@client_options = {}
+	    end
 	end
 end
