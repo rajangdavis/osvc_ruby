@@ -28,25 +28,24 @@
   # => interface
 
 # ServiceProduct class
-# SiteInterface class
 
 require 'net/http'
 require 'openssl'
 require 'json'
 require 'uri'
 
-interface = 'qsee--tst1' 
+interface = 'qsee--tst' 
 username = ENV['OSC_ADMIN'] 
 password = ENV['OSC_PASSWORD']
 
 
 
-
-uri = URI.parse("https://#{interface}.custhelp.com/services/rest/connect/v1.3/serviceProducts")
-params = { :limit => 1 }
-uri.query = URI.encode_www_form(params)
-
-# puts uri
+products_query = 'select id,lookupname,parent.id,displayorder from serviceproducts'
+interface_query = 'select id,name,language from siteinterfaces'
+final_query = products_query+';'+interface_query
+uri = URI.encode("https://#{interface}.custhelp.com/services/rest/connect/v1.3/queryResults?query=#{final_query};")
+uri = URI.parse(uri)
+puts uri
 
 
 Net::HTTP.start(uri.host, uri.port,
@@ -70,10 +69,9 @@ end
 # names[0] = {:labelText => 'QTH45', :language => {:id => 1}}
 # names[1] = {:labelText => 'QTH45', :language => {:id => 11}}
 
-# GET available interfaces for selection
-# /services/rest/connect/v1.3/siteInterfaces
-
 # parent = {:id => 102}
+
+# displayOrder = {:id => 4}
 
 # admin_user_visible_interfaces = []
 # admin_user_visible_interfaces[0] = {:id => 1}
