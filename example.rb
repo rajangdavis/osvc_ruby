@@ -42,13 +42,19 @@ password = ENV['OSC_PASSWORD']
 
 
 
-uri = URI("https://#{interface}.custhelp.com/services/rest/connect/v1.3/siteInterfaces")
+uri = URI.parse("https://#{interface}.custhelp.com/services/rest/connect/v1.3/serviceProducts")
+params = { :limit => 1 }
+uri.query = URI.encode_www_form(params)
+
+# puts uri
+
 
 Net::HTTP.start(uri.host, uri.port,
   :use_ssl => uri.scheme == 'https', 
   :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
 
   request = Net::HTTP::Get.new uri.request_uri
+  request.add_field('Content-Type', 'application/x-www-form-urlencoded')
   request.basic_auth username, password
 
   response = http.request request # Net::HTTPResponse object
