@@ -4,6 +4,7 @@ describe OSCRuby::Client do
 	subject { client }
 
 	context '#initialize' do
+		
 		it 'should require a block' do
 			expect { OSCRuby::Client.new }.to raise_error(ArgumentError)
 		end
@@ -51,6 +52,48 @@ describe OSCRuby::Client do
 
 				client.config.interface.should eq('test_password')
 				client.config.interface.should !='test1_password'
+			end
+		end
+	end
+
+	context '#service_cloud_interface' do
+		it 'should produce a valid url string' do
+			expect do
+				client = OSCRuby::Client.new do |config|
+					config.interface = 'test'
+					config.username = 'test_username'
+					config.password = 'test_password'
+				end
+
+				client.service_cloud_interface.should eq('https://test.custhelp.com/services/rest/connect/v1.3/')
+			end
+		end
+	end
+
+	context '#basic_auth_url' do
+		it 'should produce a URI::HTTPS object' do
+			expect do
+				client = OSCRuby::Client.new do |config|
+					config.interface = 'test'
+					config.username = 'test_username'
+					config.password = 'test_password'
+				end
+
+				client.basic_auth_url.should_be a('URI::HTTPS')
+			end
+		end
+	end
+
+	context '#basic_auth_url' do
+		it 'should produce a JSON Response' do
+			expect do
+				client = OSCRuby::Client.new do |config|
+					config.interface = 'qsee--tst'
+					config.username = ENV['OSC_ADMIN']
+					config.password = ENV['OSC_PASSWORD']
+				end
+
+				client.connect.should_be a('String')
 			end
 		end
 	end

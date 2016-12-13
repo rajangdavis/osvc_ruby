@@ -1,5 +1,6 @@
 require 'net/http'
 require 'openssl'
+require 'json'
 
 require 'osc_ruby/version'
 require 'osc_ruby/configuration'
@@ -31,26 +32,25 @@ module OSCRuby
 	    	end
 	    end
 
-		# def basic_auth(config)
-		# 	uri = URI(service_cloud_interface(config))
-		# end
+		def self.basic_auth_url
+			uri = URI.parse(self.service_cloud_interface)
+		end
 
-	 #    def service_cloud_interface(config)
-	 #    	@url = 'https://' + config.interface + '/services/rest/connect/v1.3/'
-	 #    end
+	    def self.service_cloud_interface
+	    	url = 'https://' + config.interface + '.custhelp.com/services/rest/connect/v1.3/'
+	    end
 
-	 #    def connect(config,uri)
-	 #    	Net::HTTP.start(uri.host, uri.port,
-		# 	  :use_ssl => uri.scheme == 'https') do |http|
+	    def self.connect(config,uri)
+	    	Net::HTTP.start(uri.host, uri.port,
+				:use_ssl => true) do |http|
 
-		# 	  request = Net::HTTP::Get.new uri.request_uri
-		# 	  request.basic_auth config.username, config.password
+				request = Net::HTTP::Get.new uri.request_uri
+				request.basic_auth config.username, config.password
 
-		# 	  response = http.request request # Net::HTTPResponse object
+				response = http.request request # Net::HTTPResponse object
 
-		# 	  puts response
-		# 	  puts response.body
-		# 	end
-	 #    end
+				json_response = JSON.parse(response.body)
+			end
+	    end
 	end
 end
