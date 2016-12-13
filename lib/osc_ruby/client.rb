@@ -19,7 +19,7 @@ module OSCRuby
 	        self.config ||= OSCRuby::Configuration.new
 	    	yield(config)
 
-	    	connect unless check_config == false
+	    	check_config
 	    end
 
 	    def check_config
