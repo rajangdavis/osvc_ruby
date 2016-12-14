@@ -55,18 +55,4 @@ describe OSCRuby::Client do
 			end
 		end
 	end
-
-	# context '#connect' do
-	# 	it 'should produce a JSON Response' do
-	# 		expect do
-	# 			client = OSCRuby::Client.new do |config|
-	# 				config.interface = 'qsee--tst'
-	# 				config.username = ENV['OSC_ADMIN']
-	# 				config.password = ENV['OSC_PASSWORD']
-	# 			end
-
-	# 			client.connect.should_be a('String')
-	# 		end
-	# 	end
-	# end
 end
