@@ -34,7 +34,7 @@ require 'openssl'
 require 'json'
 require 'uri'
 
-interface = 'qsee--tst' 
+interface = ENV['OSC_TEST_SITE']
 username = ENV['OSC_ADMIN'] 
 password = ENV['OSC_PASSWORD']
 
