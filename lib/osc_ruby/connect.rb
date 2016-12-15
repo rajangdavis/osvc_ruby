@@ -8,13 +8,9 @@ require 'uri'
 module OSCRuby
 	
 	class Connect
-	   
-	   	def self.get(client,url = nil)
-			check_client_config(client)
-		 #  	url = 'https://' + config.interface + '.custhelp.com/services/rest/connect/v1.3/'
-		 #  	uri = URI.parse(url)
 
-		 #  	Net::HTTP.start(uri.host, uri.port,
+		def self.get(client,resource_url = nil)
+			# Net::HTTP.start(uri.host, uri.port,
 			# 	:use_ssl => true,
 			# 	:verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
 
@@ -25,6 +21,21 @@ module OSCRuby
 
 			# 	json_response = JSON.parse(response.body)
 			# end
+		end
+
+		private
+
+		def self.generate_url_and_config(client,resource_url = nil)
+
+			check_client_config(client)
+
+			@config = client.config
+
+		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/v1.3/#{resource_url}"
+		  	@final_uri = URI(@url)
+		  	
+		  	@final_config = {'site_url' => @final_uri, 'username' => @config.username, 'password' => @config.password}
+
 		end
 
 		def self.check_client_config(client)
@@ -44,6 +55,7 @@ module OSCRuby
 			elsif @config.password.nil?
 				raise ArgumentError, "The configured client password cannot be nil or blank"	
 			end
+		
 		end
 
   	end

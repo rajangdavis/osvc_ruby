@@ -6,53 +6,88 @@ The basic idea is to be able to do something simple like import a csv of informa
 
 The ultimate goal is to use this gem to make a Rails app for advanced administration/development that cannot be done with Oracle Service Cloud alone
 
+# Example (still coding this out, but trying to get this pretty simple)
+
+	client = OSCRuby::Client.new do |config|	
+		config.interface = ENV['OSC_TEST_SITE']
+		config.username = ENV['OSC_ADMIN']
+		config.password = ENV['OSC_PASSWORD']
+	end
+
+	product = OSCRuby::ServiceProduct.fetch(1)
+
+	puts product.name
+
+	//'Product Lookup Name'
+
+	names = []
+
+	names[0] = {:labelText => 'QTH45', :language => {:id => 1}}
+	names[1] = {:labelText => 'QTH45', :language => {:id => 11}}
+
+	parent = {:id => 102}
+
+	displayOrder = {:id => 4}
+
+	admin_user_visible_interfaces = []
+	admin_user_visible_interfaces[0] = {:id => 1}
+
+	end_user_visible_interfaces = []
+	end_user_visible_interfaces[0] = {:id => 1}
+
+	new_prod = []
+	new_prod[0] = {:names => names, 
+	               :parent => parent, 
+	               :adminVisibleInterfaces => admin_user_visible_interfaces,
+	               :endUserVisibleInterfaces => end_user_visible_interfaces}
+
 # TODO
 
-	Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby Wrapper
+<!-- Create a URL generator method into the Connect Class -->
 
-	Create a URL generator method into the Connect Class
+<!-- Move tests for the get method into the URL generator method -->
 
-	Move tests for the get method into the URL generator method
+<!-- Move check_config method into the URL generator method so that tests pass -->
 
-	Move check_config method into the URL generator method so that tests pass
+<!-- Create more tests to validate the generated URL -->
 
-	Create more tests to validate the generated URL
+Put the URL generator method into the get class
 
-	Put the URL generator method into the get class
+Have the get method make a get request using the Net::HTTP class
 
-	Have the get method make a get request using the Net::HTTP class
+Need to add tests for passing resources, query/id/other param into the URL generator class
 
-	Need to add tests for passing resources, query/id/other param into the URL generator class
+Need to figure out how to pass resources and some sort of query/id/other param into the URL generator class
 
-	Need to figure out how to pass resources and some sort of query/id/other param into the URL generator class
+Add in tests for Post requests
 
-	Add in tests for Post requests
+Make a Post method
 
-	Make a Post method
+Add in tests for update requests
 
-	Add in tests for update requests
+Make a update method
 
-	Make a update method
+Add in tests for delete requests
 
-	Add in tests for delete requests
+Make a delete method
 
-	Make a delete method
+Create a OSCRuby::ServiceProduct class
 
-	Create a OSCRuby::ServiceProduct class
+Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby Wrapper
 
-	Add in VCR and WebMock as dependencies
+Add in VCR and WebMock as dependencies
 
-	Figure out how to record and stub responses for a good response and bad response
+Figure out how to record and stub responses for a good response and bad response
 
-	Simulate these responses
+Simulate these responses
 
-	Add in TravisCI into workflow to run tests and push and publish gem
+Add in TravisCI into workflow to run tests and push and publish gem
 
-	Add in Code Climate? or something to show the percentage of covered methods for testing
+Add in Code Climate? or something to show the percentage of covered methods for testing
 
-	Follow with next Classes (ServiceCategories, Answers, Interfaces)
+Follow with next Classes (ServiceCategories, Answers, Interfaces)
 
-	Release MVP
+Release MVP
 
 ## Installation
 
