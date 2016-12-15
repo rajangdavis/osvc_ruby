@@ -1,5 +1,9 @@
 # OSCRuby
 
+[![Code Climate](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/gpa.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby)
+
+[![Test Coverage](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/coverage.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby/coverage)
+
 Still developing this; will let ya know when this happens.
 
 The basic idea is to be able to do something simple like import a csv of information and post it into an Oracle Service Cloud site.
