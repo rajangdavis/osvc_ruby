@@ -8,6 +8,8 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 # Example (still coding this out, but trying to get this pretty simple)
 
+	# // Product Fetch example
+
 	client = OSCRuby::Client.new do |config|	
 		config.interface = ENV['OSC_TEST_SITE']
 		config.username = ENV['OSC_ADMIN']
@@ -18,7 +20,9 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 	puts product.name
 
-	//'Product Lookup Name'
+	// puts 'Product Lookup Name'
+
+	# // Product Creation example
 
 	names = []
 
@@ -41,10 +45,13 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 	               :adminVisibleInterfaces => admin_user_visible_interfaces,
 	               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
+	OSCRuby::ServiceProduct.save(client, new_prod)
+
+	// callback with JSON details
+
 # TODO
 
 <!-- Create a URL generator method into the Connect Class -->
-
 <!-- Move tests for the get method into the URL generator method -->
 
 <!-- Move check_config method into the URL generator method so that tests pass -->
