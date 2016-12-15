@@ -11,8 +11,10 @@ describe OSCRuby::Connect do
 		end
 	}
 
-	context '#get' do
+	context '#generate_url' do
+	end
 
+	context '#get' do
 
 		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
 
@@ -23,13 +25,50 @@ describe OSCRuby::Connect do
 			end.not_to raise_error
 		end
 
-		# it 'should raise an error if client is nil' do
+		it 'should raise an error if client is nil' do
 
-		# 	expect do
-		# 		OSCRuby::Connect.get(client)
-		# 	end.to raise_error("Client cannot be nil or blank")
+			expect do
+				client = nil
+				OSCRuby::Connect.get(client)
+			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
 
-		# end
+		end
+
+		it 'should raise an error if client.config is nil' do
+
+			expect do
+				client.config = nil
+				OSCRuby::Connect.get(client)
+			end.to raise_error("Client configuration cannot be nil or blank")
+
+		end
+
+		it 'should raise an error if client interface is absent' do
+
+			expect do
+				client.config.interface = nil
+				OSCRuby::Connect.get(client)
+			end.to raise_error("The configured client interface cannot be nil or blank")
+
+		end
+
+		it 'should raise an error if client username is absent' do
+
+			expect do
+				client.config.username = nil
+				OSCRuby::Connect.get(client)
+			end.to raise_error("The configured client username cannot be nil or blank")
+
+		end
+
+		it 'should raise an error if client password is absent' do
+
+			expect do
+				client.config.password = nil
+				OSCRuby::Connect.get(client)
+			end.to raise_error("The configured client password cannot be nil or blank")
+
+		end
 
 		# it 'should produce a JSON Response' do
 		# 	expect do
