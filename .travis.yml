@@ -4,3 +4,6 @@ rvm:
   - jruby
 script:
   bundle exec rake spec
+addons:
+	code_climate:
+		repo_token: 3cf6bec1eab840d45119164e7e2fd517f5e73c9c34a68051cd09eea110a22884
