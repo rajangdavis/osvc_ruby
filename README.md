@@ -10,9 +10,9 @@ The basic idea is to be able to do something simple like import a csv of informa
 
 The ultimate goal is to use this gem to make a Rails app for advanced administration/development that cannot be done with Oracle Service Cloud alone
 
-# Example (still coding this out, but trying to get this pretty simple)
+## Example (still coding this out, but trying to get this pretty simple)
 
-	# // Product Fetch example
+	# Product Fetch example
 
 	client = OSCRuby::Client.new do |config|	
 		config.interface = ENV['OSC_TEST_SITE']
@@ -24,9 +24,9 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 	puts product.name
 
-	// puts 'Product Lookup Name'
+	# puts 'Product Lookup Name'
 
-	# // Product Creation example
+	# Product Creation example
 
 	names = []
 
@@ -51,11 +51,11 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 	OSCRuby::ServiceProduct.save(client, new_prod)
 
-	// callback with JSON details
+	# callback with JSON details
 
-# TODO
+## TODO
 
-## Completed
+### Completed
 Create a URL generator method into the Connect Class
 
 Move tests for the get method into the URL generator method
@@ -68,7 +68,7 @@ Add in TravisCI into workflow to run tests and push and publish gem
 
 Add in Code Climate or something to show the percentage of covered methods for testing
 
-## Remaining To do list
+### Remaining To do list
 Put the URL generator method into the get class
 
 Have the get method make a get request using the Net::HTTP class
