@@ -55,13 +55,15 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 # TODO
 
-<!-- Create a URL generator method into the Connect Class -->
-<!-- Move tests for the get method into the URL generator method -->
+## Completed
+Create a URL generator method into the Connect Class
+Move tests for the get method into the URL generator method
+Move check_config method into the URL generator method so that tests pass
+Create more tests to validate the generated URL
+Add in TravisCI into workflow to run tests and push and publish gem
+Add in Code Climate or something to show the percentage of covered methods for testing
 
-<!-- Move check_config method into the URL generator method so that tests pass -->
-
-<!-- Create more tests to validate the generated URL -->
-
+## Remaining To do list
 Put the URL generator method into the get class
 
 Have the get method make a get request using the Net::HTTP class
@@ -82,6 +84,8 @@ Add in tests for delete requests
 
 Make a delete method
 
+I might need to do a transformation class that converts JSON response into a Ruby Hash
+
 Create a OSCRuby::ServiceProduct class
 
 Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby Wrapper
@@ -91,10 +95,6 @@ Add in VCR and WebMock as dependencies
 Figure out how to record and stub responses for a good response and bad response
 
 Simulate these responses
-
-Add in TravisCI into workflow to run tests and push and publish gem
-
-Add in Code Climate? or something to show the percentage of covered methods for testing
 
 Follow with next Classes (ServiceCategories, Answers, Interfaces)
 
