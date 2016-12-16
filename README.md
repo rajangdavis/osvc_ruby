@@ -57,10 +57,15 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 ## Completed
 Create a URL generator method into the Connect Class
+
 Move tests for the get method into the URL generator method
+
 Move check_config method into the URL generator method so that tests pass
+
 Create more tests to validate the generated URL
+
 Add in TravisCI into workflow to run tests and push and publish gem
+
 Add in Code Climate or something to show the percentage of covered methods for testing
 
 ## Remaining To do list
