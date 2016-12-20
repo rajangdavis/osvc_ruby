@@ -109,6 +109,29 @@ describe OSCRuby::Connect do
 
 	context '#get' do
 
+		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			expect do
+
+				OSCRuby::Connect.get(client)
+
+			end.not_to raise_error
+		end
+
+		it 'should raise an error if client is nil' do
+
+			expect do
+				
+				client = nil
+
+				OSCRuby::Connect.get(client)
+
+			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+
+		end
+
 		# it 'should produce a JSON Response' do
 		# 	expect do
 		

@@ -10,17 +10,31 @@ module OSCRuby
 	class Connect
 
 		def self.get(client,resource_url = nil)
-			# Net::HTTP.start(uri.host, uri.port,
-			# 	:use_ssl => true,
-			# 	:verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
 
-			# 	request = Net::HTTP::Get.new uri.request_uri
-			# 	request.basic_auth config.username, config.password
+			if client.nil?
+				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+			else
+				@final_config = generate_url_and_config(client)
+			end
 
-			# 	response = http.request request # Net::HTTPResponse object
+			@uri = @final_config['site_url']
+			@username = @final_config['username']
+			@password = @final_config['password']
 
-			# 	json_response = JSON.parse(response.body)
-			# end
+			Net::HTTP.start(@uri.host, @uri.port,
+				:use_ssl => true,
+				:verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+
+				request = Net::HTTP::Get.new @uri.request_uri
+				request.basic_auth @username, @password
+
+				response = http.request request # Net::HTTPResponse object
+
+				json_response = JSON.parse(response.body)
+
+				puts json_response
+			end
+			
 		end
 
 		private
@@ -32,6 +46,7 @@ module OSCRuby
 			@config = client.config
 
 		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/v1.3/#{resource_url}"
+		  	
 		  	@final_uri = URI(@url)
 		  	
 		  	@final_config = {'site_url' => @final_uri, 'username' => @config.username, 'password' => @config.password}
