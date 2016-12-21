@@ -1,4 +1,5 @@
 require 'core/spec_helper'
+require 'json'
 
 describe OSCRuby::Connect do
 	
@@ -107,6 +108,10 @@ describe OSCRuby::Connect do
 
 	end
 
+	let(:test){
+		OSCRuby::Connect.get(client)
+	}
+
 	context '#get' do
 
 		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
@@ -132,12 +137,25 @@ describe OSCRuby::Connect do
 
 		end
 
-		# it 'should produce a JSON Response' do
-		# 	expect do
-		
+		it 'should produce a Net::HTTPResponse' do
 
-		# 		client.connect.should_be a('String')
-		# 	end
-		# end
+			expect(test).to be_an(Net::HTTPResponse)
+				
+		end
+
+		it 'should produce a 200 response code' do
+
+			expect(test.code).to eq("200")
+				
+		end
+
+		it 'should produce a JSON Response form the response body' do
+			
+			expect do
+				test.body.should_be a('String')
+			end
+
+			expect{JSON.parse(test.body)}.not_to raise_error
+		end
 	end
 end

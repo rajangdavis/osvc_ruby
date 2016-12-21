@@ -29,12 +29,7 @@ module OSCRuby
 				request.basic_auth @username, @password
 
 				response = http.request request # Net::HTTPResponse object
-
-				json_response = JSON.parse(response.body)
-
-				puts json_response
 			end
-			
 		end
 
 		private
