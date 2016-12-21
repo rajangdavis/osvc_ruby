@@ -13,8 +13,10 @@ module OSCRuby
 
 			if client.nil?
 				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+			elsif !resource_url.nil?
+				@final_config = generate_url_and_config(client,resource_url)
 			else
-				@final_config = generate_url_and_config(client)
+				@final_config = generate_url_and_config(client,nil)
 			end
 
 			@uri = @final_config['site_url']
@@ -39,6 +41,10 @@ module OSCRuby
 			check_client_config(client)
 
 			@config = client.config
+
+			if !resource_url.nil?
+				@resource_url = resource_url
+			end
 
 		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/v1.3/#{resource_url}"
 		  	

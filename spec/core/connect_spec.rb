@@ -1,5 +1,6 @@
 require 'core/spec_helper'
 require 'json'
+require 'uri'
 
 describe OSCRuby::Connect do
 	
@@ -29,6 +30,26 @@ describe OSCRuby::Connect do
 				OSCRuby::Connect.generate_url_and_config(client)
 
 			end.not_to raise_error
+		end
+
+		it 'should take an optional resource_url parameter' do
+
+			expect do
+
+				OSCRuby::Connect.generate_url_and_config(client, 'accounts')
+
+			end.not_to raise_error
+		end
+
+		it 'should change the final configured url if the resource_url parameter is specified' do
+
+			test = OSCRuby::Connect.generate_url_and_config(client, 'accounts')
+
+			interface = client.config.interface
+
+			expect(test['site_url']).to eq(URI("https://#{interface}.custhelp.com/services/rest/connect/v1.3/accounts"))
+
+			expect(test['site_url']).to be_an(URI::HTTPS)
 		end
 
 		it 'should raise an error if client is nil' do
