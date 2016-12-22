@@ -53,7 +53,7 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 	# callback with JSON details
 
-## TODO
+## To do list
 
 - [x] Create a URL generator method into the Connect Class
 
@@ -87,9 +87,9 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 - [ ] Make a delete method
 
-- [ ] I might need to do a transformation class that converts JSON response into a Ruby Hash
-
 - [ ] Create a OSCRuby::ServiceProduct class
+
+- [ ] I might need to do a transformation class that converts JSON response into a Ruby Hash
 
 - [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby Wrapper
 

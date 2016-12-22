@@ -34,7 +34,7 @@ module OSCRuby
 
 		def self.post(client,resource_url = nil, json_content = nil)
 
-			@final_config = post_check(client,resource_url, json_content)
+			@final_config = post_and_patch_check(client,resource_url, json_content)
 
 			@uri = @final_config['site_url']
 			@username = @final_config['username']
@@ -55,7 +55,33 @@ module OSCRuby
 
 		end
 
-		protected
+		
+		def self.patch(client,resource_url = nil, json_content = nil)
+
+			@final_config = post_and_patch_check(client,resource_url, json_content)
+
+			@uri = @final_config['site_url']
+			@username = @final_config['username']
+			@password = @final_config['password']
+
+			Net::HTTP.start(@uri.host, @uri.port,
+			  :use_ssl => true, 
+			  :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+
+			  request = Net::HTTP::Patch.new @uri.request_uri
+			  request.basic_auth @username, @password
+			  request.content_type = "application/json"
+			  request.body = JSON.dump(json_content)
+
+			  http.request request # Net::HTTPResponse object
+
+			end
+
+		end
+
+
+
+		## checking methods
 
 		def self.generate_url_and_config(client,resource_url = nil)
 
@@ -107,7 +133,7 @@ module OSCRuby
 
 		end
 
-		def self.post_check(client,resource_url = nil, json_content = nil)
+		def self.post_and_patch_check(client,resource_url = nil, json_content = nil)
 
 			if client.nil?
 				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
@@ -121,5 +147,6 @@ module OSCRuby
 
 		end
 
-  	end
+	end
+
 end

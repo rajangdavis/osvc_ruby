@@ -177,86 +177,165 @@ describe OSCRuby::Connect do
 			expect{JSON.parse(test.body)}.not_to raise_error
 		end
 
-		let(:json_content){
-			{:test => 'content'}
-		}
+	end
 
-		context '#post' do
+	let(:json_content){
+		{:test => 'content'}
+	}
 
-			it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
+	context '#post' do
 
-				expect(client).to be_an(OSCRuby::Client)
+		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
 
-				expect do
+			expect(client).to be_an(OSCRuby::Client)
 
-					OSCRuby::Connect.post(client,'serviceProducts',json_content)
+			expect do
 
-				end.not_to raise_error
-			end
+				OSCRuby::Connect.post(client,'serviceProducts',json_content)
 
-			it 'should raise an error if client is nil' do
+			end.not_to raise_error
+		end
 
-				expect do
-					
-					client = nil
+		it 'should raise an error if client is nil' do
 
-					OSCRuby::Connect.post(client,'serviceProducts',json_content)
+			expect do
+				
+				client = nil
 
-				end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+				OSCRuby::Connect.post(client,'serviceProducts',json_content)
 
-			end
+			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
 
-			it 'should raise an error if resource_url is nil' do
+		end
 
-				expect do
+		it 'should raise an error if resource_url is nil' do
 
-					OSCRuby::Connect.post(client,'serviceProducts')
+			expect do
 
-				end.to raise_error("There is no json content provided; please specify json content that you would like to send a POST request with")
+				OSCRuby::Connect.post(client, nil, json_content)
 
-			end
+			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST request to")
 
-			it 'should produce a Net::HTTPResponse, should produce a 201 response code, and should produce a JSON Response form the response body' do
+		end
 
-				names = []
+		it 'should raise an error if json_content is nil' do
 
-				names[0] = {:labelText => 'QTH45-test', :language => {:id => 1}}
-				names[1] = {:labelText => 'QTH45-test', :language => {:id => 11}}
+			expect do
 
-				parent = {:id => 102}
+				OSCRuby::Connect.post(client,'serviceProducts')
 
-				displayOrder = {:id => 4}
+			end.to raise_error("There is no json content provided; please specify json content that you would like to send a POST request with")
 
-				admin_user_visible_interfaces = []
-				admin_user_visible_interfaces[0] = {:id => 1}
+		end
 
-				end_user_visible_interfaces = []
-				end_user_visible_interfaces[0] = {:id => 1}
+		it 'should produce a Net::HTTPResponse, should produce a 201 response code, and should produce a JSON Response form the response body' do
 
-				new_prod = []
-				new_prod[0] = {:names => names, 
-				               :parent => parent, 
-				               :adminVisibleInterfaces => admin_user_visible_interfaces,
-				               :endUserVisibleInterfaces => end_user_visible_interfaces}
+			names = []
 
-			    test = OSCRuby::Connect.post(client,'serviceProducts',new_prod[0])
+			names[0] = {:labelText => 'QTH45-test', :language => {:id => 1}}
+			names[1] = {:labelText => 'QTH45-test', :language => {:id => 11}}
 
-				expect(test).to be_an(Net::HTTPResponse)
+			parent = {:id => 102}
 
-				expect(test.code).to eq("201")
+			displayOrder = {:id => 4}
 
-				expect(test.body).to be_an(String)
+			admin_user_visible_interfaces = []
+			admin_user_visible_interfaces[0] = {:id => 1}
 
-				expect{JSON.parse(test.body)}.not_to raise_error
-					
-			end
+			end_user_visible_interfaces = []
+			end_user_visible_interfaces[0] = {:id => 1}
 
+			new_prod = []
+			new_prod[0] = {:names => names, 
+			               :parent => parent, 
+			               :adminVisibleInterfaces => admin_user_visible_interfaces,
+			               :endUserVisibleInterfaces => end_user_visible_interfaces}
+
+		    test = OSCRuby::Connect.post(client,'serviceProducts',new_prod[0])
+
+			expect(test).to be_an(Net::HTTPResponse)
+
+			expect(test.code).to eq("201")
+
+			expect(test.body).to be_an(String)
+
+			expect{JSON.parse(test.body)}.not_to raise_error
+				
 		end
 
 	end
 
-	# context '#patch'
+	context '#patch' do
 
+		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			expect do
+
+				OSCRuby::Connect.patch(client,'serviceProducts/83',json_content)
+
+			end.not_to raise_error
+		end
+
+		it 'should raise an error if client is nil' do
+
+			expect do
+				
+				client = nil
+
+				OSCRuby::Connect.patch(client,'serviceProducts/83',json_content)
+
+			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+
+		end
+
+
+		it 'should raise an error if resource_url is nil' do
+
+			expect do
+
+				OSCRuby::Connect.patch(client, nil, json_content)
+
+			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST request to")
+
+		end
+
+		it 'should raise an error if json_content is nil' do
+
+			expect do
+
+				OSCRuby::Connect.patch(client,'serviceProducts')
+
+			end.to raise_error("There is no json content provided; please specify json content that you would like to send a POST request with")
+
+		end
+
+		it 'should produce a Net::HTTPResponse, should produce a 201 response code, and should produce a JSON Response form the response body' do
+
+			names = []
+
+			names[0] = {:labelText => 'UNSURE', :language => {:id => 1}}
+			names[1] = {:labelText => 'UNSURE', :language => {:id => 11}}
+
+
+			new_prod = []
+			new_prod[0] = {:names => names}
+
+		    test = OSCRuby::Connect.patch(client,'serviceProducts/83',new_prod[0])
+
+			expect(test).to be_an(Net::HTTPResponse)
+
+			# expect(test.code).to eq("201")
+
+			expect(test.body).to be_an(String)
+
+			puts test.body
+
+			expect{JSON.parse(test.body)}.not_to raise_error
+				
+		end
 			
-	# end
+	end
+
 end
