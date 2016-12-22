@@ -26,7 +26,7 @@ module OSCRuby
 
 				request.basic_auth @username, @password
 
-				response = http.request request # Net::HTTPResponse object
+				http.request request # Net::HTTPResponse object
 
 			end
 
@@ -49,13 +49,13 @@ module OSCRuby
 			  request.content_type = "application/json"
 			  request.body = JSON.dump(json_content)
 
-			  response = http.request request # Net::HTTPResponse object
+			  http.request request # Net::HTTPResponse object
 
 			end
-			
+
 		end
 
-		private
+		protected
 
 		def self.generate_url_and_config(client,resource_url = nil)
 

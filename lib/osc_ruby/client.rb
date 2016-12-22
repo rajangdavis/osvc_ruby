@@ -16,7 +16,7 @@ module OSCRuby
 	    	yield(config)
 
 	    	check_config
-	    end
+		end
 
 	    def check_config
 	    	if config.interface ==''
