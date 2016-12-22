@@ -253,9 +253,10 @@ describe OSCRuby::Connect do
 
 		end
 
-		context '#patch'
+	end
+
+	context '#patch'
 
 			
-		end
 	end
 end
