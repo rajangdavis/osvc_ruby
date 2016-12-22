@@ -30,8 +30,8 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 	names = []
 
-	names[0] = {:labelText => 'QTH45', :language => {:id => 1}}
-	names[1] = {:labelText => 'QTH45', :language => {:id => 11}}
+	names[0] = {:labelText => 'QTH45-test', :language => {:id => 1}}
+	names[1] = {:labelText => 'QTH45-test', :language => {:id => 11}}
 
 	parent = {:id => 102}
 
@@ -67,21 +67,21 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 - [x] Add in Code Climate or something to show the percentage of covered methods for testing
 
-- [ ] Put the URL generator method into the get class
+- [x] Put the URL generator method into the get class
 
-- [ ] Have the get method make a get request using the Net::HTTP class
+- [x] Have the get method make a get request using the Net::HTTP class
 
-- [ ] Need to add tests for passing resources, query/id/other param into the URL generator class
+- [x] Need to add tests for passing resources, query/id/other param into the URL generator class
 
-- [ ] Need to figure out how to pass resources and some sort of query/id/other param into the URL generator class
+- [x] Need to figure out how to pass resources and some sort of query/id/other param into the URL generator class
 
-- [ ] Add in tests for Post requests
+- [x] Add in tests for Post requests
 
-- [ ] Make a Post method
+- [x] Make a Post method
 
-- [ ] Add in tests for update requests
+- [ ] Add in tests for patch requests
 
-- [ ] Make a update method
+- [ ] Make a patch method
 
 - [ ] Add in tests for delete requests
 
