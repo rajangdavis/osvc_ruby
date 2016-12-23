@@ -183,7 +183,7 @@ describe OSCRuby::Connect do
 		{:test => 'content'}
 	}
 
-	context '#post' do
+	context '#post_or_patch' do
 
 		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
 
@@ -191,7 +191,7 @@ describe OSCRuby::Connect do
 
 			expect do
 
-				OSCRuby::Connect.post(client,'serviceProducts',json_content)
+				OSCRuby::Connect.post_or_patch(client,'serviceProducts',json_content)
 
 			end.not_to raise_error
 		end
@@ -202,7 +202,7 @@ describe OSCRuby::Connect do
 				
 				client = nil
 
-				OSCRuby::Connect.post(client,'serviceProducts',json_content)
+				OSCRuby::Connect.post_or_patch(client,'serviceProducts',json_content)
 
 			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
 
@@ -212,9 +212,9 @@ describe OSCRuby::Connect do
 
 			expect do
 
-				OSCRuby::Connect.post(client, nil, json_content)
+				OSCRuby::Connect.post_or_patch(client, nil, json_content)
 
-			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST request to")
+			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to")
 
 		end
 
@@ -222,9 +222,9 @@ describe OSCRuby::Connect do
 
 			expect do
 
-				OSCRuby::Connect.post(client,'serviceProducts')
+				OSCRuby::Connect.post_or_patch(client,'serviceProducts')
 
-			end.to raise_error("There is no json content provided; please specify json content that you would like to send a POST request with")
+			end.to raise_error("There is no json content provided; please specify json content that you would like to send a POST or PATCH request with")
 
 		end
 
@@ -251,7 +251,7 @@ describe OSCRuby::Connect do
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-		    test = OSCRuby::Connect.post(client,'serviceProducts',new_prod[0])
+		    test = OSCRuby::Connect.post_or_patch(client,'serviceProducts',new_prod[0])
 
 			expect(test).to be_an(Net::HTTPResponse)
 
@@ -263,79 +263,39 @@ describe OSCRuby::Connect do
 				
 		end
 
-	end
-
-	context '#patch' do
-
-		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
-
-			expect(client).to be_an(OSCRuby::Client)
-
-			expect do
-
-				OSCRuby::Connect.patch(client,'serviceProducts/83',json_content)
-
-			end.not_to raise_error
-		end
-
-		it 'should raise an error if client is nil' do
-
-			expect do
-				
-				client = nil
-
-				OSCRuby::Connect.patch(client,'serviceProducts/83',json_content)
-
-			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
-
-		end
-
-
-		it 'should raise an error if resource_url is nil' do
-
-			expect do
-
-				OSCRuby::Connect.patch(client, nil, json_content)
-
-			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST request to")
-
-		end
-
-		it 'should raise an error if json_content is nil' do
-
-			expect do
-
-				OSCRuby::Connect.patch(client,'serviceProducts')
-
-			end.to raise_error("There is no json content provided; please specify json content that you would like to send a POST request with")
-
-		end
-
-		it 'should produce a Net::HTTPResponse, should produce a 201 response code, and should produce a JSON Response form the response body' do
+		it 'should take an optional parameter to allow PATCH request; it should produce a Net::HTTPResponse, should produce a 200 code' do
 
 			names = []
 
-			names[0] = {:labelText => 'UNSURE', :language => {:id => 1}}
-			names[1] = {:labelText => 'UNSURE', :language => {:id => 11}}
+			names[0] = {:labelText => 'QTH45-test-updated', :language => {:id => 1}}
+			names[1] = {:labelText => 'QTH45-test-updated', :language => {:id => 11}}
 
+			parent = {:id => 102}
+
+			displayOrder = {:id => 4}
+
+			admin_user_visible_interfaces = []
+			admin_user_visible_interfaces[0] = {:id => 1}
+
+			end_user_visible_interfaces = []
+			end_user_visible_interfaces[0] = {:id => 1}
 
 			new_prod = []
-			new_prod[0] = {:names => names}
+			new_prod[0] = {:names => names, 
+			               :parent => parent, 
+			               :adminVisibleInterfaces => admin_user_visible_interfaces,
+			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-		    test = OSCRuby::Connect.patch(client,'serviceProducts/83',new_prod[0])
+		    test = OSCRuby::Connect.post_or_patch(client,'serviceProducts/1339',new_prod[0],true)
 
 			expect(test).to be_an(Net::HTTPResponse)
 
-			# expect(test.code).to eq("201")
+			expect(test.body).to eq("")
 
-			expect(test.body).to be_an(String)
-
-			puts test.body
-
-			expect{JSON.parse(test.body)}.not_to raise_error
+			expect(test.code).to eq("200")
 				
 		end
-			
+
 	end
 
 end

@@ -32,58 +32,36 @@ module OSCRuby
 
 		end
 
-		def self.post(client,resource_url = nil, json_content = nil)
+		def self.post_or_patch(client,resource_url = nil, json_content = nil,patch_request = false)
 
-			@final_config = post_and_patch_check(client,resource_url, json_content)
-
-			@uri = @final_config['site_url']
-			@username = @final_config['username']
-			@password = @final_config['password']
-
-			Net::HTTP.start(@uri.host, @uri.port,
-			  :use_ssl => true, 
-			  :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
-
-			  request = Net::HTTP::Post.new @uri.request_uri
-			  request.basic_auth @username, @password
-			  request.content_type = "application/json"
-			  request.body = JSON.dump(json_content)
-
-			  http.request request # Net::HTTPResponse object
-
-			end
-
-		end
-
-		
-		def self.patch(client,resource_url = nil, json_content = nil)
-
-			@final_config = post_and_patch_check(client,resource_url, json_content)
+			@final_config = post_and_patch_check(client,resource_url, json_content, patch_request)
 
 			@uri = @final_config['site_url']
 			@username = @final_config['username']
 			@password = @final_config['password']
 
 			Net::HTTP.start(@uri.host, @uri.port,
-			  :use_ssl => true, 
-			  :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+				:use_ssl => true, 
+				:verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
 
-			  request = Net::HTTP::Patch.new @uri.request_uri
-			  request.basic_auth @username, @password
-			  request.content_type = "application/json"
-			  request.body = JSON.dump(json_content)
+				request = Net::HTTP::Post.new @uri.request_uri
+				request.basic_auth @username, @password
+				request.content_type = "application/json"
+				if @final_config['patch_request'] == true
+					request.add_field 'X-HTTP-Method-Override','PATCH'
+				end
+				request.body = JSON.dump(json_content)
 
-			  http.request request # Net::HTTPResponse object
+				http.request request # Net::HTTPResponse object
 
 			end
 
 		end
-
 
 
 		## checking methods
 
-		def self.generate_url_and_config(client,resource_url = nil)
+		def self.generate_url_and_config(client,resource_url = nil, patch_request = false)
 
 			check_client_config(client)
 
@@ -96,8 +74,10 @@ module OSCRuby
 		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/v1.3/#{resource_url}"
 		  	
 		  	@final_uri = URI(@url)
+
+		  	@patch_request = patch_request == true ? true : false
 		  	
-		  	@final_config = {'site_url' => @final_uri, 'username' => @config.username, 'password' => @config.password}
+		  	@final_config = {'site_url' => @final_uri, 'username' => @config.username, 'password' => @config.password, 'patch_request' => @patch_request}
 
 		end
 
@@ -133,14 +113,16 @@ module OSCRuby
 
 		end
 
-		def self.post_and_patch_check(client,resource_url = nil, json_content = nil)
+		def self.post_and_patch_check(client,resource_url = nil, json_content = nil, patch_request = false)
 
 			if client.nil?
 				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
 			elsif resource_url.nil?
-				raise ArgumentError, "There is no URL resource provided; please specify a URL resource that you would like to send a POST request to"
+				raise ArgumentError, "There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to"
 			elsif json_content.nil?
-				raise ArgumentError, "There is no json content provided; please specify json content that you would like to send a POST request with"
+				raise ArgumentError, "There is no json content provided; please specify json content that you would like to send a POST or PATCH request with"
+			elsif patch_request == true
+				@final_config = generate_url_and_config(client,resource_url,true)
 			else
 				@final_config = generate_url_and_config(client,resource_url)
 			end
