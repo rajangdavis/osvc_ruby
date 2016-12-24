@@ -232,6 +232,7 @@ describe OSCRuby::Connect do
 			end.not_to raise_error
 		end
 
+
 		it 'should raise an error if client is nil' do
 
 			expect do
@@ -256,7 +257,7 @@ describe OSCRuby::Connect do
 				
 		end
 
-		it 'should produce a JSON Response form the response body' do
+		it 'should produce a JSON Response from the response body' do
 			
 			expect(test.body).to be_an(String)
 
@@ -266,12 +267,6 @@ describe OSCRuby::Connect do
 	end
 
 	let(:product_test_id){
-		
-		client = OSCRuby::Client.new do |config|	
-			config.interface = ENV['OSC_TEST_SITE']
-			config.username = ENV['OSC_ADMIN']
-			config.password = ENV['OSC_PASSWORD']
-		end
 
 		resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST';")
 
@@ -280,7 +275,7 @@ describe OSCRuby::Connect do
 		prod_json = JSON.parse(product_test.body).to_hash
 
 		prod_json['items'][0]['rows'][0][0].to_i
-		
+
 	}
 
 	context '#post_or_patch' do
@@ -309,6 +304,56 @@ describe OSCRuby::Connect do
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
 		    test = OSCRuby::Connect.post_or_patch(client,"serviceProducts/#{product_test_id}",new_prod[0],true)
+
+			expect(test).to be_an(Net::HTTPResponse)
+
+			expect(test.body).to eq("")
+
+			expect(test.code).to eq("200")
+				
+		end
+
+	end
+
+	let(:product_test_updated_id){
+
+		resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';")
+
+		product_test_updated = OSCRuby::Connect.get(client,resource)
+
+		prod_json = JSON.parse(product_test_updated.body).to_hash
+
+		prod_json['items'][0]['rows'][0][0].to_i
+
+	}
+
+	context '#delete' do
+
+		it 'should raise an error if client is nil' do
+
+			expect do
+				
+				client = nil
+
+				OSCRuby::Connect.delete(client)
+
+			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+
+		end
+
+		it 'should raise an error if the resource_url is not specified' do
+
+			expect do
+
+				OSCRuby::Connect.delete(client)
+
+			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to")
+
+		end
+
+		it 'it should produce a Net::HTTPResponse, should produce a 200 code' do
+
+		    test = OSCRuby::Connect.delete(client,"serviceProducts/#{product_test_updated_id}")
 
 			expect(test).to be_an(Net::HTTPResponse)
 

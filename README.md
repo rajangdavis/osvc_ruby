@@ -4,11 +4,7 @@
 
 [![Test Coverage](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/coverage.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby/coverage)
 
-Still developing this; will let ya know when this happens.
-
-The basic idea is to be able to do something simple like import a csv of information and post it into an Oracle Service Cloud site.
-
-The ultimate goal is to use this gem to make a Rails app for advanced administration/development that cannot be done with Oracle Service Cloud alone
+An (under development) Ruby ORM for using Oracle Service Cloud influenced by the ConnectPHP API and ActiveRecord Gem
 
 ## Example (still coding this out, but trying to get this pretty simple)
 
@@ -22,36 +18,43 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 	product = OSCRuby::ServiceProduct.fetch(1)
 
+	# returns OSCRuby::ServiceProduct object with id of 1
+
 	puts product.name
 
-	# puts 'Product Lookup Name'
+	# =>'Product Lookup Name'
+
+	puts product.displayOrder
+
+	# => 64
+
+
+
 
 	# Product Creation example
 
-	names = []
+	new_product = OSCRuby::ServiceProduct.new
 
-	names[0] = {:labelText => 'QTH45-test', :language => {:id => 1}}
-	names[1] = {:labelText => 'QTH45-test', :language => {:id => 11}}
+	# use Ruby hashes to set field information
 
-	parent = {:id => 102}
+	new_product.names[0] = {:labelText => 'QTH45-test', :language => {:id => 1}}
+	new_product.names[1] = {:labelText => 'QTH45-test', :language => {:id => 11}}
 
-	displayOrder = {:id => 4}
+	new_product.parent = {:id => 102}
 
-	admin_user_visible_interfaces = []
-	admin_user_visible_interfaces[0] = {:id => 1}
+	new_product.displayOrder = {:id => 4}
 
-	end_user_visible_interfaces = []
-	end_user_visible_interfaces[0] = {:id => 1}
+	new_product.adminUserVisibleInterfaces[0] = {:id => 1}
 
-	new_prod = []
-	new_prod[0] = {:names => names, 
-	               :parent => parent, 
-	               :adminVisibleInterfaces => admin_user_visible_interfaces,
-	               :endUserVisibleInterfaces => end_user_visible_interfaces}
+	new_product.endUserVisibleInterfaces[0] = {:id => 1}
 
-	OSCRuby::ServiceProduct.save(client, new_prod)
+	new_product.save(client)
 
 	# callback with JSON details
+
+
+
+	
 
 ## To do list
 
@@ -79,13 +82,13 @@ The ultimate goal is to use this gem to make a Rails app for advanced administra
 
 - [x] Make a Post method
 
-- [ ] Add in tests for patch requests
+- [x] Add in tests for patch requests
 
-- [ ] Make a patch method
+- [x] Make a patch method
 
-- [ ] Add in tests for delete requests
+- [x] Add in tests for delete requests
 
-- [ ] Make a delete method
+- [x] Make a delete method
 
 - [ ] Create a OSCRuby::ServiceProduct class
 

@@ -58,6 +58,27 @@ module OSCRuby
 
 		end
 
+		def self.delete(client,resource_url = nil)
+
+			@final_config = delete_check(client,resource_url)
+
+			@uri = @final_config['site_url']
+			@username = @final_config['username']
+			@password = @final_config['password']
+
+			Net::HTTP.start(@uri.host, @uri.port,
+			  :use_ssl => true, 
+			  :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+
+			  request = Net::HTTP::Delete.new @uri.request_uri
+			  request.basic_auth @username, @password
+
+			  http.request request # Net::HTTPResponse object
+
+			end
+		
+		end
+
 
 		## checking methods
 
@@ -127,6 +148,16 @@ module OSCRuby
 				@final_config = generate_url_and_config(client,resource_url)
 			end
 
+		end
+
+		def self.delete_check(client,resource_url = nil)
+			if client.nil?
+				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+			elsif resource_url.nil?
+				raise ArgumentError, "There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to"
+			else
+				@final_config = generate_url_and_config(client,resource_url)
+			end
 		end
 
 	end

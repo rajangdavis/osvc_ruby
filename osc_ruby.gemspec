@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Rajan Davis"]
   spec.email         = ["rajangdavis@gmail.com"]
   spec.summary       = %q{Making the best of opensource and enterprise technology}
-  spec.description   = %q{An unofficial Ruby wrapper for the Oracle Cloud Services (fka RightNow Technologies) REST API}
+  spec.description   = %q{An unofficial Ruby ORM on top of the Oracle Cloud Services (fka RightNow Technologies) REST API}
   spec.homepage      = %q{https://github.com/rajangdavis/osc_ruby}
   spec.license       = "MIT"
 
