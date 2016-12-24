@@ -129,56 +129,6 @@ describe OSCRuby::Connect do
 
 	end
 
-	let(:test){
-		OSCRuby::Connect.get(client)
-	}
-
-	context '#get' do
-
-		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
-
-			expect(client).to be_an(OSCRuby::Client)
-
-			expect do
-
-				OSCRuby::Connect.get(client)
-
-			end.not_to raise_error
-		end
-
-		it 'should raise an error if client is nil' do
-
-			expect do
-				
-				client = nil
-
-				OSCRuby::Connect.get(client)
-
-			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
-
-		end
-
-		it 'should produce a Net::HTTPResponse' do
-
-			expect(test).to be_an(Net::HTTPResponse)
-				
-		end
-
-		it 'should produce a 200 response code' do
-
-			expect(test.code).to eq("200")
-				
-		end
-
-		it 'should produce a JSON Response form the response body' do
-			
-			expect(test.body).to be_an(String)
-
-			expect{JSON.parse(test.body)}.not_to raise_error
-		end
-
-	end
-
 	let(:json_content){
 		{:test => 'content'}
 	}
@@ -232,8 +182,8 @@ describe OSCRuby::Connect do
 
 			names = []
 
-			names[0] = {:labelText => 'QTH45-test', :language => {:id => 1}}
-			names[1] = {:labelText => 'QTH45-test', :language => {:id => 11}}
+			names[0] = {:labelText => 'PRODUCT-TEST', :language => {:id => 1}}
+			names[1] = {:labelText => 'PRODUCT-TEST', :language => {:id => 11}}
 
 			parent = {:id => 102}
 
@@ -263,12 +213,84 @@ describe OSCRuby::Connect do
 				
 		end
 
+	end
+
+	let(:test){
+		OSCRuby::Connect.get(client)
+	}
+
+	context '#get' do
+
+		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			expect do
+
+				OSCRuby::Connect.get(client)
+
+			end.not_to raise_error
+		end
+
+		it 'should raise an error if client is nil' do
+
+			expect do
+				
+				client = nil
+
+				OSCRuby::Connect.get(client)
+
+			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+
+		end
+
+		it 'should produce a Net::HTTPResponse' do
+
+			expect(test).to be_an(Net::HTTPResponse)
+				
+		end
+
+		it 'should produce a 200 response code' do
+
+			expect(test.code).to eq("200")
+				
+		end
+
+		it 'should produce a JSON Response form the response body' do
+			
+			expect(test.body).to be_an(String)
+
+			expect{JSON.parse(test.body)}.not_to raise_error
+		end
+
+	end
+
+	let(:product_test_id){
+		
+		client = OSCRuby::Client.new do |config|	
+			config.interface = ENV['OSC_TEST_SITE']
+			config.username = ENV['OSC_ADMIN']
+			config.password = ENV['OSC_PASSWORD']
+		end
+
+		resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST';")
+
+		product_test = OSCRuby::Connect.get(client,resource)
+
+		prod_json = JSON.parse(product_test.body).to_hash
+
+		prod_json['items'][0]['rows'][0][0].to_i
+		
+	}
+
+	context '#post_or_patch' do
+
 		it 'should take an optional parameter to allow PATCH request; it should produce a Net::HTTPResponse, should produce a 200 code' do
 
 			names = []
 
-			names[0] = {:labelText => 'QTH45-test-updated', :language => {:id => 1}}
-			names[1] = {:labelText => 'QTH45-test-updated', :language => {:id => 11}}
+			names[0] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 1}}
+			names[1] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 11}}
 
 			parent = {:id => 102}
 
@@ -286,7 +308,7 @@ describe OSCRuby::Connect do
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-		    test = OSCRuby::Connect.post_or_patch(client,'serviceProducts/1339',new_prod[0],true)
+		    test = OSCRuby::Connect.post_or_patch(client,"serviceProducts/#{product_test_id}",new_prod[0],true)
 
 			expect(test).to be_an(Net::HTTPResponse)
 
