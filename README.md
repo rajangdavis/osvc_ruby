@@ -4,57 +4,76 @@
 
 [![Test Coverage](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/coverage.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby/coverage)
 
+
+
 An (under development) Ruby ORM for using Oracle Service Cloud influenced by the ConnectPHP API and ActiveRecord Gem
 
 ## Example (still coding this out, but trying to get this pretty simple)
 
-	# Product Fetch example
+	# Configuration is as simple as requiring the gem
+	# and adding a config block (Completed 12/2016)
 
-	client = OSCRuby::Client.new do |config|	
-		config.interface = ENV['OSC_TEST_SITE']
+	require 'osc_ruby'
+
+	rn_client = OSCRuby::Client.new do |config|
 		config.username = ENV['OSC_ADMIN']
 		config.password = ENV['OSC_PASSWORD']
+		config.interface = ENV['OSC_TEST_SITE']
 	end
 
-	product = OSCRuby::ServiceProduct.fetch(1)
 
-	# returns OSCRuby::ServiceProduct object with id of 1
+	# ServiceProduct fetch example (Completed 12/28/2016)
 
-	puts product.name
+		product = ServiceProduct.find(rn_client,100)
 
-	# =>'Product Lookup Name'
+		puts product
+		# => #<ServiceProduct:0x007fd0fa87e588>
 
-	puts product.displayOrder
+		puts product.name
+		# => QR404
 
-	# => 64
+		puts product.displayOrder
+		# => 3
 
+	# ServiceProduct fetch all example
 
+		products = OSCRuby::ServiceProduct.all(rn_client)
 
+		products.each do |p|
+
+			puts p.name
+
+		end
+
+		# => Unsure
+		# => DVR/NVR
+		# => QC Series
+		# => QR Series
+		# => QR404
+		# => QS Series
+		# => QT Series
 
 	# Product Creation example
 
-	new_product = OSCRuby::ServiceProduct.new
+		new_product = OSCRuby::ServiceProduct.new
 
-	# use Ruby hashes to set field information
+		# use Ruby hashes to set field information
 
-	new_product.names[0] = {:labelText => 'QTH45-test', :language => {:id => 1}}
-	new_product.names[1] = {:labelText => 'QTH45-test', :language => {:id => 11}}
+		new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
+		new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
 
-	new_product.parent = {:id => 102}
+		new_product.parent = {'id' => 102}
 
-	new_product.displayOrder = {:id => 4}
+		new_product.displayOrder = 4
 
-	new_product.adminUserVisibleInterfaces[0] = {:id => 1}
+		new_product.adminVisibleInterfaces[0] = {'id' => 1}
 
-	new_product.endUserVisibleInterfaces[0] = {:id => 1}
+		new_product.endUserVisibleInterfaces[0] = {'id' => 1}
 
-	new_product.save(client)
+		new_product.save(client)
 
 	# callback with JSON details
 
-
-
-	
 
 ## To do list
 
@@ -90,9 +109,27 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [x] Make a delete method
 
-- [ ] Create a OSCRuby::ServiceProduct class
+- [x] Create a OSCRuby::ServiceProduct class
 
-- [ ] I might need to do a transformation class that converts JSON response into a Ruby Hash
+- [x] Build a QueryModule Module with the following query methods to be shared between all classes:
+	
+- [x] find
+	
+- [ ] take
+	
+- [ ] first
+	
+- [ ] last
+	
+- [ ] order
+	
+- [ ] find_by
+	
+- [ ] where
+	
+- [ ] all
+
+- [x] QueryModel converts JSON response into a Ruby Hash => new instance of the object being queried
 
 - [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby Wrapper
 

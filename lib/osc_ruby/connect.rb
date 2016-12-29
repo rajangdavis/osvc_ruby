@@ -7,6 +7,7 @@ require 'uri'
 module OSCRuby
 	
 	class Connect
+		# This class is purely to provide the underlying methods for CRUD functionality using Net::HTTP, URI, and OpenSSL
 
 		def self.get(client,resource_url = nil)
 

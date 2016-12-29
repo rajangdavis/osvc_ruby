@@ -4,7 +4,6 @@ require 'osc_ruby/configuration'
 
 module OSCRuby
 
-	
 	class Client
 		# The top-level class that handles configuration and connection to the Oracle Service Cloud REST API.
 		
