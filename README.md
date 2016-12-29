@@ -6,6 +6,8 @@
 
 [![Build Status](https://travis-ci.org/rajangdavis/osc_ruby.svg?branch=master)](https://travis-ci.org/rajangdavis/osc_ruby)
 
+[![Gem Version](https://badge.fury.io/rb/osc_ruby.svg)](https://badge.fury.io/rb/osc_ruby)
+
 An (under development) Ruby ORM for using Oracle Service Cloud influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
 ## Example (still coding this out, but trying to get this pretty simple)
