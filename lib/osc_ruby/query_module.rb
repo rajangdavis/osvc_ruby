@@ -13,7 +13,7 @@ module OSCRuby
 
 			check_obj_for_errors(obj_to_find)
 
-			obj_info = normalize(obj_to_find)
+			normalize(obj_to_find)
 
 		end
 
@@ -33,15 +33,15 @@ module OSCRuby
 
 			else
 
-				_json = JSON.parse(input.body)
+				json_input = JSON.parse(input.body)
 
 				final_hash = []
 
-				_json['items'][0]['rows'].each do |row|
+				json_input['items'][0]['rows'].each do |row|
 
 					obj_hash = {}
 					
-					_json['items'][0]['columnNames'].each_with_index do |column,i|
+					json_input['items'][0]['columnNames'].each_with_index do |column,i|
 						obj_hash[column] = if !row[i].nil? && row[i].is_i? == true then row[i].to_i else row[i] end
 					end
 
@@ -57,9 +57,9 @@ module OSCRuby
 
 		def self.check_obj_for_errors(obj_to_check)
 
-			_json = JSON.parse(obj_to_check.body)
+			json_obj = JSON.parse(obj_to_check.body)
 
-			if _json['items'][0]['rows'].count == 0
+			if json_obj['items'][0]['rows'].count == 0
 
 				raise ArgumentError, 'There were no objects matching your query; please try again.'
 

@@ -103,6 +103,30 @@ describe OSCRuby::ServiceProduct do
 		end
 	}
 
+	let(:new_service_product){
+		OSCRuby::ServiceProduct.new
+	}
+
+	context '#create' do
+
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			client = nil
+
+			expect{new_service_product.create(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+
+		end
+
+		# it 'should check the object and make sure that it at least has a name set' do
+
+		# 	expect{new_service_product.create(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+
+		# end
+
+	end
+
 	context '#find' do
 
 		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do

@@ -4,9 +4,9 @@
 
 [![Test Coverage](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/coverage.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby/coverage)
 
+[![Build Status](https://travis-ci.org/rajangdavis/osc_ruby.svg?branch=master)](https://travis-ci.org/rajangdavis/osc_ruby)
 
-
-An (under development) Ruby ORM for using Oracle Service Cloud influenced by the ConnectPHP API and ActiveRecord Gem
+An (under development) Ruby ORM for using Oracle Service Cloud influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
 ## Example (still coding this out, but trying to get this pretty simple)
 
@@ -24,7 +24,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 	# ServiceProduct fetch example (Completed 12/28/2016)
 
-		product = ServiceProduct.find(rn_client,100)
+		product = OSCRuby::ServiceProduct.find(rn_client,100)
 
 		puts product
 		# => #<ServiceProduct:0x007fd0fa87e588>
@@ -70,7 +70,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 		new_product.endUserVisibleInterfaces[0] = {'id' => 1}
 
-		new_product.save(client)
+		new_product.create(client)
 
 	# callback with JSON details
 
@@ -111,17 +111,9 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [x] Create a OSCRuby::ServiceProduct class
 
-- [x] Build a QueryModule Module with the following query methods to be shared between all classes:
+- [x] Build a QueryModule Module with the following query methods to be shared between most if not all classes:
 	
 - [x] find
-	
-- [ ] take
-	
-- [ ] first
-	
-- [ ] last
-	
-- [ ] order
 	
 - [ ] find_by
 	
@@ -129,17 +121,33 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	
 - [ ] all
 
-- [x] QueryModel converts JSON response into a Ruby Hash => new instance of the object being queried
+- [ ] Also add the following remaining CRUD Functionality:
 
-- [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby Wrapper
+- [ ] create
+
+- [ ] update
+
+- [ ] destroy
+
+- [x] QueryModule converts JSON response into a Ruby Hash => new instance of the object being queried
+
+- [ ] Create some validations for creating a ServiceProduct object
+
+- [ ] Make OpenSSL::SSL::VERIFY_PEER the default with OpenSSL::SSL::VERIFY_NONE option set in the config class 
+
+- [ ] Make version default to 1.3 but an option to be set in the config class
+
+- [ ] Allow for Session Authorization => update config class and connect classes, update tests
+
+- [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby ORM
 
 - [ ] Add in VCR and WebMock as dependencies
 
 - [ ] Figure out how to record and stub responses for a good response and bad response
 
-- [ ] Simulate these responses
+- [ ] Simulate these responses for ALL Connect HTTP methods
 
-- [ ] Follow with next Classes (ServiceCategories, Answers, Interfaces)
+- [ ] Follow with next Classes (ServiceCategories, Answers, Incidents)
 
 - [ ] Release MVP
 

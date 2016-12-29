@@ -15,7 +15,7 @@ module OSCRuby
 
 	    def initialize(attributes = nil)
 
-	    	if attributes.nil?
+			if attributes.nil?
 
 				@names = []
 
@@ -44,6 +44,20 @@ module OSCRuby
 				@parent = attributes["parent"]
 
 			end
+
+	    end
+
+	    def create(client)
+
+	    	self.class.check_client(client)
+
+	    	new_product = self
+
+	    	self.class.check_self_for_create_method(new_product)
+
+	  #   	resource = URI.escape("/serviceProducts")
+
+	  #   	service_product_json = QueryModule::create(client,resource,empty_arr[0])
 
 	    end
 
@@ -79,31 +93,36 @@ module OSCRuby
 
 	    # end
 
-	  #   def create(client)
-
-	  #   	new_product = self
-
-	  #   	empty_arr = []
-
-	  #   	json_content = {}
-
-			# new_product.instance_variables.each {|var| json_content[var.to_s.delete("@")] = new_product.instance_variable_get(var)}
-
-			# empty_arr[0] = json_content
-
-			# puts JSON.pretty_generate(empty_arr)
-
-	  #   	resource = URI.escape("/serviceProducts")
-
-	  #   	service_product_json = QueryModule::create(client,resource,empty_arr[0])
-
-	  #   end
 
 		def self.new_from_fetch(attributes)
 
 	    	check_attributes(attributes)
 
 	    	OSCRuby::ServiceProduct.new(attributes)
+
+		end
+
+		def self.check_self_for_create_method(obj)
+
+			empty_arr = []
+
+	    	json_content = {}
+
+			obj.instance_variables.each {|var| json_content[var.to_s.delete("@")] = obj.instance_variable_get(var)}
+			
+			# empty_arr[0] = json_content
+
+			# hash = JSON.parse(json_content)
+
+			# if hash[0]['adminVisibleInterfaces'].empty?
+			# 	hash[0].delete('adminVisibleInterfaces')
+			# elsif hash[0]['endUserVisibleInterfaces'].empty?
+			# 	hash[0].delete('endUserVisibleInterfaces')
+			# end
+
+			# empty_arr = hash.to_json
+
+			# puts JSON.pretty_generate(empty_arr)
 
 		end
 
