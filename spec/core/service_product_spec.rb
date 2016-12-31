@@ -119,11 +119,19 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		# it 'should check the object and make sure that it at least has a name set' do
+		it 'should check the object and make sure that it at least has a name set' do
 
-		# 	expect{new_service_product.create(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+			expect{new_service_product.create(client)}.to raise_error('ServiceProduct should at least have one name set (new_service_product.names[0] = "new product name" )')
 
-		# end
+		end
+
+		it 'should return the body object if it was created or not' do
+
+			new_service_product.names[0] = "new product name"
+
+			expect(new_service_product.create(client)).to be_a(String)
+
+		end
 
 	end
 

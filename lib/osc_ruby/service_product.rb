@@ -53,11 +53,11 @@ module OSCRuby
 
 	    	new_product = self
 
-	    	self.class.check_self_for_create_method(new_product)
+	    	final_json = self.class.check_self_for_create_method(new_product)
 
-	  #   	resource = URI.escape("/serviceProducts")
+	    	resource = URI.escape("/serviceProducts")
 
-	  #   	service_product_json = QueryModule::create(client,resource,empty_arr[0])
+	    	service_product_json = QueryModule::create(client,resource,final_json)
 
 	    end
 
@@ -110,19 +110,21 @@ module OSCRuby
 
 			obj.instance_variables.each {|var| json_content[var.to_s.delete("@")] = obj.instance_variable_get(var)}
 			
-			# empty_arr[0] = json_content
+			empty_arr[0] = json_content
 
-			# hash = JSON.parse(json_content)
+			if empty_arr[0]['names'].count == 0
+				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = "new product name" )'
+			end
 
-			# if hash[0]['adminVisibleInterfaces'].empty?
-			# 	hash[0].delete('adminVisibleInterfaces')
-			# elsif hash[0]['endUserVisibleInterfaces'].empty?
-			# 	hash[0].delete('endUserVisibleInterfaces')
-			# end
+			if empty_arr[0]['adminVisibleInterfaces'].empty?
+				empty_arr[0].delete('adminVisibleInterfaces')
+			end
 
-			# empty_arr = hash.to_json
+			if empty_arr[0]['endUserVisibleInterfaces'].empty?
+				empty_arr[0].delete('endUserVisibleInterfaces')
+			end
 
-			# puts JSON.pretty_generate(empty_arr)
+			empty_arr
 
 		end
 
