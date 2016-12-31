@@ -15,13 +15,35 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	# Configuration is as simple as requiring the gem
 	# and adding a config block (Completed 12/2016)
 
-	require 'osc_ruby'
+		require 'osc_ruby'
 
-	rn_client = OSCRuby::Client.new do |config|
-		config.username = ENV['OSC_ADMIN']
-		config.password = ENV['OSC_PASSWORD']
-		config.interface = ENV['OSC_TEST_SITE']
-	end
+		rn_client = OSCRuby::Client.new do |config|
+			config.username = ENV['OSC_ADMIN']
+			config.password = ENV['OSC_PASSWORD']
+			config.interface = ENV['OSC_TEST_SITE']
+		end
+
+
+	# ServiceProduct Creation example (Completed 12/30/2016)
+
+		new_product = OSCRuby::ServiceProduct.new
+
+		# use Ruby hashes to set field information
+
+		new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
+		new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
+
+		new_product.parent = {'id' => 102}
+
+		new_product.displayOrder = 4
+
+		new_product.adminVisibleInterfaces[0] = {'id' => 1}
+
+		new_product.endUserVisibleInterfaces[0] = {'id' => 1}
+
+		new_product.create(rn_client)
+
+		# callback with JSON details
 
 
 	# ServiceProduct fetch example (Completed 12/28/2016)
@@ -55,27 +77,24 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 		# => QS Series
 		# => QT Series
 
-	# Product Creation example
+	# ServiceProduct update example
 
-		new_product = OSCRuby::ServiceProduct.new
+		product_to_update = OSCRuby::ServiceProduct.find(rn_client,100)
 
-		# use Ruby hashes to set field information
+		product_to_update.names[0] = {'labelText' => 'name-updated', 'language' => {'id' => 1}}
 
-		new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
-		new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
+		product_to_update.update(rn_client)
 
-		new_product.parent = {'id' => 102}
+		# ServiceProduct updated
 
-		new_product.displayOrder = 4
 
-		new_product.adminVisibleInterfaces[0] = {'id' => 1}
+	# ServiceProduct destroy example
 
-		new_product.endUserVisibleInterfaces[0] = {'id' => 1}
+		product_to_delete = OSCRuby::ServiceProduct.find(rn_client,100)
 
-		new_product.create(client)
+		product_to_delete.destroy(rn_client)
 
-	# callback with JSON details
-
+		# ServiceProduct destroyed
 
 ## To do list
 

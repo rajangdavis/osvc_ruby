@@ -57,7 +57,7 @@ module OSCRuby
 
 	    	resource = URI.escape("/serviceProducts")
 
-	    	service_product_json = QueryModule::create(client,resource,final_json)
+	    	QueryModule::create(client,resource,final_json)
 
 	    end
 
