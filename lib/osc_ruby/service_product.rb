@@ -124,6 +124,10 @@ module OSCRuby
 				empty_arr[0].delete('endUserVisibleInterfaces')
 			end
 
+			if !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('name')
+				empty_arr[0].delete('parent')
+			end
+
 			empty_arr
 
 		end
