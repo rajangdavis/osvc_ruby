@@ -94,6 +94,8 @@ module OSCRuby
 	    # end
 
 
+	    protected
+
 		def self.new_from_fetch(attributes)
 
 	    	check_attributes(attributes)
