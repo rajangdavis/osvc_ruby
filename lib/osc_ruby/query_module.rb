@@ -19,9 +19,7 @@ module OSCRuby
 
 		def self.create(rn_client,resource,json_content)
 
-			obj_to_find = OSCRuby::Connect.post_or_patch(rn_client,resource,json_content)
-
-			obj_to_find.body
+			OSCRuby::Connect.post_or_patch(rn_client,resource,json_content)
 
 		end
 

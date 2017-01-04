@@ -47,7 +47,7 @@ module OSCRuby
 
 	    end
 
-	    def create(client)
+	    def create(client,return_json = false)
 
 	    	self.class.check_client(client)
 
@@ -57,7 +57,23 @@ module OSCRuby
 
 	    	resource = URI.escape("/serviceProducts")
 
-	    	QueryModule::create(client,resource,final_json)
+	    	response = QueryModule::create(client,resource,final_json)
+
+	    	if response.code == 200 && return_json == false
+
+	    		prod_json = JSON.parse(response.body)
+
+	    		final_prod = new_from_fetch(service_product_json_final[0])
+
+	    		puts "New product ${final_prod.name} was created"
+
+	    		final_prod
+
+	    	elsif return_json == true
+
+	    		response.body
+
+	    	end
 
 	    end
 
@@ -93,9 +109,6 @@ module OSCRuby
 
 	    # end
 
-
-	    protected
-
 		def self.new_from_fetch(attributes)
 
 	    	check_attributes(attributes)
@@ -114,8 +127,8 @@ module OSCRuby
 			
 			empty_arr[0] = json_content
 
-			if empty_arr[0]['names'].count == 0
-				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = "new product name" )'
+			if empty_arr[0]['names'].count == 0 || empty_arr[0]['names'][0]['labelText'].nil? || empty_arr[0]['names'][0]['language'].nil?
+				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
 			end
 
 			if empty_arr[0]['adminVisibleInterfaces'].empty?
