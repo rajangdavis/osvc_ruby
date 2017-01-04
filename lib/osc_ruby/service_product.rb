@@ -71,7 +71,7 @@ module OSCRuby
 
 	    	elsif return_json == true
 
-	    		response.body
+	    		puts response.body
 
 	    	end
 
