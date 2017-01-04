@@ -65,13 +65,11 @@ module OSCRuby
 
 	    		final_prod = new_from_fetch(prod_json[0])
 
-	    		puts "New product ${final_prod.name} was created"
-
 	    		final_prod
 
 	    	elsif return_json == true
 
-	    		puts response.body
+	    		response.body
 
 	    	end
 
@@ -108,6 +106,12 @@ module OSCRuby
 	    # 	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
 
 	    # end
+
+	    def self.new_from_update(prod_json)
+
+	    	puts prod_json	
+
+		end
 
 		def self.new_from_fetch(attributes)
 

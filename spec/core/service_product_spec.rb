@@ -150,6 +150,8 @@ describe OSCRuby::ServiceProduct do
 
 			expect(new_service_product).to be_a(OSCRuby::ServiceProduct)
 
+			# expect(new_service_product.name).to eq("QTH45-test")
+
 		end
 
 
