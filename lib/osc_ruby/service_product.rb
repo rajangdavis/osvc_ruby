@@ -63,7 +63,7 @@ module OSCRuby
 
 	    		prod_json = JSON.parse(response.body)
 
-	    		final_prod = new_from_fetch(service_product_json_final[0])
+	    		final_prod = new_from_fetch(prod_json[0])
 
 	    		puts "New product ${final_prod.name} was created"
 
