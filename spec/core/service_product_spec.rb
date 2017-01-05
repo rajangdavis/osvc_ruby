@@ -146,18 +146,29 @@ describe OSCRuby::ServiceProduct do
 			new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}}
 			new_service_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}} 		
 
+			new_service_product.parent = {'id' => 102}
+
+			new_service_product.displayOrder = 4
+
 			new_service_product.create(client)
 
 			expect(new_service_product).to be_a(OSCRuby::ServiceProduct)
 
-			# expect(new_service_product.name).to eq("QTH45-test")
+			expect(new_service_product.name).to eq("QTH45-test")
+
+			expect(new_service_product.lookupName).to eq("QTH45-test")
+
+			expect(new_service_product.displayOrder).to eq(4)
+
+			# expect(new_service_product.parent).to eq(102)
 
 		end
 
 
 		it 'should return the body object if the json_response param is set to true' do
 
-			new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} 		
+			new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}}
+			new_service_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}} 	
 
 			expect(new_service_product.create(client,true)).to be_a(String)
 

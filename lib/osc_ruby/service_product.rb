@@ -9,9 +9,7 @@ module OSCRuby
 
 		include QueryModule
 		
-		attr_reader :id, :lookupName, :createdTime, :updatedTime, :name
-		
-		attr_accessor :names, :parent, :displayOrder, :adminVisibleInterfaces, :endUserVisibleInterfaces
+		attr_accessor :names, :parent, :displayOrder, :adminVisibleInterfaces, :endUserVisibleInterfaces, :id, :lookupName, :createdTime, :updatedTime, :name
 
 	    def initialize(attributes = nil)
 
@@ -59,13 +57,21 @@ module OSCRuby
 
 	    	response = QueryModule::create(client,resource,final_json)
 
-	    	if response.code == 200 && return_json == false
+	    	response_body = JSON.parse(response.body)
 
-	    		prod_json = JSON.parse(response.body)
+	    	puts response_body
 
-	    		final_prod = new_from_fetch(prod_json[0])
+	    	if response.code.to_i == 201 && return_json == false
 
-	    		final_prod
+	    		self.id = response_body['id'].to_i
+
+	    		self.name = response_body['name']
+
+	    		self.lookupName = response_body["lookupName"]
+
+				self.displayOrder = response_body["displayOrder"]
+
+				self.parent = response_body["parent"]
 
 	    	elsif return_json == true
 
@@ -106,12 +112,6 @@ module OSCRuby
 	    # 	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
 
 	    # end
-
-	    def self.new_from_update(prod_json)
-
-	    	puts prod_json	
-
-		end
 
 		def self.new_from_fetch(attributes)
 
