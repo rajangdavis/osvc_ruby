@@ -5,7 +5,7 @@
 An (under development) Ruby ORM for using Oracle Service Cloud influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
 ## Example (still coding this out, but trying to get this pretty simple)
-
+```ruby
 	# Configuration is as simple as requiring the gem
 	# and adding a config block (Completed 12/2016)
 
@@ -89,6 +89,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 		product_to_delete.destroy(rn_client)
 
 		# ServiceProduct destroyed
+```
 
 ## To do list
 
