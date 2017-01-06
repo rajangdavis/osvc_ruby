@@ -101,15 +101,15 @@ module OSCRuby
 
 	    	service_product_json = QueryModule::find(client,resource)
 
-	    	if return_json == true
+			if return_json == true
 
-	    		service_product_json
+				service_product_json
 
-	    	else
+			else
 
-		    	service_product_json_final = JSON.parse(service_product_json)
+				service_product_json_final = JSON.parse(service_product_json)
 
-		      	new_from_fetch(service_product_json_final[0])
+				new_from_fetch(service_product_json_final[0])
 
 			end
 
@@ -208,9 +208,7 @@ module OSCRuby
 	    
 		def self.check_self_for_create_and_update_methods(obj,is_update = false)
 
-			empty_arr = []				
-
-    		empty_arr[0] = {}
+			empty_arr = [{}]
 
 			obj.instance_variables.each {|var| empty_arr[0][var.to_s.delete("@")] = obj.instance_variable_get(var)}
 
@@ -256,7 +254,7 @@ module OSCRuby
 
 	    def self.check_query(query)
 
-	    	if query.empty?
+			if query.empty?
 				
 				raise ArgumentError, 'A query must be specified when using the "where" method'
 
