@@ -210,7 +210,13 @@ module OSCRuby
 
 			empty_arr = [{}]
 
-			obj.instance_variables.each do |var| 
+			if obj.instance_variables.nil? 
+				raise ArgumentError, 'Invalid instance of a Service Product'
+			else 
+				obj_vars = obj.instance_variables
+			end
+
+			obj_vars.each do |var| 
 
 				obj_attr = var.to_s.delete("@")
 
