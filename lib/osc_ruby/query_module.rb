@@ -30,6 +30,12 @@ module OSCRuby
 
 		end
 
+		def self.update(rn_client,resource,json_content)
+
+			OSCRuby::Connect.post_or_patch(rn_client,resource,json_content,true)
+
+		end
+
 		def self.normalize(input)
 
 			if input.code.to_i == 404

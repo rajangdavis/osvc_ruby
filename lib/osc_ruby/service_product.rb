@@ -13,17 +13,17 @@ module OSCRuby
 
 	    def initialize(attributes = nil)
 
-			if attributes.nil?
-
-				@names = []
-
-				@parent = {}
-
-				@displayOrder = 1
+	    		@names = []
 
 				@adminVisibleInterfaces = []
 
 				@endUserVisibleInterfaces = []
+
+			if attributes.nil?
+
+				@parent = {}
+
+				@displayOrder = 1
 
 			else
 
@@ -51,7 +51,7 @@ module OSCRuby
 
 	    	new_product = self
 
-	    	final_json = self.class.check_self_for_create_method(new_product)
+	    	final_json = self.class.check_self_for_create_and_update_methods(new_product)
 
 	    	resource = URI.escape("/serviceProducts")
 
@@ -161,10 +161,41 @@ module OSCRuby
 
 	    end
 
+	    def update(client, return_json = false)
 
+	    	self.class.check_client(client)
+
+	    	product_to_update = self
+
+	    	final_json = self.class.check_self_for_create_and_update_methods(product_to_update,true)
+
+	    	resource = URI.escape("/serviceProducts/#{product_to_update.id}")
+
+	    	response = QueryModule::update(client,resource,final_json)
+
+	    	if response.code.to_i == 200 && return_json == false
+
+	    		updated_product = OSCRuby::ServiceProduct.find(client,product_to_update.id)
+
+	    		self.lookupName = updated_product.lookupName
+
+				self.createdTime = updated_product.createdTime
+
+				self.updatedTime = updated_product.updatedTime
+
+				self.name = updated_product.name
+
+				self.parent = updated_product.parent
+
+	    	elsif return_json == true
+
+	    		response.body
+
+	    	end
+
+	    end
 
 	    # Convenience Methods for making the CRUD operations nicer to use
-
 
 		def self.new_from_fetch(attributes)
 
@@ -175,27 +206,37 @@ module OSCRuby
 		end
 
 	    
-		def self.check_self_for_create_method(obj)
+		def self.check_self_for_create_and_update_methods(obj,is_update = false)
 
-			empty_arr = []
+			empty_arr = []				
 
-	    	empty_arr[0] = {}
+    		empty_arr[0] = {}
 
 			obj.instance_variables.each {|var| empty_arr[0][var.to_s.delete("@")] = obj.instance_variable_get(var)}
 
-			if empty_arr[0]['names'].count == 0 || empty_arr[0]['names'][0]['labelText'].nil? || empty_arr[0]['names'][0]['language'].nil?
+			if is_update == true
+				empty_arr[0].delete('id')
+				empty_arr[0].delete('lookupName')
+				empty_arr[0].delete('createdTime')
+				empty_arr[0].delete('updatedTime')
+				empty_arr[0].delete('name')
+			end
+
+			if is_update == false && (empty_arr[0]['names'].count == 0 || empty_arr[0]['names'][0]['labelText'].nil? || empty_arr[0]['names'][0]['language'].nil?)
 				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
 			end
 
-			if empty_arr[0]['adminVisibleInterfaces'].empty?
+			if !empty_arr[0]['adminVisibleInterfaces'].nil? && empty_arr[0]['adminVisibleInterfaces'].empty?
 				empty_arr[0].delete('adminVisibleInterfaces')
 			end
 
-			if empty_arr[0]['endUserVisibleInterfaces'].empty?
+			if !empty_arr[0]['endUserVisibleInterfaces'].nil? && empty_arr[0]['endUserVisibleInterfaces'].empty?
 				empty_arr[0].delete('endUserVisibleInterfaces')
 			end
 
-			if !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('lookupName')
+			if !empty_arr[0]['parent'].nil? && empty_arr[0]['parent'].is_a?(Hash) && !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('lookupName')
+				empty_arr[0].delete('parent')
+			elsif is_update == true && !empty_arr[0]['parent'].nil?
 				empty_arr[0].delete('parent')
 			end
 

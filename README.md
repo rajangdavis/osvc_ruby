@@ -83,9 +83,21 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	# => QS Series
 	# => QT Series
 
-	# ServiceProduct where example
 
-	products_lvl_1 = OSCRuby::ServiceProduct.where(rn_client,'parent is null and lookupName!="Unsure"')
+	# ServiceProduct where example (Completed 01/05/2017) 
+
+	# NOTE: Make sure to put your queries wrapped in doublequotes("")
+	# this is because when Ruby converts the queries into a URI
+	# the REST API does not like it when the queries are wrapped in single quotes ('')
+	# with strings escaped by double quotes
+
+	# Just a weird little quirk I noticed :laughing:
+
+	# For example
+	# "parent is null and lookupName!='Unsure'" => great!
+	# 'parent is null and lookupName!="Unsure"' => don't do this, it will spit back an error from the REST API!
+
+	products_lvl_1 = OSCRuby::ServiceProduct.where(rn_client,"parent is null and lookupName!='Unsure'")
 
 	products_lvl_1.each do |p|
 
@@ -98,10 +110,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	# => Accessories
 
 
-
-
-
-	# ServiceProduct update example
+	# ServiceProduct update example (Completed 01/05/2017)
 
 	product_to_update = OSCRuby::ServiceProduct.find(rn_client,100)
 
@@ -110,6 +119,8 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	product_to_update.update(rn_client)
 
 	# ServiceProduct updated
+
+
 
 
 	# ServiceProduct destroy example

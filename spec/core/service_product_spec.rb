@@ -206,9 +206,11 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
+
 		let(:known_working_product){
 			OSCRuby::ServiceProduct.find(client, 100)
 		}
+
 
 		it 'should return an instance of a new OSCRuby::ServiceProduct object with at least a name and displayOrder' do
 
@@ -323,6 +325,45 @@ describe OSCRuby::ServiceProduct do
 			expect(parents).to be_a(String)
 
 			# puts parents
+
+		end
+
+	end
+
+	let(:known_working_product){
+		OSCRuby::ServiceProduct.find(client, 100)
+	}
+
+	context 'update' do
+
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			client = nil
+
+			expect{known_working_product.update(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+
+		end
+
+		it 'should update name when the names is updated' do
+
+			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'QTH45-test'")
+			first_prod = test_prods[0]
+
+			first_prod.names[0] = {"labelText" => "QTH45-test-UPDATED", "language" => {"id" => 1}}
+
+			first_prod.update(client)
+
+			expect(first_prod.name).to eq('QTH45-test-UPDATED')
+
+		end
+
+		it 'should just return JSON if the return_json parameter is set to true' do
+
+			test = known_working_product.update(client,true)
+
+			expect(test).to be_a(String)
 
 		end
 
