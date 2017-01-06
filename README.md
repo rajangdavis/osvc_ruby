@@ -53,7 +53,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	puts product.displayOrder
 	# => 3
 
-	# ServiceProduct fetch all example
+	# ServiceProduct fetch all example (Completed 01/05/2017)
 
 	products = OSCRuby::ServiceProduct.all(rn_client)
 
@@ -135,7 +135,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	
 - [ ] where
 	
-- [ ] all
+- [x] all
 
 - [ ] Also add the following remaining CRUD Functionality:
 
@@ -152,6 +152,8 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 - [ ] Make OpenSSL::SSL::VERIFY_PEER the default with OpenSSL::SSL::VERIFY_NONE option set in the config class 
 
 - [ ] Make version default to 1.3 but an option to be set in the config class
+
+- [ ] Allow for the prefer:exclude-null-properties header => update config and connect class, update tests
 
 - [ ] Allow for Session Authorization => update config class and connect classes, update tests
 

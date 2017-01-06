@@ -260,8 +260,8 @@ describe OSCRuby::ServiceProduct do
 
 	end
 
-	contect '#where' do
+	# context '#where' do
 
-	end
+	# end
 
 end
