@@ -362,14 +362,14 @@ describe OSCRuby::ServiceProduct do
 
 		it 'should update name when the names is updated' do
 
-			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'QTH45-test'")
+			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT'")
 			first_prod = test_prods[0]
 
-			first_prod.names[0] = {"labelText" => "QTH45-test-UPDATED", "language" => {"id" => 1}}
+			first_prod.names[0] = {"labelText" => "TEST-PRODUCT-UPDATED", "language" => {"id" => 1}}
 
 			first_prod.update(client)
 
-			expect(first_prod.name).to eq('QTH45-test-UPDATED')
+			expect(first_prod.name).to eq('TEST-PRODUCT-UPDATED')
 
 		end
 
