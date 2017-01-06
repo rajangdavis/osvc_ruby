@@ -51,7 +51,7 @@ module OSCRuby
 
 	    	new_product = self
 
-	    	final_json = self.class.check_self_for_create_and_update_methods(new_product)
+	    	final_json = self.class.check_self(new_product)
 
 	    	resource = URI.escape("/serviceProducts")
 
@@ -167,7 +167,7 @@ module OSCRuby
 
 	    	product_to_update = self
 
-	    	final_json = self.class.check_self_for_create_and_update_methods(product_to_update,true)
+	    	final_json = self.class.check_self(product_to_update,true)
 
 	    	resource = URI.escape("/serviceProducts/#{product_to_update.id}")
 
@@ -206,15 +206,11 @@ module OSCRuby
 		end
 
 	    
-		def self.check_self_for_create_and_update_methods(obj,is_update = false)
+		def self.check_self(obj,is_update = false)
 
 			empty_arr = [{}]
 
-			if obj.instance_variables.nil? 
-				raise ArgumentError, 'Invalid instance of a Service Product'
-			else 
-				obj_vars = obj.instance_variables
-			end
+			obj_vars = obj.instance_variables
 
 			obj_vars.each do |var| 
 
