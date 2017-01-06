@@ -228,10 +228,13 @@ module OSCRuby
 				empty_arr[0].delete('createdTime')
 				empty_arr[0].delete('updatedTime')
 				empty_arr[0].delete('name')
-			end
-
-			if is_update == false && (empty_arr[0]['names'].count == 0 || empty_arr[0]['names'][0]['labelText'].nil? || empty_arr[0]['names'][0]['language'].nil?)
+				if !empty_arr[0]['parent'].nil?
+					empty_arr[0].delete('parent')
+				end
+			elsif empty_arr[0]['names'].count == 0 || empty_arr[0]['names'][0]['labelText'].nil? || empty_arr[0]['names'][0]['language'].nil?
 				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
+			elsif !empty_arr[0]['parent'].nil? && empty_arr[0]['parent'].is_a?(Hash) && !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('lookupName')
+					empty_arr[0].delete('parent')
 			end
 
 			if empty_arr[0]['adminVisibleInterfaces'].empty?
@@ -240,12 +243,6 @@ module OSCRuby
 
 			if empty_arr[0]['endUserVisibleInterfaces'].empty?
 				empty_arr[0].delete('endUserVisibleInterfaces')
-			end
-
-			if !empty_arr[0]['parent'].nil? && empty_arr[0]['parent'].is_a?(Hash) && !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('lookupName')
-				empty_arr[0].delete('parent')
-			elsif is_update == true && !empty_arr[0]['parent'].nil?
-				empty_arr[0].delete('parent')
 			end
 
 			empty_arr
