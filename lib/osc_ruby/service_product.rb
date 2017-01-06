@@ -208,19 +208,7 @@ module OSCRuby
 	    
 		def self.check_self(obj,is_update = false)
 
-			empty_arr = [{}]
-
-			obj_vars = obj.instance_variables
-
-			obj_vars.each do |var| 
-
-				obj_attr = var.to_s.delete("@")
-
-				obj_attr_val = obj.instance_variable_get(var)
-
-				empty_arr[0][obj_attr] = obj_attr_val
-
-			end
+			empty_arr = self.extract_attributes(obj)
 
 			if is_update == true
 				empty_arr[0].delete('id')
@@ -243,6 +231,26 @@ module OSCRuby
 
 			if empty_arr[0]['endUserVisibleInterfaces'].empty?
 				empty_arr[0].delete('endUserVisibleInterfaces')
+			end
+
+			empty_arr
+
+		end
+
+		def self.extract_attributes(obj)
+
+			empty_arr = [{}]
+
+			obj_vars = obj.instance_variables
+
+			obj_vars.each do |var| 
+
+				obj_attr = var.to_s.delete("@")
+
+				obj_attr_val = obj.instance_variable_get(var)
+
+				empty_arr[0][obj_attr] = obj_attr_val
+
 			end
 
 			empty_arr

@@ -334,7 +334,7 @@ describe OSCRuby::ServiceProduct do
 		OSCRuby::ServiceProduct.find(client, 100)
 	}
 
-	context 'update' do
+	context '#update' do
 
 		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
 
