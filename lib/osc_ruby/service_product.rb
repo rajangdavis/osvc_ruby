@@ -210,7 +210,15 @@ module OSCRuby
 
 			empty_arr = [{}]
 
-			obj.instance_variables.each {|var| empty_arr[0][var.to_s.delete("@")] = obj.instance_variable_get(var)}
+			obj.instance_variables.each do |var| 
+
+				obj_attr = var.to_s.delete("@")
+
+				obj_attr_val = obj.instance_variable_get(var)
+
+				empty_arr[0][obj_attr] = obj_attr_val
+
+			end
 
 			if is_update == true
 				empty_arr[0].delete('id')
@@ -224,11 +232,11 @@ module OSCRuby
 				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
 			end
 
-			if !empty_arr[0]['adminVisibleInterfaces'].nil? && empty_arr[0]['adminVisibleInterfaces'].empty?
+			if empty_arr[0]['adminVisibleInterfaces'].empty?
 				empty_arr[0].delete('adminVisibleInterfaces')
 			end
 
-			if !empty_arr[0]['endUserVisibleInterfaces'].nil? && empty_arr[0]['endUserVisibleInterfaces'].empty?
+			if empty_arr[0]['endUserVisibleInterfaces'].empty?
 				empty_arr[0].delete('endUserVisibleInterfaces')
 			end
 
