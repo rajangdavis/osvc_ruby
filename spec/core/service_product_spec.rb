@@ -210,7 +210,7 @@ describe OSCRuby::ServiceProduct do
 			OSCRuby::ServiceProduct.find(client, 100)
 		}
 
-		it 'should return an instance of a new OSC::ServiceProduct object with at least a name and displayOrder' do
+		it 'should return an instance of a new OSCRuby::ServiceProduct object with at least a name and displayOrder' do
 
 			expect(known_working_product).to be_an(OSCRuby::ServiceProduct)
 
@@ -219,6 +219,48 @@ describe OSCRuby::ServiceProduct do
 			expect(known_working_product.displayOrder).to eq(3)
 
 		end
+
+		it 'should return the raw json response if the return_json parameter is set to true' do
+
+			known_working_product_in_json = OSCRuby::ServiceProduct.find(client, 100, true)
+
+			expect(known_working_product_in_json).to be_an(String)
+
+		end
+
+	end
+
+	context '#all' do
+
+		it 'should return multiple instances of OSCRuby::ServiceProduct' do
+
+			products = OSCRuby::ServiceProduct.all(client)
+
+			expect(products.size).to be > 0
+
+			puts "Checking if OSCRuby::ServiceProduct.all produces multiple instances of products"
+
+			products.each_with_index do |p,i|
+
+				if i < 10
+
+					expect(p).to be_an(OSCRuby::ServiceProduct)
+
+				end
+
+			end
+
+		end
+
+		it 'should just return JSON if the return_json parameter is set to true' do
+
+			expect(OSCRuby::ServiceProduct.all(client,true)).to be_a(String)
+
+		end
+
+	end
+
+	contect '#where' do
 
 	end
 

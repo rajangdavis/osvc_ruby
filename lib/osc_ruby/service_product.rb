@@ -87,7 +87,7 @@ module OSCRuby
 
 	    end
 
-	    def self.find(client,id = nil)
+	    def self.find(client,id = nil,return_json = false)
 
 	    	check_client(client)
 
@@ -101,23 +101,39 @@ module OSCRuby
 
 	    	service_product_json = QueryModule::find(client,resource)
 
-	    	service_product_json_final = JSON.parse(service_product_json)
+	    	if return_json == true
 
-	      	new_from_fetch(service_product_json_final[0])
+	    		service_product_json
+
+	    	else
+
+		    	service_product_json_final = JSON.parse(service_product_json)
+
+		      	new_from_fetch(service_product_json_final[0])
+
+			end
 
 	    end
 
-	    # def self.all(client)
+	    def self.all(client, return_json = false)
 	    	
-	    # 	resource = URI.escape("queryResults/?query=select * from serviceproducts")
+	    	resource = URI.escape("queryResults/?query=select * from serviceproducts")
 
-	    # 	service_product_json = QueryModule::find(client,resource)
+	    	service_product_json = QueryModule::find(client,resource)
 
-	    # 	service_product_json_final = JSON.parse(service_product_json)
+	    	if return_json == true
 
-	    # 	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
+	    		service_product_json
 
-	    # end
+	    	else
+
+		    	service_product_json_final = JSON.parse(service_product_json)
+
+		    	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
+
+		    end
+
+	    end
 
 		def self.new_from_fetch(attributes)
 
