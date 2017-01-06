@@ -122,7 +122,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 
 
-	# ServiceProduct destroy example
+	# ServiceProduct destroy example (Completed 01/06/2017)
 
 	product_to_delete = OSCRuby::ServiceProduct.find(rn_client,100)
 
@@ -169,17 +169,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [x] Build a QueryModule Module with the following query methods to be shared between most if not all classes:
 
-- [x] create
-	
-- [x] find
-		
-- [x] where
-	
-- [x] all
-
-- [x] update
-
-- [ ] destroy
+- [x] create, find, where, all, update, destroy
 
 - [x] QueryModule converts JSON response into a Ruby Hash => new instance of the object being queried
 
@@ -193,13 +183,13 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [ ] Allow for Session Authorization => update config class and connect classes, update tests
 
-- [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby ORM
-
 - [ ] Add in VCR and WebMock as dependencies
 
 - [ ] Figure out how to record and stub responses for a good response and bad response
 
 - [ ] Simulate these responses for ALL Connect HTTP methods
+
+- [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby ORM
 
 - [ ] Follow with next Classes (ServiceCategories, Answers, Incidents)
 

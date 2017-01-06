@@ -245,9 +245,9 @@ module OSCRuby
 
 			if obj.id.nil?
 
-	    		raise ArgumentError, 'OSCRuby::ServiceProduct must have a valid ID set'
+				raise ArgumentError, 'OSCRuby::ServiceProduct must have a valid ID set'
 
-	    	end
+			end
 
 		end
 
