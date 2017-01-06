@@ -178,7 +178,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	
 - [x] all
 
-- [ ] update
+- [x] update
 
 - [ ] destroy
 
