@@ -13,11 +13,11 @@ module OSCRuby
 
 	    def initialize(attributes = nil)
 
-	    		@names = []
+    		@names = []
 
-				@adminVisibleInterfaces = []
+			@adminVisibleInterfaces = []
 
-				@endUserVisibleInterfaces = []
+			@endUserVisibleInterfaces = []
 
 			if attributes.nil?
 
@@ -167,6 +167,8 @@ module OSCRuby
 
 	    	product_to_update = self
 
+	    	self.class.check_for_id(product_to_update)
+
 	    	final_json = self.class.check_self(product_to_update,true)
 
 	    	resource = URI.escape("/serviceProducts/#{product_to_update.id}")
@@ -195,9 +197,39 @@ module OSCRuby
 
 	    end
 
+	    def destroy(client, return_json = false)
+
+	    	self.class.check_client(client)
+
+	    	product_to_destroy = self
+
+	    	self.class.check_for_id(product_to_destroy)
+
+	    	resource = URI.escape("/serviceProducts/#{product_to_destroy.id}")
+
+	    	response = QueryModule::destroy(client,resource)
+
+	    	if response.code.to_i == 200 && return_json == false
+
+	    		nil
+
+	    	elsif return_json == true
+
+	    		response.body
+
+	    	end
+
+	    end
 
 
-	    
+
+
+
+
+
+
+
+
 
 	    # Convenience Methods for making the CRUD operations nicer to use
 
@@ -209,7 +241,16 @@ module OSCRuby
 
 		end
 
-	    
+		def self.check_for_id(obj)
+
+			if obj.id.nil?
+
+	    		raise ArgumentError, 'OSCRuby::ServiceProduct must have a valid ID set'
+
+	    	end
+
+		end
+
 		def self.check_self(obj,is_update = false)
 
 			obj_attrs = self.extract_attributes(obj)
@@ -220,7 +261,9 @@ module OSCRuby
 			
 			else
 
-				obj_attrs = check_for_names_and_parent(obj_attrs)
+				obj_attrs = check_for_names(obj_attrs)
+
+				obj_attrs = check_for_parents(obj_attrs)
 				
 			end
 
@@ -228,13 +271,21 @@ module OSCRuby
 
 		end
 
-		def self.check_for_names_and_parent(obj_attrs)
+		def self.check_for_names(obj_attrs)
 
 			if obj_attrs[0]['names'].count == 0 || obj_attrs[0]['names'][0]['labelText'].nil? || obj_attrs[0]['names'][0]['language'].nil?
 				
 				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
 			
-			elsif !obj_attrs[0]['parent'].nil? && obj_attrs[0]['parent'].is_a?(Hash) && !obj_attrs[0]['parent'].key?('id') && !obj_attrs[0]['parent'].key?('lookupName')
+			end
+
+			obj_attrs
+
+		end
+
+		def self.check_for_parents(obj_attrs)
+
+			if !obj_attrs[0]['parent'].nil? && obj_attrs[0]['parent'].is_a?(Hash) && !obj_attrs[0]['parent'].key?('id') && !obj_attrs[0]['parent'].key?('lookupName')
 			
 				obj_attrs[0].delete('parent')
 			
@@ -297,6 +348,10 @@ module OSCRuby
 			empty_arr
 
 		end
+
+
+
+		# Will probably extract the following into a Validations class or something
 
 		def self.check_attributes(attributes)
 

@@ -143,8 +143,8 @@ describe OSCRuby::ServiceProduct do
 
 		it 'should return an instance of an OSCRuby::ServiceProduct if the json_response param is set to false (which it is by default)' do
 
-			new_service_product.names[0] = {"labelText" => "QTH45", "language" => {"id" => 1}}
-			new_service_product.names[1] = {"labelText" => "QTH45", "language" => {"id" => 11}} 		
+			new_service_product.names[0] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 1}}
+			new_service_product.names[1] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 11}} 		
 
 			new_service_product.parent = {'id' => 102}
 
@@ -154,9 +154,9 @@ describe OSCRuby::ServiceProduct do
 
 			expect(new_service_product).to be_a(OSCRuby::ServiceProduct)
 
-			expect(new_service_product.name).to eq("QTH45")
+			expect(new_service_product.name).to eq("TEST-PRODUCT")
 
-			expect(new_service_product.lookupName).to eq("QTH45")
+			expect(new_service_product.lookupName).to eq("TEST-PRODUCT")
 
 			expect(new_service_product.displayOrder).to eq(4)
 
@@ -167,8 +167,8 @@ describe OSCRuby::ServiceProduct do
 
 		it 'should return the body object if the json_response param is set to true' do
 
-			new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}}
-			new_service_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}} 	
+			new_service_product.names[0] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 1}}
+			new_service_product.names[1] = {'labelText' => 'TEST-PRODUCT', 'language' => {'id' => 11}} 	
 
 			expect(new_service_product.create(client,true)).to be_a(String)
 
@@ -346,6 +346,20 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
+		it 'should expect that the Service Product is an instance of a OSCRuby::ServiceProduct' do
+
+			expect(known_working_product).to be_an(OSCRuby::ServiceProduct)
+
+		end
+
+		it 'should expect that the product has an ID and spit out an error if it does not' do
+
+			known_working_product.id = nil
+
+			expect{known_working_product.destroy(client)}.to raise_error('OSCRuby::ServiceProduct must have a valid ID set')
+		
+		end
+
 		it 'should update name when the names is updated' do
 
 			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'QTH45-test'")
@@ -365,6 +379,51 @@ describe OSCRuby::ServiceProduct do
 
 			expect(test).to be_a(String)
 
+		end
+
+	end
+
+	let(:product_to_delete){
+
+		test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT'")
+		test_prods[0]
+
+	}
+
+	context '#destroy' do
+
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			client = nil
+
+			expect{product_to_delete.destroy(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+
+		end
+
+		it 'should expect that the Service Product is an instance of a OSCRuby::ServiceProduct' do
+
+			expect(product_to_delete).to be_an(OSCRuby::ServiceProduct)
+
+		end
+
+		it 'should expect that the product has an ID and spit out an error if it does not' do
+
+			product_to_delete.id = nil
+
+			expect{product_to_delete.destroy(client)}.to raise_error('OSCRuby::ServiceProduct must have a valid ID set')
+		
+		end
+
+		it 'should delete the product' do
+
+			id_to_find = product_to_delete.id
+
+			product_to_delete.destroy(client)
+
+			expect{OSCRuby::ServiceProduct.find(client, id_to_find)}.to raise_error('There were no objects matching your query; please try again.')
+		
 		end
 
 	end

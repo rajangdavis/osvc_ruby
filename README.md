@@ -43,7 +43,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 
 	# NOTE: Make sure that in a production environment
-	# that the following methods are wrapped in a try/catch block.
+	# that the following methods are wrapped in a begin/rescue block.
 
 	# If a null set is returned by your query
 	# an exception will be raised
@@ -91,11 +91,10 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	# the REST API does not like it when the queries are wrapped in single quotes ('')
 	# with strings escaped by double quotes
 
-	# Just a weird little quirk I noticed :laughing:
-
 	# For example
 	# "parent is null and lookupName!='Unsure'" => great!
-	# 'parent is null and lookupName!="Unsure"' => don't do this, it will spit back an error from the REST API!
+	# 'parent is null and lookupName!="Unsure"' => don't do this
+	# it will spit back an error from the REST API!
 
 	products_lvl_1 = OSCRuby::ServiceProduct.where(rn_client,"parent is null and lookupName!='Unsure'")
 

@@ -36,6 +36,12 @@ module OSCRuby
 
 		end
 
+		def self.destroy(rn_client,resource)
+
+			OSCRuby::Connect.delete(rn_client,resource)
+			
+		end
+
 		def self.normalize(input)
 
 			if input.code.to_i == 404
