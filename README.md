@@ -9,86 +9,86 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	# Configuration is as simple as requiring the gem
 	# and adding a config block (Completed 12/2016)
 
-		require 'osc_ruby'
+	require 'osc_ruby'
 
-		rn_client = OSCRuby::Client.new do |config|
-			config.username = ENV['OSC_ADMIN']
-			config.password = ENV['OSC_PASSWORD']
-			config.interface = ENV['OSC_TEST_SITE']
-		end
+	rn_client = OSCRuby::Client.new do |config|
+		config.username = ENV['OSC_ADMIN']
+		config.password = ENV['OSC_PASSWORD']
+		config.interface = ENV['OSC_TEST_SITE']
+	end
 
 
 	# ServiceProduct Creation example (Completed 12/30/2016)
 
-		new_product = OSCRuby::ServiceProduct.new
+	new_product = OSCRuby::ServiceProduct.new
 
-		# use Ruby hashes to set field information
+	# use Ruby hashes to set field information
 
-		new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
-		new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
+	new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
+	new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
 
-		new_product.parent = {'id' => 102}
+	new_product.parent = {'id' => 102}
 
-		new_product.displayOrder = 4
+	new_product.displayOrder = 4
 
-		new_product.adminVisibleInterfaces[0] = {'id' => 1}
+	new_product.adminVisibleInterfaces[0] = {'id' => 1}
 
-		new_product.endUserVisibleInterfaces[0] = {'id' => 1}
+	new_product.endUserVisibleInterfaces[0] = {'id' => 1}
 
-		new_product.create(rn_client)
+	new_product.create(rn_client)
 
-		# callback with JSON details
+	# callback with JSON details
 
 
 	# ServiceProduct fetch example (Completed 12/28/2016)
 
-		product = OSCRuby::ServiceProduct.find(rn_client,100)
+	product = OSCRuby::ServiceProduct.find(rn_client,100)
 
-		puts product
-		# => #<ServiceProduct:0x007fd0fa87e588>
+	puts product
+	# => #<ServiceProduct:0x007fd0fa87e588>
 
-		puts product.name
-		# => QR404
+	puts product.name
+	# => QR404
 
-		puts product.displayOrder
-		# => 3
+	puts product.displayOrder
+	# => 3
 
 	# ServiceProduct fetch all example
 
-		products = OSCRuby::ServiceProduct.all(rn_client)
+	products = OSCRuby::ServiceProduct.all(rn_client)
 
-		products.each do |p|
+	products.each do |p|
 
-			puts p.name
+		puts p.name
 
-		end
+	end
 
-		# => Unsure
-		# => DVR/NVR
-		# => QC Series
-		# => QR Series
-		# => QR404
-		# => QS Series
-		# => QT Series
+	# => Unsure
+	# => DVR/NVR
+	# => QC Series
+	# => QR Series
+	# => QR404
+	# => QS Series
+	# => QT Series
 
 	# ServiceProduct update example
 
-		product_to_update = OSCRuby::ServiceProduct.find(rn_client,100)
+	product_to_update = OSCRuby::ServiceProduct.find(rn_client,100)
 
-		product_to_update.names[0] = {'labelText' => 'name-updated', 'language' => {'id' => 1}}
+	product_to_update.names[0] = {'labelText' => 'name-updated', 'language' => {'id' => 1}}
 
-		product_to_update.update(rn_client)
+	product_to_update.update(rn_client)
 
-		# ServiceProduct updated
+	# ServiceProduct updated
 
 
 	# ServiceProduct destroy example
 
-		product_to_delete = OSCRuby::ServiceProduct.find(rn_client,100)
+	product_to_delete = OSCRuby::ServiceProduct.find(rn_client,100)
 
-		product_to_delete.destroy(rn_client)
+	product_to_delete.destroy(rn_client)
 
-		# ServiceProduct destroyed
+	# ServiceProduct destroyed
 ```
 
 ## To do list
@@ -139,7 +139,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [ ] Also add the following remaining CRUD Functionality:
 
-- [ ] create
+- [x] create
 
 - [ ] update
 
@@ -147,7 +147,7 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [x] QueryModule converts JSON response into a Ruby Hash => new instance of the object being queried
 
-- [ ] Create some validations for creating a ServiceProduct object
+- [x] Create some validations for creating a ServiceProduct object
 
 - [ ] Make OpenSSL::SSL::VERIFY_PEER the default with OpenSSL::SSL::VERIFY_NONE option set in the config class 
 

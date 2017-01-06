@@ -143,8 +143,8 @@ describe OSCRuby::ServiceProduct do
 
 		it 'should return an instance of an OSCRuby::ServiceProduct if the json_response param is set to false (which it is by default)' do
 
-			new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}}
-			new_service_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}} 		
+			new_service_product.names[0] = {"labelText" => "QTH45", "language" => {"id" => 1}}
+			new_service_product.names[1] = {"labelText" => "QTH45", "language" => {"id" => 11}} 		
 
 			new_service_product.parent = {'id' => 102}
 
@@ -154,13 +154,13 @@ describe OSCRuby::ServiceProduct do
 
 			expect(new_service_product).to be_a(OSCRuby::ServiceProduct)
 
-			expect(new_service_product.name).to eq("QTH45-test")
+			expect(new_service_product.name).to eq("QTH45")
 
-			expect(new_service_product.lookupName).to eq("QTH45-test")
+			expect(new_service_product.lookupName).to eq("QTH45")
 
 			expect(new_service_product.displayOrder).to eq(4)
 
-			# expect(new_service_product.parent).to eq(102)
+			expect(new_service_product.parent).to eq(102)
 
 		end
 

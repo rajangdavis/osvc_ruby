@@ -59,19 +59,25 @@ module OSCRuby
 
 	    	response_body = JSON.parse(response.body)
 
-	    	puts response_body
-
 	    	if response.code.to_i == 201 && return_json == false
 
 	    		self.id = response_body['id'].to_i
 
-	    		self.name = response_body['name']
+	    		self.name = response_body["lookupName"]
 
 	    		self.lookupName = response_body["lookupName"]
 
 				self.displayOrder = response_body["displayOrder"]
 
-				self.parent = response_body["parent"]
+				if !response_body["parent"].nil?
+
+					self.parent = response_body["parent"]["links"][0]["href"].split('/').pop.to_i
+
+				else
+
+					self.parent = nil
+
+				end
 
 	    	elsif return_json == true
 
@@ -125,11 +131,9 @@ module OSCRuby
 
 			empty_arr = []
 
-	    	json_content = {}
+	    	empty_arr[0] = {}
 
-			obj.instance_variables.each {|var| json_content[var.to_s.delete("@")] = obj.instance_variable_get(var)}
-			
-			empty_arr[0] = json_content
+			obj.instance_variables.each {|var| empty_arr[0][var.to_s.delete("@")] = obj.instance_variable_get(var)}
 
 			if empty_arr[0]['names'].count == 0 || empty_arr[0]['names'][0]['labelText'].nil? || empty_arr[0]['names'][0]['language'].nil?
 				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
@@ -143,7 +147,7 @@ module OSCRuby
 				empty_arr[0].delete('endUserVisibleInterfaces')
 			end
 
-			if !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('name')
+			if !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('lookupName')
 				empty_arr[0].delete('parent')
 			end
 
