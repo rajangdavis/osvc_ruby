@@ -195,6 +195,10 @@ module OSCRuby
 
 	    end
 
+
+
+	    
+
 	    # Convenience Methods for making the CRUD operations nicer to use
 
 		def self.new_from_fetch(attributes)
@@ -208,32 +212,57 @@ module OSCRuby
 	    
 		def self.check_self(obj,is_update = false)
 
-			empty_arr = self.extract_attributes(obj)
+			obj_attrs = self.extract_attributes(obj)
 
 			if is_update == true
-				empty_arr[0].delete('id')
-				empty_arr[0].delete('lookupName')
-				empty_arr[0].delete('createdTime')
-				empty_arr[0].delete('updatedTime')
-				empty_arr[0].delete('name')
-				if !empty_arr[0]['parent'].nil?
-					empty_arr[0].delete('parent')
-				end
-			elsif empty_arr[0]['names'].count == 0 || empty_arr[0]['names'][0]['labelText'].nil? || empty_arr[0]['names'][0]['language'].nil?
+			
+				obj_attrs = remove_unused_new_attrs(obj_attrs)
+			
+			else
+
+				obj_attrs = check_for_names_and_parent(obj_attrs)
+				
+			end
+
+			obj_attrs
+
+		end
+
+		def self.check_for_names_and_parent(obj_attrs)
+
+			if obj_attrs[0]['names'].count == 0 || obj_attrs[0]['names'][0]['labelText'].nil? || obj_attrs[0]['names'][0]['language'].nil?
+				
 				raise ArgumentError, 'ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
-			elsif !empty_arr[0]['parent'].nil? && empty_arr[0]['parent'].is_a?(Hash) && !empty_arr[0]['parent'].key?('id') && !empty_arr[0]['parent'].key?('lookupName')
-					empty_arr[0].delete('parent')
+			
+			elsif !obj_attrs[0]['parent'].nil? && obj_attrs[0]['parent'].is_a?(Hash) && !obj_attrs[0]['parent'].key?('id') && !obj_attrs[0]['parent'].key?('lookupName')
+			
+				obj_attrs[0].delete('parent')
+			
 			end
 
-			if empty_arr[0]['adminVisibleInterfaces'].empty?
-				empty_arr[0].delete('adminVisibleInterfaces')
+			obj_attrs
+
+		end
+
+		def self.remove_unused_new_attrs(obj_attrs)
+
+			obj_attrs[0].delete('id')
+			
+			obj_attrs[0].delete('lookupName')
+			
+			obj_attrs[0].delete('createdTime')
+			
+			obj_attrs[0].delete('updatedTime')
+			
+			obj_attrs[0].delete('name')
+			
+			if !obj_attrs[0]['parent'].nil?
+			
+				obj_attrs[0].delete('parent')
+			
 			end
 
-			if empty_arr[0]['endUserVisibleInterfaces'].empty?
-				empty_arr[0].delete('endUserVisibleInterfaces')
-			end
-
-			empty_arr
+			obj_attrs
 
 		end
 
@@ -251,6 +280,18 @@ module OSCRuby
 
 				empty_arr[0][obj_attr] = obj_attr_val
 
+			end
+
+			if empty_arr[0]['adminVisibleInterfaces'].empty?
+				
+				empty_arr[0].delete('adminVisibleInterfaces')
+			
+			end
+
+			if empty_arr[0]['endUserVisibleInterfaces'].empty?
+				
+				empty_arr[0].delete('endUserVisibleInterfaces')
+			
 			end
 
 			empty_arr
