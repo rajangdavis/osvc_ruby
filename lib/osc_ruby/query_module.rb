@@ -11,9 +11,16 @@ module OSCRuby
 
 			obj_to_find = OSCRuby::Connect.get(rn_client,resource)
 
-			check_obj_for_errors(obj_to_find)
+			if obj_to_find.code.to_i == 200 || obj_to_find.code.to_i == 201
 
-			normalize(obj_to_find)
+				check_obj_for_errors(obj_to_find)
+
+				normalize(obj_to_find)
+			else
+
+				obj_to_find.body
+
+			end
 
 		end
 
@@ -57,7 +64,7 @@ module OSCRuby
 
 			json_obj = JSON.parse(obj_to_check.body)
 
-			if json_obj['items'][0]['rows'].count == 0
+			if !json_obj.nil? && json_obj['items'][0]['rows'].count == 0
 
 				raise ArgumentError, 'There were no objects matching your query; please try again.'
 

@@ -116,6 +116,8 @@ module OSCRuby
 	    end
 
 	    def self.all(client, return_json = false)
+
+	    	check_client(client)
 	    	
 	    	resource = URI.escape("queryResults/?query=select * from serviceproducts")
 
@@ -135,6 +137,35 @@ module OSCRuby
 
 	    end
 
+	    def self.where(client, query = '', return_json = false)
+
+	    	check_client(client)
+
+	    	check_query(query)
+
+	    	@query = URI.escape("queryResults/?query=select * from serviceproducts where #{query}")
+
+	    	service_product_json = QueryModule::find(client,@query)
+
+	    	if return_json == true
+
+	    		service_product_json
+
+	    	else
+
+		    	service_product_json_final = JSON.parse(service_product_json)
+
+		    	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
+
+		    end
+
+	    end
+
+
+
+	    # Convenience Methods for making the CRUD operations nicer to use
+
+
 		def self.new_from_fetch(attributes)
 
 	    	check_attributes(attributes)
@@ -143,6 +174,7 @@ module OSCRuby
 
 		end
 
+	    
 		def self.check_self_for_create_method(obj)
 
 			empty_arr = []
@@ -180,6 +212,16 @@ module OSCRuby
 			end
 
 		end
+
+	    def self.check_query(query)
+
+	    	if query.empty?
+				
+				raise ArgumentError, 'A query must be specified when using the "where" method'
+
+			end
+
+	    end
 
 		def self.check_client(client)
 

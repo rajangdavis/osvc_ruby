@@ -232,19 +232,31 @@ describe OSCRuby::ServiceProduct do
 
 	context '#all' do
 
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			client = nil
+
+			expect{OSCRuby::ServiceProduct.all(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+
+		end
+
 		it 'should return multiple instances of OSCRuby::ServiceProduct' do
 
 			products = OSCRuby::ServiceProduct.all(client)
 
 			expect(products.size).to be > 0
 
-			puts "Checking if OSCRuby::ServiceProduct.all produces multiple instances of products"
+			# puts "Checking if OSCRuby::ServiceProduct.all produces multiple instances of products"
 
 			products.each_with_index do |p,i|
 
 				if i < 10
 
 					expect(p).to be_an(OSCRuby::ServiceProduct)
+
+					# puts p.name
 
 				end
 
@@ -260,8 +272,60 @@ describe OSCRuby::ServiceProduct do
 
 	end
 
-	# context '#where' do
+	context '#where' do
 
-	# end
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+
+			expect(client).to be_an(OSCRuby::Client)
+
+			client = nil
+
+			expect{OSCRuby::ServiceProduct.where(client,'query')}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+
+		end
+
+		it 'should raise an error if there is no query' do
+
+			expect{OSCRuby::ServiceProduct.where(client)}.to raise_error('A query must be specified when using the "where" method')
+
+		end
+
+		it 'should take a query and return results' do
+
+			products_lvl_1 = OSCRuby::ServiceProduct.where(client,"parent is null and lookupname not like 'Unsure'")
+
+			expect(products_lvl_1.count).to be > 0
+
+			products_lvl_1.each_with_index do |p,i|
+
+				if i < 10
+
+					expect(p).to be_an(OSCRuby::ServiceProduct)
+
+					# puts p.name
+
+				end
+
+			end
+
+		end
+
+		it 'should raise an error if the query returns 0 results' do
+
+			expect{OSCRuby::ServiceProduct.where(client,"parent = 6546546546546")}.to raise_error('There were no objects matching your query; please try again.')
+
+		end
+
+		it 'should just return JSON if the return_json parameter is set to true' do
+
+			parents = OSCRuby::ServiceProduct.where(client,"parent is null and lookupname not like 'Unsure'",true)
+
+			expect(parents).to be_a(String)
+
+			# puts parents
+
+		end
+
+	end
 
 end

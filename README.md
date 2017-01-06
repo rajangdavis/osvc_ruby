@@ -40,6 +40,18 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	# callback with JSON details
 
 
+
+
+	# NOTE: Make sure that in a production environment
+	# that the following methods are wrapped in a try/catch block.
+
+	# If a null set is returned by your query
+	# an exception will be raised
+	# this is to ensure that you 
+	# handle your errors explicitly
+	# when writing scripts
+
+
 	# ServiceProduct fetch example (Completed 12/28/2016)
 
 	product = OSCRuby::ServiceProduct.find(rn_client,100)
@@ -70,6 +82,24 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 	# => QR404
 	# => QS Series
 	# => QT Series
+
+	# ServiceProduct where example
+
+	products_lvl_1 = OSCRuby::ServiceProduct.where(rn_client,'parent is null and lookupName!="Unsure"')
+
+	products_lvl_1.each do |p|
+
+		puts p.name
+
+	end
+
+	# => DVR/NVR
+	# => Cameras
+	# => Accessories
+
+
+
+
 
 	# ServiceProduct update example
 
@@ -128,18 +158,14 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 - [x] Create a OSCRuby::ServiceProduct class
 
 - [x] Build a QueryModule Module with the following query methods to be shared between most if not all classes:
-	
-- [x] find
-	
-- [ ] find_by
-	
-- [ ] where
-	
-- [x] all
-
-- [ ] Also add the following remaining CRUD Functionality:
 
 - [x] create
+	
+- [x] find
+		
+- [x] where
+	
+- [x] all
 
 - [ ] update
 

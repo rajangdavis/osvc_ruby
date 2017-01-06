@@ -3,6 +3,7 @@ require 'osc_ruby/client'
 require 'net/http'
 require 'openssl'
 require 'uri'
+require 'cgi'
 
 module OSCRuby
 	
@@ -14,6 +15,7 @@ module OSCRuby
 			@final_config = get_check(client,resource_url)
 
 			@uri = @final_config['site_url']
+
 			@username = @final_config['username']
 			@password = @final_config['password']
 
