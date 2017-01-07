@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
     spec.add_development_dependency "rspec", "~> 3.2.0"
     spec.add_development_dependency "vcr", "~> 3.0.3"
     spec.add_development_dependency "fakeweb"
+
+    spec.add_dependency 'yard'
 end

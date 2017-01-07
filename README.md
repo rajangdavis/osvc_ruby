@@ -4,131 +4,160 @@
 
 An (under development) Ruby ORM for using Oracle Service Cloud influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
+
+## Compatibility
+
+This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]. Additionally,
+[TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests against Ruby version 2.2.0 as well as jruby version 1.7.19
+
+The create, update, and destroy methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before November 2016. This is because I am using the ROQL queries to generate values for Common Objects
+
+Currently supporting the following objects:
+**ServiceProduct**
+
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'osc_ruby'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install osc_ruby
+
+
 ## Example (still coding this out, but trying to get this pretty simple)
 ```ruby
-	# Configuration is as simple as requiring the gem
-	# and adding a config block (Completed 12/2016)
+# Configuration is as simple as requiring the gem
+# and adding a config block (Completed 12/2016)
 
-	require 'osc_ruby'
+require 'osc_ruby'
 
-	rn_client = OSCRuby::Client.new do |config|
-		config.username = ENV['OSC_ADMIN']
-		config.password = ENV['OSC_PASSWORD']
-		config.interface = ENV['OSC_TEST_SITE']
-	end
-
-
-	# ServiceProduct Creation example (Completed 12/30/2016)
-
-	new_product = OSCRuby::ServiceProduct.new
-
-	# use Ruby hashes to set field information
-
-	new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
-	new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
-
-	new_product.parent = {'id' => 102}
-
-	new_product.displayOrder = 4
-
-	new_product.adminVisibleInterfaces[0] = {'id' => 1}
-
-	new_product.endUserVisibleInterfaces[0] = {'id' => 1}
-
-	new_product.create(rn_client)
-
-	# callback with JSON details
+rn_client = OSCRuby::Client.new do |config|
+	config.username = ENV['OSC_ADMIN']
+	config.password = ENV['OSC_PASSWORD']
+	config.interface = ENV['OSC_TEST_SITE']
+end
 
 
+# ServiceProduct Creation example (Completed 12/30/2016)
 
+new_product = OSCRuby::ServiceProduct.new
 
-	# NOTE: Make sure that in a production environment
-	# that the following methods are wrapped in a begin/rescue block.
+# use Ruby hashes to set field information
 
-	# If a null set is returned by your query
-	# an exception will be raised
-	# this is to ensure that you 
-	# handle your errors explicitly
-	# when writing scripts
+new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
+new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
 
+new_product.parent = {'id' => 102}
 
-	# ServiceProduct fetch example (Completed 12/28/2016)
+new_product.displayOrder = 4
 
-	product = OSCRuby::ServiceProduct.find(rn_client,100)
+new_product.adminVisibleInterfaces[0] = {'id' => 1}
 
-	puts product
-	# => #<ServiceProduct:0x007fd0fa87e588>
+new_product.endUserVisibleInterfaces[0] = {'id' => 1}
 
-	puts product.name
-	# => QR404
+new_product.create(rn_client)
 
-	puts product.displayOrder
-	# => 3
-
-	# ServiceProduct fetch all example (Completed 01/05/2017)
-
-	products = OSCRuby::ServiceProduct.all(rn_client)
-
-	products.each do |p|
-
-		puts p.name
-
-	end
-
-	# => Unsure
-	# => DVR/NVR
-	# => QC Series
-	# => QR Series
-	# => QR404
-	# => QS Series
-	# => QT Series
-
-
-	# ServiceProduct where example (Completed 01/05/2017) 
-
-	# NOTE: Make sure to put your queries wrapped in doublequotes("")
-	# this is because when Ruby converts the queries into a URI
-	# the REST API does not like it when the queries are wrapped in single quotes ('')
-	# with strings escaped by double quotes
-
-	# For example
-	# "parent is null and lookupName!='Unsure'" => great!
-	# 'parent is null and lookupName!="Unsure"' => don't do this
-	# it will spit back an error from the REST API!
-
-	products_lvl_1 = OSCRuby::ServiceProduct.where(rn_client,"parent is null and lookupName!='Unsure'")
-
-	products_lvl_1.each do |p|
-
-		puts p.name
-
-	end
-
-	# => DVR/NVR
-	# => Cameras
-	# => Accessories
-
-
-	# ServiceProduct update example (Completed 01/05/2017)
-
-	product_to_update = OSCRuby::ServiceProduct.find(rn_client,100)
-
-	product_to_update.names[0] = {'labelText' => 'name-updated', 'language' => {'id' => 1}}
-
-	product_to_update.update(rn_client)
-
-	# ServiceProduct updated
+# callback with JSON details
 
 
 
 
-	# ServiceProduct destroy example (Completed 01/06/2017)
+# NOTE: Make sure that in a production environment
+# that the following methods are wrapped in a begin/rescue block.
 
-	product_to_delete = OSCRuby::ServiceProduct.find(rn_client,100)
+# If a null set is returned by your query
+# an exception will be raised
+# this is to ensure that you 
+# handle your errors explicitly
+# when writing scripts
 
-	product_to_delete.destroy(rn_client)
 
-	# ServiceProduct destroyed
+# ServiceProduct fetch example (Completed 12/28/2016)
+
+product = OSCRuby::ServiceProduct.find(rn_client,100)
+
+puts product
+# => #<ServiceProduct:0x007fd0fa87e588>
+
+puts product.name
+# => QR404
+
+puts product.displayOrder
+# => 3
+
+# ServiceProduct fetch all example (Completed 01/05/2017)
+
+products = OSCRuby::ServiceProduct.all(rn_client)
+
+products.each do |p|
+
+	puts p.name
+
+end
+
+# => Unsure
+# => DVR/NVR
+# => QC Series
+# => QR Series
+# => QR404
+# => QS Series
+# => QT Series
+
+
+# ServiceProduct where example (Completed 01/05/2017) 
+
+# NOTE: Make sure to put your queries wrapped in doublequotes("")
+# this is because when Ruby converts the queries into a URI
+# the REST API does not like it when the queries are wrapped in single quotes ('')
+# with strings escaped by double quotes
+
+# For example
+# "parent is null and lookupName!='Unsure'" => great!
+# 'parent is null and lookupName!="Unsure"' => don't do this
+# it will spit back an error from the REST API!
+
+products_lvl_1 = OSCRuby::ServiceProduct.where(rn_client,"parent is null and lookupName!='Unsure'")
+
+products_lvl_1.each do |p|
+
+	puts p.name
+
+end
+
+# => DVR/NVR
+# => Cameras
+# => Accessories
+
+
+# ServiceProduct update example (Completed 01/05/2017)
+
+product_to_update = OSCRuby::ServiceProduct.find(rn_client,100)
+
+product_to_update.names[0] = {'labelText' => 'name-updated', 'language' => {'id' => 1}}
+
+product_to_update.update(rn_client)
+
+# ServiceProduct updated
+
+
+
+
+# ServiceProduct destroy example (Completed 01/06/2017)
+
+product_to_delete = OSCRuby::ServiceProduct.find(rn_client,100)
+
+product_to_delete.destroy(rn_client)
+
+# ServiceProduct destroyed
 ```
 
 ## To do list
@@ -194,19 +223,3 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 - [ ] Follow with next Classes (ServiceCategories, Answers, Incidents)
 
 - [ ] Release MVP
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'osc_ruby'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install osc_ruby

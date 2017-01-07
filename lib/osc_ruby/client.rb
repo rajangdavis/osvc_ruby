@@ -15,6 +15,7 @@ module OSCRuby
 	    	yield(config)
 
 	    	check_config
+	    	optional_check
 		end
 
 	    def check_config
@@ -24,13 +25,17 @@ module OSCRuby
 	    		raise ArgumentError, "Username cannot be nil or blank"
 	    	elsif config.password ==''
 	    		raise ArgumentError, "Password cannot be nil or blank"
-	    	elsif config.no_ssl_verify.class != FalseClass && config.no_ssl_verify.class != TrueClass
+	    	end
+
+	    	true
+	    end
+
+	    def optional_check
+	    	if config.no_ssl_verify.class != FalseClass && config.no_ssl_verify.class != TrueClass
 	    		raise ArgumentError, "The no SSL verification setting must be set to true or false"
 	    	elsif config.version.nil?
 	    		raise ArgumentError, "Connect version cannot be null"
 	    	end
-
-	    	true
 	    end
 	end
 end
