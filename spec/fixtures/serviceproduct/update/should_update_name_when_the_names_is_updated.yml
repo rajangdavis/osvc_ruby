@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:48:02 GMT
+      - Sat, 07 Jan 2017 01:28:21 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=139188 t=1483750082625580
+      - D=141358 t=1483752501419276
       rnt-machine:
-      - '0.76'
+      - '0.83'
       transfer-encoding:
       - chunked
       content-type:
@@ -43,7 +43,7 @@ http_interactions:
             "items": [
                 {
                     "tableName": "serviceProducts",
-                    "count": 2,
+                    "count": 3,
                     "columnNames": [
                         "id",
                         "lookupName",
@@ -55,7 +55,16 @@ http_interactions:
                     ],
                     "rows": [
                         [
-                            "2128",
+                            "2129",
+                            "TEST-PRODUCT",
+                            null,
+                            null,
+                            "2",
+                            "TEST-PRODUCT",
+                            null
+                        ],
+                        [
+                            "2131",
                             "TEST-PRODUCT",
                             null,
                             null,
@@ -64,7 +73,7 @@ http_interactions:
                             "102"
                         ],
                         [
-                            "2129",
+                            "2132",
                             "TEST-PRODUCT",
                             null,
                             null,
@@ -92,13 +101,13 @@ http_interactions:
             ]
         }
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:48:13 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:33 GMT
 - request:
     method: post
-    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3//serviceProducts/2128
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3//serviceProducts/2129
     body:
       encoding: UTF-8
-      string: '[{"names":[{"labelText":"TEST-PRODUCT-UPDATED","language":{"id":1}}],"displayOrder":4}]'
+      string: '[{"names":[{"labelText":"TEST-PRODUCT-UPDATED","language":{"id":1}}],"parent":null,"displayOrder":2}]'
     headers:
       accept-encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -118,15 +127,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:48:03 GMT
+      - Sat, 07 Jan 2017 01:28:22 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=224907 t=1483750083685718
+      - D=421469 t=1483752502135164
       rnt-machine:
-      - '0.65'
+      - '0.68'
       content-length:
       - '0'
       content-type:
@@ -135,10 +144,10 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:48:14 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:34 GMT
 - request:
     method: get
-    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20*%20from%20serviceproducts%20where%20id%20=%202128
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20*%20from%20serviceproducts%20where%20id%20=%202129
     body:
       encoding: US-ASCII
       string: ''
@@ -159,15 +168,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:48:04 GMT
+      - Sat, 07 Jan 2017 01:28:23 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=133787 t=1483750084992278
+      - D=122272 t=1483752503191199
       rnt-machine:
-      - '0.64'
+      - '0.78'
       transfer-encoding:
       - chunked
       content-type:
@@ -191,13 +200,13 @@ http_interactions:
                     ],
                     "rows": [
                         [
-                            "2128",
+                            "2129",
                             "TEST-PRODUCT-UPDATED",
                             null,
                             null,
-                            "4",
+                            "2",
                             "TEST-PRODUCT-UPDATED",
-                            "102"
+                            null
                         ]
                     ]
                 }
@@ -205,7 +214,7 @@ http_interactions:
             "links": [
                 {
                     "rel": "self",
-                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20*%20from%20serviceproducts%20where%20id%20=%202128"
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20*%20from%20serviceproducts%20where%20id%20=%202129"
                 },
                 {
                     "rel": "canonical",
@@ -219,5 +228,5 @@ http_interactions:
             ]
         }
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:48:16 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:35 GMT
 recorded_with: VCR 3.0.3

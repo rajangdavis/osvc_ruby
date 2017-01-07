@@ -23,17 +23,17 @@ http_interactions:
       message: Created
     headers:
       date:
-      - Sat, 07 Jan 2017 00:47:48 GMT
+      - Sat, 07 Jan 2017 01:28:07 GMT
       server:
       - Apache
       content-language:
       - en-US
       location:
-      - https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129
+      - https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132
       rnt-time:
-      - D=321134 t=1483750068921407
+      - D=284796 t=1483752487066372
       rnt-machine:
-      - '0.72'
+      - '0.65'
       transfer-encoding:
       - chunked
       content-type:
@@ -42,17 +42,17 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-            "id": 2129,
+            "id": 2132,
             "lookupName": "TEST-PRODUCT",
             "adminVisibleInterfaces": {
                 "links": [
                     {
                         "rel": "self",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/adminVisibleInterfaces"
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/adminVisibleInterfaces"
                     },
                     {
                         "rel": "full",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/adminVisibleInterfaces/{adminVisibleInterface_id}",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/adminVisibleInterfaces/{adminVisibleInterface_id}",
                         "templated": true
                     }
                 ]
@@ -61,11 +61,11 @@ http_interactions:
                 "links": [
                     {
                         "rel": "self",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/categoryLinks"
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/categoryLinks"
                     },
                     {
                         "rel": "full",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/categoryLinks/{categoryLink_id}",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/categoryLinks/{categoryLink_id}",
                         "templated": true
                     }
                 ]
@@ -74,11 +74,11 @@ http_interactions:
                 "links": [
                     {
                         "rel": "self",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/descriptions"
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/descriptions"
                     },
                     {
                         "rel": "full",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/descriptions/{description_id}",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/descriptions/{description_id}",
                         "templated": true
                     }
                 ]
@@ -88,11 +88,11 @@ http_interactions:
                 "links": [
                     {
                         "rel": "self",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/dispositionLinks"
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/dispositionLinks"
                     },
                     {
                         "rel": "full",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/dispositionLinks/{dispositionLink_id}",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/dispositionLinks/{dispositionLink_id}",
                         "templated": true
                     }
                 ]
@@ -101,11 +101,11 @@ http_interactions:
                 "links": [
                     {
                         "rel": "self",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/endUserVisibleInterfaces"
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/endUserVisibleInterfaces"
                     },
                     {
                         "rel": "full",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/endUserVisibleInterfaces/{endUserVisibleInterface_id}",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/endUserVisibleInterfaces/{endUserVisibleInterface_id}",
                         "templated": true
                     }
                 ]
@@ -115,11 +115,11 @@ http_interactions:
                 "links": [
                     {
                         "rel": "self",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/names"
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/names"
                     },
                     {
                         "rel": "full",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/names/{name_id}",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/names/{name_id}",
                         "templated": true
                     }
                 ]
@@ -129,11 +129,11 @@ http_interactions:
                 "links": [
                     {
                         "rel": "self",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/productHierarchy"
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/productHierarchy"
                     },
                     {
                         "rel": "full",
-                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129/productHierarchy/{productHierarchy_id}",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132/productHierarchy/{productHierarchy_id}",
                         "templated": true
                     }
                 ]
@@ -141,11 +141,11 @@ http_interactions:
             "links": [
                 {
                     "rel": "self",
-                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129"
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132"
                 },
                 {
                     "rel": "canonical",
-                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2129"
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2132"
                 },
                 {
                     "rel": "describedby",
@@ -155,5 +155,5 @@ http_interactions:
             ]
         }
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:48:00 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:19 GMT
 recorded_with: VCR 3.0.3

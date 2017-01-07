@@ -18,7 +18,7 @@ RSpec.configure do |c|
     class_name = example.metadata[:described_class].to_s.gsub(/OSCRuby::/,'').downcase
     method_name = example.metadata[:example_group][:description_args][0].gsub(/#/,'')
     test_name = example.metadata[:description].gsub(/ /,'_').downcase
-    name = [class_name,method_name,test_name].join('/')
+    name = [class_name,method_name,test_name].join('/')[0...95]
     VCR.use_cassette(name) { example.call }
   end
 end

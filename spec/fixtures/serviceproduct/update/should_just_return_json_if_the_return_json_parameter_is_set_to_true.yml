@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:50:42 GMT
+      - Sat, 07 Jan 2017 01:28:23 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=126080 t=1483750242265916
+      - D=138109 t=1483752503875995
       rnt-machine:
-      - '0.72'
+      - '0.75'
       transfer-encoding:
       - chunked
       content-type:
@@ -83,7 +83,7 @@ http_interactions:
             ]
         }
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:50:53 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:36 GMT
 - request:
     method: post
     uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3//serviceProducts/100
@@ -109,15 +109,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:50:43 GMT
+      - Sat, 07 Jan 2017 01:28:24 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=245936 t=1483750243305532
+      - D=232142 t=1483752504850874
       rnt-machine:
-      - '0.78'
+      - '0.68'
       content-length:
       - '0'
       content-type:
@@ -126,5 +126,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:50:54 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:37 GMT
 recorded_with: VCR 3.0.3

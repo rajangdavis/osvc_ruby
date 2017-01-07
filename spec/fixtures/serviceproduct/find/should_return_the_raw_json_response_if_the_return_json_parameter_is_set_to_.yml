@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:47:59 GMT
+      - Sat, 07 Jan 2017 01:28:11 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=131216 t=1483750079700306
+      - D=127333 t=1483752491142711
       rnt-machine:
-      - '0.71'
+      - '0.69'
       transfer-encoding:
       - chunked
       content-type:
@@ -83,5 +83,5 @@ http_interactions:
             ]
         }
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:48:11 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:23 GMT
 recorded_with: VCR 3.0.3

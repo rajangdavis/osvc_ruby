@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:52:48 GMT
+      - Sat, 07 Jan 2017 01:28:03 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=127744 t=1483750368991809
+      - D=154755 t=1483752483837617
       rnt-machine:
-      - '0.74'
+      - '0.66'
       transfer-encoding:
       - chunked
       content-type:
@@ -49,10 +49,10 @@ http_interactions:
                     ],
                     "rows": [
                         [
-                            "2106"
+                            "2110"
                         ],
                         [
-                            "2110"
+                            "2112"
                         ]
                     ]
                 }
@@ -74,10 +74,10 @@ http_interactions:
             ]
         }
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:53:00 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:16 GMT
 - request:
     method: delete
-    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2106
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2110
     body:
       encoding: US-ASCII
       string: ''
@@ -96,15 +96,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:52:49 GMT
+      - Sat, 07 Jan 2017 01:28:04 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=650063 t=1483750369942790
+      - D=368880 t=1483752484906978
       rnt-machine:
-      - '0.75'
+      - '0.67'
       content-encoding:
       - gzip
       content-length:
@@ -115,5 +115,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:53:01 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:17 GMT
 recorded_with: VCR 3.0.3

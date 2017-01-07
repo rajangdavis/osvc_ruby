@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:47:45 GMT
+      - Sat, 07 Jan 2017 01:28:02 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=119295 t=1483750065242461
+      - D=148919 t=1483752482264893
       rnt-machine:
-      - '0.81'
+      - '0.77'
       transfer-encoding:
       - chunked
       content-type:
@@ -48,9 +48,6 @@ http_interactions:
                         "id"
                     ],
                     "rows": [
-                        [
-                            "2110"
-                        ],
                         [
                             "2112"
                         ],
@@ -74,6 +71,9 @@ http_interactions:
                         ],
                         [
                             "2127"
+                        ],
+                        [
+                            "2130"
                         ]
                     ]
                 }
@@ -95,10 +95,10 @@ http_interactions:
             ]
         }
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:47:56 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:14 GMT
 - request:
     method: post
-    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2110
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2112
     body:
       encoding: UTF-8
       string: '{"names":[{"labelText":"PRODUCT-TEST-updated","language":{"id":1}},{"labelText":"PRODUCT-TEST-updated","language":{"id":11}}],"parent":{"id":102},"adminVisibleInterfaces":[{"id":1}],"endUserVisibleInterfaces":[{"id":1}]}'
@@ -121,15 +121,15 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 07 Jan 2017 00:47:45 GMT
+      - Sat, 07 Jan 2017 01:28:02 GMT
       server:
       - Apache
       content-language:
       - en-US
       rnt-time:
-      - D=295014 t=1483750065959022
+      - D=285312 t=1483752482983421
       rnt-machine:
-      - '0.76'
+      - '0.82'
       content-length:
       - '0'
       content-type:
@@ -138,5 +138,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: '1.1'
-  recorded_at: Sat, 07 Jan 2017 00:47:57 GMT
+  recorded_at: Sat, 07 Jan 2017 01:28:15 GMT
 recorded_with: VCR 3.0.3
