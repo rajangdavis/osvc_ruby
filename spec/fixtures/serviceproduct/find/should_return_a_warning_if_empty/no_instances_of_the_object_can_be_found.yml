@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20*%20from%20serviceproducts%20where%20id%20=%201
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      content-type:
+      - application/x-www-form-urlencoded
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:47:51 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=110013 t=1483750071420997
+      rnt-machine:
+      - '0.81'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "items": [
+                {
+                    "tableName": "serviceProducts",
+                    "count": 0,
+                    "columnNames": [
+                        "id",
+                        "lookupName",
+                        "createdTime",
+                        "updatedTime",
+                        "displayOrder",
+                        "name",
+                        "parent"
+                    ],
+                    "rows": [
+
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20*%20from%20serviceproducts%20where%20id%20=%201"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults"
+                },
+                {
+                    "rel": "describedby",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/queryResults",
+                    "mediaType": "application/schema+json"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:48:02 GMT
+recorded_with: VCR 3.0.3

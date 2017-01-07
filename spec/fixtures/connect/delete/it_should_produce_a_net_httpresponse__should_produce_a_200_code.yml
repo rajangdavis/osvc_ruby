@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20id%20from%20serviceproducts%20where%20lookupname%20=%20'PRODUCT-TEST-updated';
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      content-type:
+      - application/x-www-form-urlencoded
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:52:48 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=127744 t=1483750368991809
+      rnt-machine:
+      - '0.74'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "items": [
+                {
+                    "tableName": "serviceProducts",
+                    "count": 2,
+                    "columnNames": [
+                        "id"
+                    ],
+                    "rows": [
+                        [
+                            "2106"
+                        ],
+                        [
+                            "2110"
+                        ]
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20id%20from%20serviceproducts%20where%20lookupname%20=%20'PRODUCT-TEST-updated';"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults"
+                },
+                {
+                    "rel": "describedby",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/queryResults",
+                    "mediaType": "application/schema+json"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:53:00 GMT
+- request:
+    method: delete
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2106
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:52:49 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=650063 t=1483750369942790
+      rnt-machine:
+      - '0.75'
+      content-encoding:
+      - gzip
+      content-length:
+      - '20'
+      content-type:
+      - text/html; charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:53:01 GMT
+recorded_with: VCR 3.0.3

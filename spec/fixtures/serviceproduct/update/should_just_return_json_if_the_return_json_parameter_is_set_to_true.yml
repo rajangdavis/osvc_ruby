@@ -1,0 +1,130 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20*%20from%20serviceproducts%20where%20id%20=%20100
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      content-type:
+      - application/x-www-form-urlencoded
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:50:42 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=126080 t=1483750242265916
+      rnt-machine:
+      - '0.72'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "items": [
+                {
+                    "tableName": "serviceProducts",
+                    "count": 1,
+                    "columnNames": [
+                        "id",
+                        "lookupName",
+                        "createdTime",
+                        "updatedTime",
+                        "displayOrder",
+                        "name",
+                        "parent"
+                    ],
+                    "rows": [
+                        [
+                            "100",
+                            "QR404",
+                            null,
+                            null,
+                            "3",
+                            "QR404",
+                            "99"
+                        ]
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20*%20from%20serviceproducts%20where%20id%20=%20100"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults"
+                },
+                {
+                    "rel": "describedby",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/queryResults",
+                    "mediaType": "application/schema+json"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:50:53 GMT
+- request:
+    method: post
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3//serviceProducts/100
+    body:
+      encoding: UTF-8
+      string: '[{"names":[],"displayOrder":3}]'
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      authorization:
+      - Basic <BASIC_AUTH>
+      content-type:
+      - application/json
+      x-http-method-override:
+      - PATCH
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:50:43 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=245936 t=1483750243305532
+      rnt-machine:
+      - '0.78'
+      content-length:
+      - '0'
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:50:54 GMT
+recorded_with: VCR 3.0.3

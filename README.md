@@ -175,6 +175,12 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [x] Create some validations for creating a ServiceProduct object
 
+- [x] Add in VCR and WebMock as dependencies
+
+- [x] Figure out how to record and stub responses for a good response and bad response
+
+- [x] Simulate these responses for ALL Connect HTTP methods
+
 - [ ] Make OpenSSL::SSL::VERIFY_PEER the default with OpenSSL::SSL::VERIFY_NONE option set in the config class 
 
 - [ ] Make version default to 1.3 but an option to be set in the config class
@@ -182,12 +188,6 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 - [ ] Allow for the prefer:exclude-null-properties header => update config and connect class, update tests
 
 - [ ] Allow for Session Authorization => update config class and connect classes, update tests
-
-- [ ] Add in VCR and WebMock as dependencies
-
-- [ ] Figure out how to record and stub responses for a good response and bad response
-
-- [ ] Simulate these responses for ALL Connect HTTP methods
 
 - [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby ORM
 

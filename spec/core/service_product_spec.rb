@@ -141,7 +141,7 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should return an instance of an OSCRuby::ServiceProduct if the json_response param is set to false (which it is by default)' do
+		it 'should return an instance of an OSCRuby::ServiceProduct if the json_response param is set to false (which it is by default)', :vcr do
 
 			new_service_product.names[0] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 1}}
 			new_service_product.names[1] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 11}} 		
@@ -165,7 +165,7 @@ describe OSCRuby::ServiceProduct do
 		end
 
 
-		it 'should return the body object if the json_response param is set to true' do
+		it 'should return the body object if the json_response param is set to true', :vcr do
 
 			new_service_product.names[0] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 1}}
 			new_service_product.names[1] = {'labelText' => 'TEST-PRODUCT', 'language' => {'id' => 11}} 	
@@ -200,19 +200,16 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should return a warning if empty/no instances of the object can be found' do
+		it 'should return a warning if empty/no instances of the object can be found', :vcr do
 
 			expect{OSCRuby::ServiceProduct.find(client, 1)}.to raise_error('There were no objects matching your query; please try again.')
 
 		end
 
 
-		let(:known_working_product){
-			OSCRuby::ServiceProduct.find(client, 100)
-		}
-
-
-		it 'should return an instance of a new OSCRuby::ServiceProduct object with at least a name and displayOrder' do
+		it 'should return an instance of a new OSCRuby::ServiceProduct object with at least a name and displayOrder', :vcr do
+		
+			known_working_product = OSCRuby::ServiceProduct.find(client, 100)
 
 			expect(known_working_product).to be_an(OSCRuby::ServiceProduct)
 
@@ -222,7 +219,7 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should return the raw json response if the return_json parameter is set to true' do
+		it 'should return the raw json response if the return_json parameter is set to true', :vcr do
 
 			known_working_product_in_json = OSCRuby::ServiceProduct.find(client, 100, true)
 
@@ -244,7 +241,7 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should return multiple instances of OSCRuby::ServiceProduct' do
+		it 'should return multiple instances of OSCRuby::ServiceProduct', :vcr do
 
 			products = OSCRuby::ServiceProduct.all(client)
 
@@ -266,7 +263,7 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should just return JSON if the return_json parameter is set to true' do
+		it 'should just return JSON if the return_json parameter is set to true', :vcr do
 
 			expect(OSCRuby::ServiceProduct.all(client,true)).to be_a(String)
 
@@ -292,7 +289,7 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should take a query and return results' do
+		it 'should take a query and return results', :vcr do
 
 			products_lvl_1 = OSCRuby::ServiceProduct.where(client,"parent is null and lookupname not like 'Unsure'")
 
@@ -312,13 +309,13 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should raise an error if the query returns 0 results' do
+		it 'should raise an error if the query returns 0 results', :vcr do
 
 			expect{OSCRuby::ServiceProduct.where(client,"parent = 6546546546546")}.to raise_error('There were no objects matching your query; please try again.')
 
 		end
 
-		it 'should just return JSON if the return_json parameter is set to true' do
+		it 'should just return JSON if the return_json parameter is set to true', :vcr do
 
 			parents = OSCRuby::ServiceProduct.where(client,"parent is null and lookupname not like 'Unsure'",true)
 
@@ -330,13 +327,13 @@ describe OSCRuby::ServiceProduct do
 
 	end
 
-	let(:known_working_product){
-		OSCRuby::ServiceProduct.find(client, 100)
-	}
+		
 
 	context '#update' do
 
-		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not', :vcr do
+
+			known_working_product = OSCRuby::ServiceProduct.find(client, 100)
 
 			expect(client).to be_an(OSCRuby::Client)
 
@@ -346,13 +343,17 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should expect that the Service Product is an instance of a OSCRuby::ServiceProduct' do
+		it 'should expect that the Service Product is an instance of a OSCRuby::ServiceProduct', :vcr do
+
+			known_working_product = OSCRuby::ServiceProduct.find(client, 100)
 
 			expect(known_working_product).to be_an(OSCRuby::ServiceProduct)
 
 		end
 
-		it 'should expect that the product has an ID and spit out an error if it does not' do
+		it 'should expect that the product has an ID and spit out an error if it does not', :vcr do
+
+			known_working_product = OSCRuby::ServiceProduct.find(client, 100)
 
 			known_working_product.id = nil
 
@@ -360,7 +361,7 @@ describe OSCRuby::ServiceProduct do
 		
 		end
 
-		it 'should update name when the names is updated' do
+		it 'should update name when the names is updated', :vcr do
 
 			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT'")
 			first_prod = test_prods[0]
@@ -373,7 +374,9 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should just return JSON if the return_json parameter is set to true' do
+		it 'should just return JSON if the return_json parameter is set to true', :vcr do
+
+			known_working_product = OSCRuby::ServiceProduct.find(client, 100)
 
 			test = known_working_product.update(client,true)
 
@@ -383,16 +386,12 @@ describe OSCRuby::ServiceProduct do
 
 	end
 
-	let(:product_to_delete){
-
-		test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT'")
-		test_prods[0]
-
-	}
-
 	context '#destroy' do
 
-		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not', :vcr do
+
+			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT-UPDATED'")
+			product_to_delete = test_prods[0]
 
 			expect(client).to be_an(OSCRuby::Client)
 
@@ -402,13 +401,19 @@ describe OSCRuby::ServiceProduct do
 
 		end
 
-		it 'should expect that the Service Product is an instance of a OSCRuby::ServiceProduct' do
+		it 'should expect that the Service Product is an instance of a OSCRuby::ServiceProduct', :vcr do
+
+			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT-UPDATED'")
+			product_to_delete = test_prods[0]
 
 			expect(product_to_delete).to be_an(OSCRuby::ServiceProduct)
 
 		end
 
-		it 'should expect that the product has an ID and spit out an error if it does not' do
+		it 'should expect that the product has an ID and spit out an error if it does not', :vcr do
+
+			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT-UPDATED'")
+			product_to_delete = test_prods[0]
 
 			product_to_delete.id = nil
 
@@ -416,7 +421,10 @@ describe OSCRuby::ServiceProduct do
 		
 		end
 
-		it 'should delete the product' do
+		it 'should delete the product', :vcr do
+
+			test_prods = OSCRuby::ServiceProduct.where(client,"name like 'TEST-PRODUCT-UPDATED'")
+			product_to_delete = test_prods[0]
 
 			id_to_find = product_to_delete.id
 

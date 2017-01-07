@@ -135,7 +135,7 @@ describe OSCRuby::Connect do
 
 	context '#post_or_patch' do
 
-		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
+		it 'should take at least a config parameter that is an instance of an OSCRuby::Client', :vcr do
 
 			expect(client).to be_an(OSCRuby::Client)
 
@@ -178,7 +178,7 @@ describe OSCRuby::Connect do
 
 		end
 
-		it 'should produce a Net::HTTPResponse, should produce a 201 response code, and should produce a JSON Response form the response body' do
+		it 'should produce a Net::HTTPResponse, should produce a 201 response code, and should produce a JSON Response form the response body', :vcr do
 
 			names = []
 
@@ -213,11 +213,7 @@ describe OSCRuby::Connect do
 				
 		end
 
-	end
-
-	let(:test){
-		OSCRuby::Connect.get(client)
-	}
+	end	
 
 	context '#get' do
 
@@ -245,19 +241,25 @@ describe OSCRuby::Connect do
 
 		end
 
-		it 'should produce a Net::HTTPResponse' do
+		it 'should produce a Net::HTTPResponse', :vcr do
+
+			test = OSCRuby::Connect.get(client)
 
 			expect(test).to be_an(Net::HTTPResponse)
 				
 		end
 
-		it 'should produce a 200 response code' do
+		it 'should produce a 200 response code', :vcr do
+
+			test = OSCRuby::Connect.get(client)
 
 			expect(test.code).to eq("200")
 				
 		end
 
-		it 'should produce a JSON Response from the response body' do
+		it 'should produce a JSON Response from the response body', :vcr do
+
+			test = OSCRuby::Connect.get(client)
 			
 			expect(test.body).to be_an(String)
 
@@ -280,7 +282,7 @@ describe OSCRuby::Connect do
 
 	context '#post_or_patch' do
 
-		it 'should take an optional parameter to allow PATCH request; it should produce a Net::HTTPResponse, should produce a 200 code' do
+		it 'should take an optional parameter to allow PATCH request; it should produce a Net::HTTPResponse, should produce a 200 code', :vcr do
 
 			names = []
 
@@ -315,18 +317,6 @@ describe OSCRuby::Connect do
 
 	end
 
-	let(:product_test_updated_id){
-
-		resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';")
-
-		product_test_updated = OSCRuby::Connect.get(client,resource)
-
-		prod_json = JSON.parse(product_test_updated.body).to_hash
-
-		prod_json['items'][0]['rows'][0][0].to_i
-
-	}
-
 	context '#delete' do
 
 		it 'should raise an error if client is nil' do
@@ -351,7 +341,15 @@ describe OSCRuby::Connect do
 
 		end
 
-		it 'it should produce a Net::HTTPResponse, should produce a 200 code' do
+		it 'it should produce a Net::HTTPResponse, should produce a 200 code', :vcr do
+
+			resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';")
+
+			product_test_updated = OSCRuby::Connect.get(client,resource)
+
+			prod_json = JSON.parse(product_test_updated.body).to_hash
+
+			product_test_updated_id = prod_json['items'][0]['rows'][0][0].to_i
 
 		    test = OSCRuby::Connect.delete(client,"serviceProducts/#{product_test_updated_id}")
 

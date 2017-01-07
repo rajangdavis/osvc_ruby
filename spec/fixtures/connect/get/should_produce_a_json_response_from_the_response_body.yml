@@ -1,0 +1,373 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      content-type:
+      - application/x-www-form-urlencoded
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:47:44 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=120435 t=1483750064531486
+      rnt-machine:
+      - '0.83'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "items": [
+                {
+                    "name": "accounts",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/accounts"
+                        }
+                    ]
+                },
+                {
+                    "name": "analyticsReports",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/analyticsReports"
+                        }
+                    ]
+                },
+                {
+                    "name": "answers",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/answers"
+                        }
+                    ]
+                },
+                {
+                    "name": "assets",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/assets"
+                        }
+                    ]
+                },
+                {
+                    "name": "assetStatuses",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/assetStatuses"
+                        }
+                    ]
+                },
+                {
+                    "name": "channelTypes",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/channelTypes"
+                        }
+                    ]
+                },
+                {
+                    "name": "configurations",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/configurations"
+                        }
+                    ]
+                },
+                {
+                    "name": "contacts",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/contacts"
+                        }
+                    ]
+                },
+                {
+                    "name": "countries",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/countries"
+                        }
+                    ]
+                },
+                {
+                    "name": "eventSubscriptions",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/eventSubscriptions"
+                        }
+                    ]
+                },
+                {
+                    "name": "holidays",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/holidays"
+                        }
+                    ]
+                },
+                {
+                    "name": "incidents",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/incidents"
+                        }
+                    ]
+                },
+                {
+                    "name": "mailboxes",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/mailboxes"
+                        }
+                    ]
+                },
+                {
+                    "name": "marketingMailboxes",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/marketingMailboxes"
+                        }
+                    ]
+                },
+                {
+                    "name": "messageBases",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/messageBases"
+                        }
+                    ]
+                },
+                {
+                    "name": "opportunities",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/opportunities"
+                        }
+                    ]
+                },
+                {
+                    "name": "organizations",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/organizations"
+                        }
+                    ]
+                },
+                {
+                    "name": "purchasedProducts",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/purchasedProducts"
+                        }
+                    ]
+                },
+                {
+                    "name": "salesProducts",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/salesProducts"
+                        }
+                    ]
+                },
+                {
+                    "name": "salesTerritories",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/salesTerritories"
+                        }
+                    ]
+                },
+                {
+                    "name": "serviceCategories",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceCategories"
+                        }
+                    ]
+                },
+                {
+                    "name": "serviceDispositions",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceDispositions"
+                        }
+                    ]
+                },
+                {
+                    "name": "serviceMailboxes",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceMailboxes"
+                        }
+                    ]
+                },
+                {
+                    "name": "serviceProducts",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts"
+                        }
+                    ]
+                },
+                {
+                    "name": "siteInterfaces",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/siteInterfaces"
+                        }
+                    ]
+                },
+                {
+                    "name": "sSOTokenReferences",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/sSOTokenReferences"
+                        }
+                    ]
+                },
+                {
+                    "name": "standardContents",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/standardContents"
+                        }
+                    ]
+                },
+                {
+                    "name": "tasks",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/tasks"
+                        }
+                    ]
+                },
+                {
+                    "name": "variables",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/variables"
+                        }
+                    ]
+                },
+                {
+                    "name": "CO.OSEMINCIDENT",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/CO.OSEMINCIDENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "STPBX.Call_Track",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/STPBX.Call_Track"
+                        }
+                    ]
+                },
+                {
+                    "name": "analyticsReportResults",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/analyticsReportResults"
+                        }
+                    ]
+                },
+                {
+                    "name": "namedIDHierarchies",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/namedIDHierarchies"
+                        }
+                    ]
+                },
+                {
+                    "name": "namedIDs",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/namedIDs"
+                        }
+                    ]
+                },
+                {
+                    "name": "queryResults",
+                    "links": [
+                        {
+                            "rel": "canonical",
+                            "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults"
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:47:55 GMT
+recorded_with: VCR 3.0.3

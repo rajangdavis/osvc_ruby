@@ -1,0 +1,231 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20*%20from%20serviceproducts%20where%20name%20like%20'TEST-PRODUCT-UPDATED'
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      content-type:
+      - application/x-www-form-urlencoded
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:48:05 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=151149 t=1483750085707204
+      rnt-machine:
+      - '0.70'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "items": [
+                {
+                    "tableName": "serviceProducts",
+                    "count": 17,
+                    "columnNames": [
+                        "id",
+                        "lookupName",
+                        "createdTime",
+                        "updatedTime",
+                        "displayOrder",
+                        "name",
+                        "parent"
+                    ],
+                    "rows": [
+                        [
+                            "2079",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "16",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2081",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "15",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2084",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "14",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2087",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "13",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2090",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "12",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2093",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "11",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2096",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "10",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2099",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "9",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2102",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "8",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2105",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "7",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2108",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "6",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2111",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "5",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2115",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "4",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2119",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "3",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2123",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "5",
+                            "TEST-PRODUCT-UPDATED",
+                            "102"
+                        ],
+                        [
+                            "2126",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "2",
+                            "TEST-PRODUCT-UPDATED",
+                            null
+                        ],
+                        [
+                            "2128",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "4",
+                            "TEST-PRODUCT-UPDATED",
+                            "102"
+                        ]
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20*%20from%20serviceproducts%20where%20name%20like%20'TEST-PRODUCT-UPDATED'"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults"
+                },
+                {
+                    "rel": "describedby",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/queryResults",
+                    "mediaType": "application/schema+json"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:48:16 GMT
+recorded_with: VCR 3.0.3

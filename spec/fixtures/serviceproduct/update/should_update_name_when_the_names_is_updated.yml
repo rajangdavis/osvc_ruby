@@ -1,0 +1,223 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20*%20from%20serviceproducts%20where%20name%20like%20'TEST-PRODUCT'
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      content-type:
+      - application/x-www-form-urlencoded
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:48:02 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=139188 t=1483750082625580
+      rnt-machine:
+      - '0.76'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "items": [
+                {
+                    "tableName": "serviceProducts",
+                    "count": 2,
+                    "columnNames": [
+                        "id",
+                        "lookupName",
+                        "createdTime",
+                        "updatedTime",
+                        "displayOrder",
+                        "name",
+                        "parent"
+                    ],
+                    "rows": [
+                        [
+                            "2128",
+                            "TEST-PRODUCT",
+                            null,
+                            null,
+                            "4",
+                            "TEST-PRODUCT",
+                            "102"
+                        ],
+                        [
+                            "2129",
+                            "TEST-PRODUCT",
+                            null,
+                            null,
+                            "1",
+                            "TEST-PRODUCT",
+                            null
+                        ]
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20*%20from%20serviceproducts%20where%20name%20like%20'TEST-PRODUCT'"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults"
+                },
+                {
+                    "rel": "describedby",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/queryResults",
+                    "mediaType": "application/schema+json"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:48:13 GMT
+- request:
+    method: post
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3//serviceProducts/2128
+    body:
+      encoding: UTF-8
+      string: '[{"names":[{"labelText":"TEST-PRODUCT-UPDATED","language":{"id":1}}],"displayOrder":4}]'
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      authorization:
+      - Basic <BASIC_AUTH>
+      content-type:
+      - application/json
+      x-http-method-override:
+      - PATCH
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:48:03 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=224907 t=1483750083685718
+      rnt-machine:
+      - '0.65'
+      content-length:
+      - '0'
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:48:14 GMT
+- request:
+    method: get
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults/?query=select%20*%20from%20serviceproducts%20where%20id%20=%202128
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      content-type:
+      - application/x-www-form-urlencoded
+      authorization:
+      - Basic <BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:48:04 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=133787 t=1483750084992278
+      rnt-machine:
+      - '0.64'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "items": [
+                {
+                    "tableName": "serviceProducts",
+                    "count": 1,
+                    "columnNames": [
+                        "id",
+                        "lookupName",
+                        "createdTime",
+                        "updatedTime",
+                        "displayOrder",
+                        "name",
+                        "parent"
+                    ],
+                    "rows": [
+                        [
+                            "2128",
+                            "TEST-PRODUCT-UPDATED",
+                            null,
+                            null,
+                            "4",
+                            "TEST-PRODUCT-UPDATED",
+                            "102"
+                        ]
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults?query=select%20*%20from%20serviceproducts%20where%20id%20=%202128"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/queryResults"
+                },
+                {
+                    "rel": "describedby",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/queryResults",
+                    "mediaType": "application/schema+json"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:48:16 GMT
+recorded_with: VCR 3.0.3

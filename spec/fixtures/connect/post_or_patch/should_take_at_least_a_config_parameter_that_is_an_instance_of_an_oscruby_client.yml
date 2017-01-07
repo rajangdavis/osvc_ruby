@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts
+    body:
+      encoding: UTF-8
+      string: '{"test":"content"}'
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      authorization:
+      - Basic <BASIC_AUTH>
+      content-type:
+      - application/json
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:47:40 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      rnt-time:
+      - D=132976 t=1483750060020699
+      rnt-machine:
+      - '0.66'
+      x-cnection:
+      - close
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/problem+json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "type": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/exceptions/OSC-CREST-00013",
+            "title": "Unrecognized resource",
+            "status": 400,
+            "detail": "Invalid property specified: test",
+            "instance": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts",
+            "o:errorCode": "OSC-CREST-00013"
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:47:51 GMT
+recorded_with: VCR 3.0.3

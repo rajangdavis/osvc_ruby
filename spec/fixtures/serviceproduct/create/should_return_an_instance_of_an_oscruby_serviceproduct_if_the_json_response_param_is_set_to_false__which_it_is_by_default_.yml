@@ -1,0 +1,175 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://<OSC_ADMIN_USERNAME>:<OSC_ADMIN_PASSWORD>@<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3//serviceProducts
+    body:
+      encoding: UTF-8
+      string: '[{"names":[{"labelText":"TEST-PRODUCT","language":{"id":1}},{"labelText":"TEST-PRODUCT","language":{"id":11}}],"parent":{"id":102},"displayOrder":4}]'
+    headers:
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+      authorization:
+      - Basic <BASIC_AUTH>
+      content-type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      date:
+      - Sat, 07 Jan 2017 00:47:47 GMT
+      server:
+      - Apache
+      content-language:
+      - en-US
+      location:
+      - https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128
+      rnt-time:
+      - D=411503 t=1483750067792128
+      rnt-machine:
+      - '0.77'
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "id": 2128,
+            "lookupName": "TEST-PRODUCT",
+            "adminVisibleInterfaces": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/adminVisibleInterfaces"
+                    },
+                    {
+                        "rel": "full",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/adminVisibleInterfaces/{adminVisibleInterface_id}",
+                        "templated": true
+                    }
+                ]
+            },
+            "categoryLinks": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/categoryLinks"
+                    },
+                    {
+                        "rel": "full",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/categoryLinks/{categoryLink_id}",
+                        "templated": true
+                    }
+                ]
+            },
+            "descriptions": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/descriptions"
+                    },
+                    {
+                        "rel": "full",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/descriptions/{description_id}",
+                        "templated": true
+                    }
+                ]
+            },
+            "displayOrder": 4,
+            "dispositionLinks": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/dispositionLinks"
+                    },
+                    {
+                        "rel": "full",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/dispositionLinks/{dispositionLink_id}",
+                        "templated": true
+                    }
+                ]
+            },
+            "endUserVisibleInterfaces": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/endUserVisibleInterfaces"
+                    },
+                    {
+                        "rel": "full",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/endUserVisibleInterfaces/{endUserVisibleInterface_id}",
+                        "templated": true
+                    }
+                ]
+            },
+            "name": "TEST-PRODUCT",
+            "names": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/names"
+                    },
+                    {
+                        "rel": "full",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/names/{name_id}",
+                        "templated": true
+                    }
+                ]
+            },
+            "parent": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/102"
+                    },
+                    {
+                        "rel": "canonical",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/102"
+                    },
+                    {
+                        "rel": "describedby",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/serviceProducts",
+                        "mediaType": "application/schema+json"
+                    }
+                ]
+            },
+            "productHierarchy": {
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/productHierarchy"
+                    },
+                    {
+                        "rel": "full",
+                        "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128/productHierarchy/{productHierarchy_id}",
+                        "templated": true
+                    }
+                ]
+            },
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128"
+                },
+                {
+                    "rel": "canonical",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/serviceProducts/2128"
+                },
+                {
+                    "rel": "describedby",
+                    "href": "https://<TEST_INTERFACE>.custhelp.com/services/rest/connect/v1.3/metadata-catalog/serviceProducts",
+                    "mediaType": "application/schema+json"
+                }
+            ]
+        }
+    http_version: '1.1'
+  recorded_at: Sat, 07 Jan 2017 00:47:59 GMT
+recorded_with: VCR 3.0.3
