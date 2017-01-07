@@ -21,7 +21,7 @@ module OSCRuby
 
 			Net::HTTP.start(@uri.host, @uri.port,
 				:use_ssl => true,
-				:verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+				:verify_mode => @final_config['ssl']) do |http|
 
 				request = Net::HTTP::Get.new @uri.request_uri
 
@@ -45,7 +45,7 @@ module OSCRuby
 
 			Net::HTTP.start(@uri.host, @uri.port,
 				:use_ssl => true, 
-				:verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+				:verify_mode => @final_config['ssl']) do |http|
 
 				request = Net::HTTP::Post.new @uri.request_uri
 				request.basic_auth @username, @password
@@ -71,7 +71,7 @@ module OSCRuby
 
 			Net::HTTP.start(@uri.host, @uri.port,
 			  :use_ssl => true, 
-			  :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+			  :verify_mode => @final_config['ssl']) do |http|
 
 			  request = Net::HTTP::Delete.new @uri.request_uri
 			  request.basic_auth @username, @password
@@ -91,17 +91,25 @@ module OSCRuby
 
 			@config = client.config
 
-			if !resource_url.nil?
-				@resource_url = resource_url
+			@version = @config.version
+
+			if @config.no_ssl_verify == true
+
+				@ssl_verification = OpenSSL::SSL::VERIFY_NONE
+				
+			else
+				
+				@ssl_verification = OpenSSL::SSL::VERIFY_PEER
+
 			end
 
-		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/v1.3/#{resource_url}"
+		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/#{@version}/#{resource_url}"
 		  	
 		  	@final_uri = URI(@url)
 
 		  	@patch_request = patch_request == true ? true : false
 		  	
-		  	@final_config = {'site_url' => @final_uri, 'username' => @config.username, 'password' => @config.password, 'patch_request' => @patch_request}
+		  	@final_config = {'site_url' => @final_uri, 'username' => @config.username, 'password' => @config.password, 'patch_request' => @patch_request, 'ssl' => @ssl_verification}
 
 		end
 

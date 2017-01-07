@@ -181,9 +181,9 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 - [x] Simulate these responses for ALL Connect HTTP methods
 
-- [ ] Make OpenSSL::SSL::VERIFY_PEER the default with OpenSSL::SSL::VERIFY_NONE option set in the config class 
+- [x] Make OpenSSL::SSL::VERIFY_PEER the default with OpenSSL::SSL::VERIFY_NONE option set in the config class 
 
-- [ ] Make version default to 1.3 but an option to be set in the config class
+- [x] Make version default to 1.3 but an option to be set in the config class
 
 - [ ] Allow for the prefer:exclude-null-properties header => update config and connect class, update tests
 
