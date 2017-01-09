@@ -268,21 +268,18 @@ describe OSCRuby::Connect do
 
 	end
 
-	let(:product_test_id){
-
-		resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST';")
-
-		product_test = OSCRuby::Connect.get(client,resource)
-
-		prod_json = JSON.parse(product_test.body).to_hash
-
-		prod_json['items'][0]['rows'][0][0].to_i
-
-	}
 
 	context '#post_or_patch' do
 
 		it 'should take an optional parameter to allow PATCH request; it should produce a Net::HTTPResponse, should produce a 200 code', :vcr do
+
+			resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST';")
+
+			product_test = OSCRuby::Connect.get(client,resource)
+
+			prod_json = JSON.parse(product_test.body).to_hash
+
+			product_test_id = prod_json['items'][0]['rows'][0][0].to_i
 
 			names = []
 
