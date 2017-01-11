@@ -71,19 +71,27 @@ describe OSCRuby::Client do
 
 			expect{client}.to_not raise_error
 
-			expect do
-				client.config.interface.should eq('test')
-				client.config.interface.should !='test1'
-
-				client.config.username.should eq('test_username')
-				client.config.username.should !='test1_username'
-
-				client.config.interface.should eq('test_password')
-				client.config.interface.should !='test1_password'
-
-				client.config.no_ssl_verify.should eq(true)
-				client.config.no_ssl_verify.should !=false
-			end
 		end
+
+		it 'should have interface set to "test" and not "test1"' do
+			expect(client.config.interface).to eq('test')
+			expect(client.config.interface).not_to eq('test1')
+		end
+
+		it 'should have username set to "test_username" and not "test1_username"' do
+			expect(client.config.username).to eq('test_username')
+			expect(client.config.username).not_to eq('test1_username')
+		end
+
+		it 'should have password set to "test_password" and not "test1_password"' do
+			expect(client.config.password).to eq('test_password')
+			expect(client.config.password).not_to eq('test1_password')
+		end
+
+		it 'should have no_ssl set to true and not false' do
+			expect(client.config.no_ssl_verify).to eq(true)
+			expect(client.config.no_ssl_verify).not_to eq(false)
+		end
+
 	end
 end
