@@ -58,15 +58,20 @@ describe OSCRuby::Client do
 			end.to raise_error("Connect version cannot be null")
 		end
 
-		it 'should create a configuration object' do
-			expect do
-				client = OSCRuby::Client.new do |config|
-					config.interface = 'test'
-					config.username = 'test_username'
-					config.password = 'test_password'
-					config.no_ssl_verify = true
-				end
+		let(:client){
+			OSCRuby::Client.new do |config|
+				config.interface = 'test'
+				config.username = 'test_username'
+				config.password = 'test_password'
+				config.no_ssl_verify = true
+			end
+		}
 
+		it 'should create a configuration object' do
+
+			expect{client}.to_not raise_error
+
+			expect do
 				client.config.interface.should eq('test')
 				client.config.interface.should !='test1'
 
