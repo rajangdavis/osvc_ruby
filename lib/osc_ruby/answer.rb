@@ -9,45 +9,81 @@ module OSCRuby
 
 		include QueryModule
 		
-		attr_accessor :answerType, :language, :summary
+		attr_accessor :answerType, :language, :summary, :id, :lookupName, :createdTime, :updatedTime, :accessLevels, :name, :adminLastAccessTime, :expiresDate, :guidedAssistance, :keywords, :lastAccessTime, :lastNotificationTime, :nextNotificationTime, :originalReferenceNumber, :positionInList,
+			:publishOnDate, :question, :solution, :updatedByAccount, :uRL
 
 	    def initialize(attributes = nil)
 
    			@answerType = {}
 
-   			@language = {}
 
-   			@summary = "Answer summary text"
+			if attributes.nil?
+   				
+   				@summary = "Answer summary text"
+   				
+   				@language = {}
 
-			# if attributes.nil?
+   				@question = nil
 
 			# 	@parent = {}
 
 			# 	@displayOrder = 1
 
-			# else
+			else
 
-			# 	@id = attributes["id"]
+				@id = attributes["id"]
 		      
-			# 	@lookupName = attributes["lookupName"]
+				@lookupName = attributes["lookupName"]
 		      
-			# 	@createdTime = attributes["createdTime"]
+				@createdTime = attributes["createdTime"]
 		      
-			# 	@updatedTime = attributes["updatedTime"]
-		      
-			# 	@displayOrder = attributes["displayOrder"]
-		      
-			# 	@name = attributes["name"]
-		      
-			# 	@parent = attributes["parent"]
+				@updatedTime = attributes["updatedTime"]
 
-			# end
+				@accessLevels = attributes["accessLevels"]
+		      
+				@name = attributes["name"]
+		      
+				@adminLastAccessTime = attributes["adminLastAccessTime"]
+
+				@answerType = attributes["answerType"]
+
+				@expiresDate = attributes["expiresDate"]
+
+				@guidedAssistance = attributes["guidedAssistance"]
+
+				@keywords = attributes["keywords"]
+
+				@language = attributes["language"]
+
+				@lastAccessTime = attributes["lastAccessTime"]
+
+				@lastNotificationTime = attributes["lastNotificationTime"]
+
+				@nextNotificationTime = attributes["nextNotificationTime"]
+
+				@originalReferenceNumber = attributes["originalReferenceNumber"]
+
+				@positionInList = attributes["positionInList"]
+
+				@publishOnDate = attributes["publishOnDate"]
+
+				@question = attributes["question"]
+
+				@solution = attributes["solution"]
+
+				@summary = attributes["summary"]
+
+				@updatedByAccount = attributes["updatedByAccount"]
+
+				@uRL = attributes["uRL"]
+
+			end
 
 	    end
 
-# 	    def create(client,return_json = false)
+	    def create(client,return_json = false)
 
-# 	    	self.class.check_client(client)
+	    	self.class.check_client(client)
 
 # 	    	new_product = self
 
@@ -85,7 +121,7 @@ module OSCRuby
 
 # 	    	end
 
-# 	    end
+	    end
 
 # 	    def self.find(client,id = nil,return_json = false)
 
@@ -231,15 +267,15 @@ module OSCRuby
 
 
 
-# 	    # Convenience Methods for making the CRUD operations nicer to use
+	    # Convenience Methods for making the CRUD operations nicer to use
 
-# 		def self.new_from_fetch(attributes)
+		def self.new_from_fetch(attributes)
 
-# 	    	check_attributes(attributes)
+	    	check_attributes(attributes)
 
-# 	    	OSCRuby::Answer.new(attributes)
+	    	OSCRuby::Answer.new(attributes)
 
-# 		end
+		end
 
 # 		def self.check_for_id(obj)
 
@@ -353,15 +389,15 @@ module OSCRuby
 
 # 		# Will probably extract the following into a Validations class or something
 
-# 		def self.check_attributes(attributes)
+		def self.check_attributes(attributes)
 
-# 			if attributes.class != Hash
+			if attributes.class != Hash
 				
-# 				raise ArgumentError, "Attributes must be a hash; please use the appropriate data structure"
+				raise ArgumentError, "Attributes must be a hash; please use the appropriate data structure"
 		
-# 			end
+			end
 
-# 		end
+		end
 
 # 	    def self.check_query(query)
 
@@ -373,13 +409,13 @@ module OSCRuby
 
 # 	    end
 
-# 		def self.check_client(client)
+		def self.check_client(client)
 
-# 			if client.class != OSCRuby::Client || client.nil?
-# 				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
-# 			end
+			if client.class != OSCRuby::Client || client.nil?
+				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+			end
 
-# 		end
+		end
 
 	end
 

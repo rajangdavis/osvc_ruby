@@ -30,89 +30,114 @@ describe OSCRuby::Answer do
 
 	end
 
-	# let(:attributes){
-	# 	{'id' => 1, 
-	# 	 'lookupName' => 'Test Product Lookup Name',
-	# 	 'createdTime'=>nil,
-	# 	 'updatedTime'=>nil,
-	# 	 'displayOrder'=>1,
-	# 	 'name'=>'Test Product Lookup Name',
-	# 	 'parent' => nil
-	# 	}
-	# }
+	let(:attributes){
+		{
+		"id"=> 2222,
+		"lookupName"=> 2222,
+		"createdTime"=> "2014-02-05T23:42:28Z",
+		"updatedTime"=> "2016-12-13T09:55:45Z",
+		"accessLevels"=> 3,
+		"adminLastAccessTime"=> "2016-11-23T22:54:26Z",
+		"answerType"=> 1,
+		"expiresDate"=> nil,
+		"guidedAssistance"=> nil,
+		"keywords"=> "AbCbEbAb",
+		"language"=> 1,
+		"lastAccessTime"=> "2016-12-10T07:27:37Z",
+		"lastNotificationTime"=> nil,
+		"name"=> 2222,
+		"nextNotificationTime"=> nil,
+		"originalReferenceNumber"=> nil,
+		"positionInList"=> 1,
+		"publishOnDate"=> nil,
+		"question"=> nil,
+		"solution"=> "<p ></iframe></p>\n<ol>\n<li>\n<div class=\"MsoNormal\" >The following video will show you how to view your DVR using the QT view app or through a Browser using the Q-See Scan n View P2P technology.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step1.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >P2P equals Peer to Peer. This concept has been around for a long time.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step2.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >P2P equals Peer to Peer. In a peer to peer network, tasks (such as searching for files or streaming audio/video) are shared amongst multiple interconnected peers who each make a portion of their resources (such as processing power, Disk Storage or network bandwidth) directly available to other Network participants, without the need for centralized coordination by servers.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step3.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Q-See's application is to take the Port Forwarding process out of the hands of the End User.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step4.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Next, you will need to install your QT View app via the Apple App Store or the Google Play Store.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step5.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Once the DVR is connected and is powered up, you will go through the wizard.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6a.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6b.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6c.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >While going through the wizard you will need to select your device to fit the the QR Code.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6d.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6e.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then go to your QT View and tap on the QR code image.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step7.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Now, your scanner will come up, then scan the QR code.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step8.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >The MAC address will appear, then enter the DVR's user name and password.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step9.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then Tap Login.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step10.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >After a few moments you will then be able to see the cameras without having to access the router.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step11.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >How to access it for PC/MAC.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step12.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Open Browser. Enter qtview.com, Push enter. NOTE: YOU WILL STILL NEED TO ADD IN THE ACTIVE X OR IE PLUG IN FOR YOUR BROWSER.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step13.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Enter the MAC address, User name, and Password, then click LOGIN.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step14.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then you will be able to see your system.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step15.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Q-See Scan n View.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step16.png\" /></p>\n</li>\n</ol>",
+		"summary"=> "QT Series: (VIDEO) Scan 'N View Setup",
+		"updatedByAccount"=> 47,
+		"uRL"=> nil
+		}
+	}
 
-	# context '#new_from_fetch' do
+	context '#new_from_fetch' do
 
-	# 	it 'should accept an attributes as a hash' do
+		it 'should accept an attributes as a hash' do
 
-	# 		expect do
+			expect do
 
-	# 			attributes = []
+				attributes = []
 
-	# 			OSCRuby::Answer.new_from_fetch(attributes)
+				OSCRuby::Answer.new_from_fetch(attributes)
 
-	# 		end.to raise_error("Attributes must be a hash; please use the appropriate data structure")
+			end.to raise_error("Attributes must be a hash; please use the appropriate data structure")
 
-	# 		expect do
+			expect do
 
-	# 			OSCRuby::Answer.new_from_fetch(attributes)
+				OSCRuby::Answer.new_from_fetch(attributes)
 
-	# 		end.not_to raise_error
+			end.not_to raise_error
 
-	# 	end
+		end
 
-	# 	it 'should instantiate an id, lookupName, createdTime, updatedTime, displayOrder, name, and parent with the correct values' do
+		it 'should instantiate an id, lookupName, createdTime, updatedTime, accessLevels, adminLastAccessTime, answerType, expiresDate, guidedAssistance, keywords, language, lastAccessTime, lastNotificationTime, name, nextNotificationTime, originalReferenceNumber, positionInList, publishOnDate, question, solution, summary, updatedByAccount, uRL with the correct values' do
 
-	# 		test = OSCRuby::Answer.new_from_fetch(attributes)
+			test = OSCRuby::Answer.new_from_fetch(attributes)
 
-	# 		expect(test.id).to eq(1)
+			expect(test.id).to eq(2222)
+			expect(test.lookupName).to eq(2222)
+			expect(test.createdTime).to eq("2014-02-05T23:42:28Z")
+			expect(test.updatedTime).to eq("2016-12-13T09:55:45Z")
+			expect(test.accessLevels).to eq(3)
+			expect(test.adminLastAccessTime).to eq("2016-11-23T22:54:26Z")
+			expect(test.answerType).to eq(1)
+			expect(test.expiresDate).to eq(nil)
+			expect(test.guidedAssistance).to eq(nil)
+			expect(test.keywords).to eq("AbCbEbAb")
+			expect(test.language).to eq(1)
+			expect(test.lastAccessTime).to eq("2016-12-10T07:27:37Z")
+			expect(test.lastNotificationTime).to eq(nil)
+			expect(test.name).to eq(2222)
+			expect(test.nextNotificationTime).to eq(nil)
+			expect(test.originalReferenceNumber).to eq(nil)
+			expect(test.positionInList).to eq(1)
+			expect(test.publishOnDate).to eq(nil)
+			expect(test.question).to eq(nil)
+			expect(test.solution).to eq("<p ></iframe></p>\n<ol>\n<li>\n<div class=\"MsoNormal\" >The following video will show you how to view your DVR using the QT view app or through a Browser using the Q-See Scan n View P2P technology.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step1.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >P2P equals Peer to Peer. This concept has been around for a long time.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step2.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >P2P equals Peer to Peer. In a peer to peer network, tasks (such as searching for files or streaming audio/video) are shared amongst multiple interconnected peers who each make a portion of their resources (such as processing power, Disk Storage or network bandwidth) directly available to other Network participants, without the need for centralized coordination by servers.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step3.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Q-See's application is to take the Port Forwarding process out of the hands of the End User.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step4.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Next, you will need to install your QT View app via the Apple App Store or the Google Play Store.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step5.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Once the DVR is connected and is powered up, you will go through the wizard.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6a.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6b.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6c.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >While going through the wizard you will need to select your device to fit the the QR Code.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6d.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6e.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then go to your QT View and tap on the QR code image.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step7.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Now, your scanner will come up, then scan the QR code.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step8.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >The MAC address will appear, then enter the DVR's user name and password.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step9.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then Tap Login.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step10.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >After a few moments you will then be able to see the cameras without having to access the router.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step11.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >How to access it for PC/MAC.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step12.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Open Browser. Enter qtview.com, Push enter. NOTE: YOU WILL STILL NEED TO ADD IN THE ACTIVE X OR IE PLUG IN FOR YOUR BROWSER.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step13.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Enter the MAC address, User name, and Password, then click LOGIN.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step14.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then you will be able to see your system.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step15.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Q-See Scan n View.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step16.png\" /></p>\n</li>\n</ol>")
+			expect(test.summary).to eq("QT Series: (VIDEO) Scan 'N View Setup")
+			expect(test.updatedByAccount).to eq(47)
+			expect(test.uRL).to eq(nil)
 
-	# 		expect(test.lookupName).to eq('Test Product Lookup Name')
+		end
 
-	# 		expect(test.createdTime).to eq(nil)
+	end
 
-	# 		expect(test.updatedTime).to eq(nil)
+	let(:client) { 
 
-	# 		expect(test.displayOrder).to eq(1)
-
-	# 		expect(test.name).to eq('Test Product Lookup Name')
-
-	# 		expect(test.name).to eq(test.lookupName)
-
-	# 		expect(test.parent).to eq(nil)
-
-	# 	end
-
-	# end
-
-	# let(:client) { 
-
-	# 	OSCRuby::Client.new do |config|
+		OSCRuby::Client.new do |config|
 		
-	# 		config.interface = ENV['OSC_TEST_SITE']
+			config.interface = ENV['OSC_TEST_SITE']
 		
-	# 		config.username = ENV['OSC_ADMIN']
+			config.username = ENV['OSC_ADMIN']
 		
-	# 		config.password = ENV['OSC_PASSWORD']
+			config.password = ENV['OSC_PASSWORD']
 		
-	# 	end
-	# }
+		end
+	}
 
-	# let(:new_answer){
-	# 	OSCRuby::Answer.new
-	# }
+	let(:new_answer){
+		OSCRuby::Answer.new
+	}
 
-	# context '#create' do
+	context '#create' do
 
-	# 	it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
 
-	# 		expect(client).to be_an(OSCRuby::Client)
+			expect(client).to be_an(OSCRuby::Client)
 
-	# 		client = nil
+			client = nil
 
-	# 		expect{new_answer.create(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+			expect{new_answer.create(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
 
-	# 	end
+		end
 
 	# 	it 'should check the object and make sure that it at least has a name set' do
 
@@ -169,7 +194,7 @@ describe OSCRuby::Answer do
 
 	# 	end
 
-	# end
+	end
 
 	# context '#find' do
 
