@@ -139,115 +139,147 @@ describe OSCRuby::Answer do
 
 		end
 
-	# 	it 'should check the object and make sure that it at least has a name set' do
+		it 'should check the object and make sure that it at least has a language, answerType, and summary set' do
 
-	# 		expect{new_answer.create(client)}.to raise_error('Answer should at least have one name set (new_answer.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			expect{new_answer.create(client)}.to raise_error('Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")')
 
-	# 	end
+			new_answer.language['id'] = 1
 
-	# 	it 'should expect the name in a hash as the value of the labelText key' do
+			expect{new_answer.create(client)}.to raise_error('Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")')
 
-	# 		new_answer.names[0] = "new product name"
+			new_answer.answerType['id'] = 1
 
-	# 		expect{new_answer.create(client)}.to raise_error('Answer should at least have one name set (new_answer.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			# the Answer summary is defaulted to "Answer summary text" so it should pass here
 
-	# 	end
+			expect{new_answer.create(client)}.to_not raise_error
 
-	# 	it 'should expect a language => id key pair within the hash' do
+		end
 
-	# 		new_answer.names[0] = {"labelText" => "QTH45-test"}
+		it 'should expect the language as a hash with an id as a key with a value of a number' do
 
-	# 		expect{new_answer.create(client)}.to raise_error('Answer should at least have one name set (new_answer.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			new_answer.language['id'] = "new product name"
+			new_answer.answerType['id'] = 1
 
-	# 	end
+			expect{new_answer.create(client)}.to raise_error('Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")')
 
-	# 	it 'should return an instance of an OSCRuby::Answer if the json_response param is set to false (which it is by default)', :vcr do
+		end
 
-	# 		new_answer.names[0] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 1}}
-	# 		new_answer.names[1] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 11}} 		
+		it 'should expect the answerType as a hash with an id as a key with a value of a number' do
 
-	# 		new_answer.parent = {'id' => 102}
+			new_answer.language['id'] = 1
+			new_answer.answerType['id'] = "new product name"
 
-	# 		new_answer.displayOrder = 4
+			expect{new_answer.create(client)}.to raise_error('Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")')
 
-	# 		new_answer.create(client)
+		end
 
-	# 		expect(new_answer).to be_a(OSCRuby::Answer)
+		it 'should expect the answerType as a hash with an lookupName as a key with a value of "HTML","URL", or "File Attachment"' do
 
-	# 		expect(new_answer.name).to eq("TEST-PRODUCT")
+			new_answer.language['id'] = 1
+			new_answer.answerType['lookupName'] = "HTML"
 
-	# 		expect(new_answer.lookupName).to eq("TEST-PRODUCT")
+			expect{new_answer.create(client)}.not_to raise_error
 
-	# 		expect(new_answer.displayOrder).to eq(4)
+		end
 
-	# 		expect(new_answer.parent).to eq(102)
+		it 'should return an instance of an OSCRuby::Answer if the json_response param is set to false (which it is by default)', :vcr do
 
-	# 	end
+			new_answer.language['id'] = 1
+			new_answer.answerType['lookupName'] = "HTML"
+
+			new_answer.create(client)
+
+			expect(new_answer).to be_a(OSCRuby::Answer)
+
+			expect(new_answer.summary).to eq("Answer summary text")
+
+			expect(new_answer.language).to eq({"id"=>1, "lookupName"=>"en_US"})
+
+		end
 
 
-	# 	it 'should return the body object if the json_response param is set to true', :vcr do
+		it 'should return the body object if the json_response param is set to true', :vcr do
 
-	# 		new_answer.names[0] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 1}}
-	# 		new_answer.names[1] = {'labelText' => 'TEST-PRODUCT', 'language' => {'id' => 11}} 	
+			new_answer.language['id'] = 1
+			new_answer.answerType['lookupName'] = "HTML"
 
-	# 		expect(new_answer.create(client,true)).to be_a(String)
+			expect(new_answer.create(client,true)).to be_a(String)
 
-	# 	end
+		end
 
 	end
 
-	# context '#find' do
+	context '#find' do
 
-	# 	it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
 
-	# 		expect(client).to be_an(OSCRuby::Client)
+			expect(client).to be_an(OSCRuby::Client)
 
-	# 		client = nil
+			client = nil
 
-	# 		expect{OSCRuby::Answer.find(client,100)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+			expect{OSCRuby::Answer.find(client,100)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
 
-	# 	end
+		end
 
-	# 	it 'should raise an error if ID is undefined' do
+		it 'should raise an error if ID is undefined' do
 
-	# 		expect{OSCRuby::Answer.find(client)}.to raise_error('ID cannot be nil')
+			expect{OSCRuby::Answer.find(client)}.to raise_error('ID cannot be nil')
 
-	# 	end
+		end
 
-	# 	it 'should raise an error if ID is not an integer' do
+		it 'should raise an error if ID is not an integer' do
 
-	# 		expect{OSCRuby::Answer.find(client, 'a')}.to raise_error('ID must be an integer')
+			expect{OSCRuby::Answer.find(client, 'a')}.to raise_error('ID must be an integer')
 
-	# 	end
+		end
 
-	# 	it 'should return a warning if empty/no instances of the object can be found', :vcr do
+		it 'should return a warning if empty/no instances of the object can be found', :vcr do
 
-	# 		expect{OSCRuby::Answer.find(client, 1)}.to raise_error('There were no objects matching your query; please try again.')
+			expect{OSCRuby::Answer.find(client, 100)}.to raise_error('There were no objects matching your query; please try again.')
 
-	# 	end
+		end
 
 
-	# 	it 'should return an instance of a new OSCRuby::Answer object with at least a name and displayOrder', :vcr do
+		it 'should return an instance of a new OSCRuby::Answer object with at least a name and displayOrder', :vcr do
 		
-	# 		known_working_product = OSCRuby::Answer.find(client, 100)
+			known_working_product = OSCRuby::Answer.find(client, 2222)
 
-	# 		expect(known_working_product).to be_an(OSCRuby::Answer)
+			expect(known_working_product).to be_an(OSCRuby::Answer)
+			expect(known_working_product.id).to eq(2222)
+			expect(known_working_product.lookupName).to eq(2222)
+			expect(known_working_product.createdTime).to eq("2014-02-05T23:42:28Z")
+			expect(known_working_product.updatedTime).to eq("2016-12-13T09:55:45Z")
+			expect(known_working_product.accessLevels).to eq(3)
+			expect(known_working_product.adminLastAccessTime).to eq("2016-11-23T22:54:26Z")
+			expect(known_working_product.answerType).to eq(1)
+			expect(known_working_product.expiresDate).to eq(nil)
+			expect(known_working_product.guidedAssistance).to eq(nil)
+			expect(known_working_product.keywords).to eq("AbCbEbAb")
+			expect(known_working_product.language).to eq(1)
+			expect(known_working_product.lastAccessTime).to eq("2016-12-10T07:27:37Z")
+			expect(known_working_product.lastNotificationTime).to eq(nil)
+			expect(known_working_product.name).to eq(2222)
+			expect(known_working_product.nextNotificationTime).to eq(nil)
+			expect(known_working_product.originalReferenceNumber).to eq(nil)
+			expect(known_working_product.positionInList).to eq(1)
+			expect(known_working_product.publishOnDate).to eq(nil)
+			expect(known_working_product.question).to eq(nil)
+			expect(known_working_product.solution).to eq("<p ></iframe></p>\n<ol>\n<li>\n<div class=\"MsoNormal\" >The following video will show you how to view your DVR using the QT view app or through a Browser using the Q-See Scan n View P2P technology.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step1.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >P2P equals Peer to Peer. This concept has been around for a long time.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step2.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >P2P equals Peer to Peer. In a peer to peer network, tasks (such as searching for files or streaming audio/video) are shared amongst multiple interconnected peers who each make a portion of their resources (such as processing power, Disk Storage or network bandwidth) directly available to other Network participants, without the need for centralized coordination by servers.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step3.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Q-See's application is to take the Port Forwarding process out of the hands of the End User.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step4.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Next, you will need to install your QT View app via the Apple App Store or the Google Play Store.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step5.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Once the DVR is connected and is powered up, you will go through the wizard.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6a.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6b.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6c.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >While going through the wizard you will need to select your device to fit the the QR Code.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6d.png\" /></p>\n<div class=\"MsoNormal\" ></div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step6e.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then go to your QT View and tap on the QR code image.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step7.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Now, your scanner will come up, then scan the QR code.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step8.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >The MAC address will appear, then enter the DVR's user name and password.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step9.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then Tap Login.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step10.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >After a few moments you will then be able to see the cameras without having to access the router.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step11.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >How to access it for PC/MAC.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step12.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Open Browser. Enter qtview.com, Push enter. NOTE: YOU WILL STILL NEED TO ADD IN THE ACTIVE X OR IE PLUG IN FOR YOUR BROWSER.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step13.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Enter the MAC address, User name, and Password, then click LOGIN.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step14.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Then you will be able to see your system.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step15.png\" /></p>\n</li>\n<li>\n<div class=\"MsoNormal\" >Q-See Scan n View.</div>\n<p align=\"center\"><img border=\"0\" alt=\"Image\" src=\"//q-see.s3.amazonaws.com/content/files/HowToFiles/p2pimages/Step16.png\" /></p>\n</li>\n</ol>")
+			expect(known_working_product.summary).to eq("QT Series: (VIDEO) Scan 'N View Setup")
+			expect(known_working_product.updatedByAccount).to eq(47)
+			expect(known_working_product.uRL).to eq(nil)
 
-	# 		expect(known_working_product.name).to eq('QR404')
+		end
 
-	# 		expect(known_working_product.displayOrder).to eq(3)
+		it 'should return the raw json response if the return_json parameter is set to true', :vcr do
 
-	# 	end
+			known_working_product_in_json = OSCRuby::Answer.find(client, 2222, true)
 
-	# 	it 'should return the raw json response if the return_json parameter is set to true', :vcr do
+			expect(known_working_product_in_json).to be_an(String)
 
-	# 		known_working_product_in_json = OSCRuby::Answer.find(client, 100, true)
+		end
 
-	# 		expect(known_working_product_in_json).to be_an(String)
-
-	# 	end
-
-	# end
+	end
 
 	# context '#all' do
 

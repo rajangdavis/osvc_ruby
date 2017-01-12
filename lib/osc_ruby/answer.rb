@@ -14,20 +14,15 @@ module OSCRuby
 
 	    def initialize(attributes = nil)
 
-   			@answerType = {}
-
-
 			if attributes.nil?
+
+   				@answerType = {}
    				
    				@summary = "Answer summary text"
    				
    				@language = {}
 
    				@question = nil
-
-			# 	@parent = {}
-
-			# 	@displayOrder = 1
 
 			else
 
@@ -85,71 +80,77 @@ module OSCRuby
 
 	    	self.class.check_client(client)
 
-# 	    	new_product = self
+	    	new_answer = self
 
-# 	    	final_json = self.class.check_self(new_product)
+	    	final_json = self.class.check_self(new_answer)
 
-# 	    	resource = URI.escape("/Answers")
+	    	resource = URI.escape("/answers")
 
-# 	    	response = QueryModule::create(client,resource,final_json)
+	    	response = QueryModule::create(client,resource,final_json)
 
-# 	    	response_body = JSON.parse(response.body)
+	    	response_body = JSON.parse(response.body)
 
-# 	    	if response.code.to_i == 201 && return_json == false
+	    	if response.code.to_i == 201 && return_json == false
 
-# 	    		self.id = response_body['id'].to_i
+				self.id = response_body['id'].to_i
+				self.lookupName = response_body['lookupName'].to_i
+				self.createdTime = response_body['createdTime']
+				self.updatedTime = response_body['updatedTime']
+				self.accessLevels = response_body['accessLevels']
+				self.adminLastAccessTime = response_body['adminLastAccessTime']
+				self.answerType = response_body['answerType']
+				self.expiresDate = response_body['expiresDate']
+				self.guidedAssistance = response_body['guidedAssistance']
+				self.keywords = response_body['keywords']
+				self.language = response_body['language']
+				self.lastAccessTime = response_body['lastAccessTime']
+				self.lastNotificationTime = response_body['lastNotificationTime']
+				self.name = response_body['name'].to_i
+				self.nextNotificationTime = response_body['nextNotificationTime']
+				self.originalReferenceNumber = response_body['originalReferenceNumber']
+				self.positionInList = response_body['positionInList']
+				self.publishOnDate = response_body['publishOnDate']
+				self.question = response_body['question']
+				self.solution = response_body['solution']
+				self.summary = response_body['summary']
+				self.updatedByAccount = response_body['updatedByAccount']
+				self.uRL = response_body['uRL']
 
-# 	    		self.name = response_body["lookupName"]
+	    	elsif return_json == true
 
-# 	    		self.lookupName = response_body["lookupName"]
+	    		response.body
 
-# 				self.displayOrder = response_body["displayOrder"]
-
-# 				if !response_body["parent"].nil?
-
-# 					self.parent = response_body["parent"]["links"][0]["href"].split('/').pop.to_i
-
-# 				else
-
-# 					self.parent = nil
-
-# 				end
-
-# 	    	elsif return_json == true
-
-# 	    		response.body
-
-# 	    	end
+	    	end
 
 	    end
 
-# 	    def self.find(client,id = nil,return_json = false)
+	    def self.find(client,id = nil,return_json = false)
 
-# 	    	check_client(client)
+	    	check_client(client)
 
-# 	    	if id.nil? == true
-# 	    		raise ArgumentError, 'ID cannot be nil'
-# 	    	elsif id.class != Fixnum
-# 	    		raise ArgumentError, 'ID must be an integer'
-# 	    	end
+	    	if id.nil? == true
+	    		raise ArgumentError, 'ID cannot be nil'
+	    	elsif id.class != Fixnum
+	    		raise ArgumentError, 'ID must be an integer'
+	    	end
 	    		
-# 	    	resource = URI.escape("queryResults/?query=select * from Answers where id = #{id}")
+	    	resource = URI.escape("queryResults/?query=select * from Answers where id = #{id}")
 
-# 	    	service_product_json = QueryModule::find(client,resource)
+	    	service_product_json = QueryModule::find(client,resource)
 
-# 			if return_json == true
+			if return_json == true
 
-# 				service_product_json
+				service_product_json
 
-# 			else
+			else
 
-# 				service_product_json_final = JSON.parse(service_product_json)
+				service_product_json_final = JSON.parse(service_product_json)
 
-# 				new_from_fetch(service_product_json_final[0])
+				new_from_fetch(service_product_json_final[0])
 
-# 			end
+			end
 
-# 	    end
+	    end
 
 # 	    def self.all(client, return_json = false)
 
@@ -287,37 +288,49 @@ module OSCRuby
 
 # 		end
 
-# 		def self.check_self(obj,is_update = false)
+		def self.check_self(obj,is_update = false)
 
-# 			obj_attrs = self.extract_attributes(obj)
+			obj_attrs = self.extract_attributes(obj)
 
-# 			if is_update == true
+			if is_update == true
 			
-# 				obj_attrs = remove_unused_new_attrs(obj_attrs)
+				obj_attrs = remove_unused_new_attrs(obj_attrs)
 			
-# 			else
+			else
 
-# 				obj_attrs = check_for_names(obj_attrs)
+				obj_attrs = check_for_language(obj_attrs)
 
-# 				obj_attrs = check_for_parents(obj_attrs)
+				obj_attrs = check_for_answertype(obj_attrs)
 				
-# 			end
+			end
 
-# 			obj_attrs
+			obj_attrs
 
-# 		end
+		end
 
-# 		def self.check_for_names(obj_attrs)
+		def self.check_for_language(obj_attrs)
 
-# 			if obj_attrs[0]['names'].count == 0 || obj_attrs[0]['names'][0]['labelText'].nil? || obj_attrs[0]['names'][0]['language'].nil?
+			if obj_attrs[0]['language']['id'].nil? || obj_attrs[0]['language']['id'].class != Fixnum
 				
-# 				raise ArgumentError, 'Answer should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )'
+				raise ArgumentError, 'Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")'
 			
-# 			end
+			end
 
-# 			obj_attrs
+			obj_attrs
 
-# 		end
+		end
+
+		def self.check_for_answertype(obj_attrs)
+
+			if (obj_attrs[0]['answerType']['id'].nil? || obj_attrs[0]['answerType']['id'].class != Fixnum) && (obj_attrs[0]['answerType']['lookupName'].nil? || obj_attrs[0]['answerType']['lookupName'].class != String)
+
+				raise ArgumentError, 'Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")'
+
+			end
+
+			obj_attrs
+
+		end
 
 # 		def self.check_for_parents(obj_attrs)
 
@@ -353,37 +366,25 @@ module OSCRuby
 
 # 		end
 
-# 		def self.extract_attributes(obj)
+		def self.extract_attributes(obj)
 
-# 			empty_arr = [{}]
+			empty_arr = [{}]
 
-# 			obj_vars = obj.instance_variables
+			obj_vars = obj.instance_variables
 
-# 			obj_vars.each do |var| 
+			obj_vars.each do |var| 
 
-# 				obj_attr = var.to_s.delete("@")
+				obj_attr = var.to_s.delete("@")
 
-# 				obj_attr_val = obj.instance_variable_get(var)
+				obj_attr_val = obj.instance_variable_get(var)
 
-# 				empty_arr[0][obj_attr] = obj_attr_val
+				empty_arr[0][obj_attr] = obj_attr_val
 
-# 			end
+			end
 
-# 			if empty_arr[0]['adminVisibleInterfaces'].empty?
-				
-# 				empty_arr[0].delete('adminVisibleInterfaces')
-			
-# 			end
+			empty_arr
 
-# 			if empty_arr[0]['endUserVisibleInterfaces'].empty?
-				
-# 				empty_arr[0].delete('endUserVisibleInterfaces')
-			
-# 			end
-
-# 			empty_arr
-
-# 		end
+		end
 
 
 
