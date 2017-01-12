@@ -1,6 +1,7 @@
 require 'osc_ruby/client'
 require 'osc_ruby/query_module'
 require 'osc_ruby/validations_module'
+require 'osc_ruby/class_factory_module'
 require 'json'
 require 'uri'
 
@@ -10,6 +11,7 @@ module OSCRuby
 
 		include QueryModule
 		include ValidationsModule
+		include ClassFactoryModule
 		
 		attr_accessor :names, :parent, :displayOrder, :adminVisibleInterfaces, :endUserVisibleInterfaces, :id, :lookupName, :createdTime, :updatedTime, :name
 
@@ -49,7 +51,7 @@ module OSCRuby
 
 	    def create(client,return_json = false)
 
-	    	ValidationsModule.check_client(client)
+	    	ValidationsModule::check_client(client)
 
 	    	new_product = self
 
@@ -91,35 +93,15 @@ module OSCRuby
 
 	    def self.find(client,id = nil,return_json = false)
 
-			ValidationsModule.check_client(client)
+			@obj_info = {'client' => client, 'id' => id, 'obj_query' => 'serviceproducts', 'return_json' => return_json}
 
-	    	if id.nil? == true
-	    		raise ArgumentError, 'ID cannot be nil'
-	    	elsif id.class != Fixnum
-	    		raise ArgumentError, 'ID must be an integer'
-	    	end
-	    		
-	    	resource = URI.escape("queryResults/?query=select * from serviceproducts where id = #{id}")
-
-	    	service_product_json = QueryModule::find(client,resource)
-
-			if return_json == true
-
-				service_product_json
-
-			else
-
-				service_product_json_final = JSON.parse(service_product_json)
-
-				new_from_fetch(service_product_json_final[0])
-
-			end
+	    	ClassFactoryModule.find(@obj_info,OSCRuby::ServiceProduct)
 
 	    end
 
 	    def self.all(client, return_json = false)
 
-			ValidationsModule.check_client(client)
+			ValidationsModule::check_client(client)
 	    	
 	    	resource = URI.escape("queryResults/?query=select * from serviceproducts")
 
@@ -133,7 +115,7 @@ module OSCRuby
 
 		    	service_product_json_final = JSON.parse(service_product_json)
 
-		    	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
+		    	service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,OSCRuby::ServiceProduct) }
 
 		    end
 
@@ -141,9 +123,9 @@ module OSCRuby
 
 	    def self.where(client, query = '', return_json = false)
 
-			ValidationsModule.check_client(client)
+			ValidationsModule::check_client(client)
 
-			ValidationsModule.check_query(query)
+			ValidationsModule::check_query(query)
 
 	    	@query = URI.escape("queryResults/?query=select * from serviceproducts where #{query}")
 
@@ -157,7 +139,7 @@ module OSCRuby
 
 		    	service_product_json_final = JSON.parse(service_product_json)
 
-		    	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
+		    	service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,OSCRuby::ServiceProduct) }
 
 		    end
 
@@ -165,7 +147,7 @@ module OSCRuby
 
 	    def update(client, return_json = false)
 
-			ValidationsModule.check_client(client)
+			ValidationsModule::check_client(client)
 
 	    	product_to_update = self
 
@@ -201,7 +183,7 @@ module OSCRuby
 
 	    def destroy(client, return_json = false)
 
-	    	ValidationsModule.check_client(client)
+	    	ValidationsModule::check_client(client)
 
 	    	product_to_destroy = self
 
@@ -224,24 +206,15 @@ module OSCRuby
 	    end
 
 
-
-
-
-
-
-
-
-
-
 	    # Convenience Methods for making the CRUD operations nicer to use
 
-		def self.new_from_fetch(attributes)
+		# def self.new_from_fetch(attributes)
 
-	    	ValidationsModule.check_attributes(attributes)
+	 #    	ValidationsModule::check_attributes(attributes)
 
-	    	OSCRuby::ServiceProduct.new(attributes)
+	 #    	OSCRuby::ServiceProduct.new(attributes)
 
-		end
+		# end
 
 		def self.check_for_id(obj)
 
@@ -255,7 +228,7 @@ module OSCRuby
 
 		def self.check_self(obj,is_update = false)
 
-			obj_attrs = ValidationsModule.extract_attributes(obj)
+			obj_attrs = ValidationsModule::extract_attributes(obj)
 
 			obj_attrs = check_interfaces(obj_attrs)
 

@@ -46,49 +46,49 @@ describe OSCRuby::ServiceProduct do
 		}
 	}
 
-	context '#new_from_fetch' do
+	# context '#new_from_fetch' do
 
-		it 'should accept an attributes as a hash' do
+	# 	it 'should accept an attributes as a hash' do
 
-			expect do
+	# 		expect do
 
-				attributes = []
+	# 			attributes = []
 
-				OSCRuby::ServiceProduct.new_from_fetch(attributes)
+	# 			OSCRuby::ServiceProduct.new_from_fetch(attributes)
 
-			end.to raise_error("Attributes must be a hash; please use the appropriate data structure")
+	# 		end.to raise_error("Attributes must be a hash; please use the appropriate data structure")
 
-			expect do
+	# 		expect do
 
-				OSCRuby::ServiceProduct.new_from_fetch(attributes)
+	# 			OSCRuby::ServiceProduct.new_from_fetch(attributes)
 
-			end.not_to raise_error
+	# 		end.not_to raise_error
 
-		end
+	# 	end
 
-		it 'should instantiate an id, lookupName, createdTime, updatedTime, displayOrder, name, and parent with the correct values' do
+	# 	it 'should instantiate an id, lookupName, createdTime, updatedTime, displayOrder, name, and parent with the correct values' do
 
-			test = OSCRuby::ServiceProduct.new_from_fetch(attributes)
+	# 		test = OSCRuby::ServiceProduct.new_from_fetch(attributes)
 
-			expect(test.id).to eq(1)
+	# 		expect(test.id).to eq(1)
 
-			expect(test.lookupName).to eq('Test Product Lookup Name')
+	# 		expect(test.lookupName).to eq('Test Product Lookup Name')
 
-			expect(test.createdTime).to eq(nil)
+	# 		expect(test.createdTime).to eq(nil)
 
-			expect(test.updatedTime).to eq(nil)
+	# 		expect(test.updatedTime).to eq(nil)
 
-			expect(test.displayOrder).to eq(1)
+	# 		expect(test.displayOrder).to eq(1)
 
-			expect(test.name).to eq('Test Product Lookup Name')
+	# 		expect(test.name).to eq('Test Product Lookup Name')
 
-			expect(test.name).to eq(test.lookupName)
+	# 		expect(test.name).to eq(test.lookupName)
 
-			expect(test.parent).to eq(nil)
+	# 		expect(test.parent).to eq(nil)
 
-		end
+	# 	end
 
-	end
+	# end
 
 	let(:client) { 
 

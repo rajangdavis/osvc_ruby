@@ -1,6 +1,7 @@
 require 'osc_ruby/client'
 require 'osc_ruby/query_module'
 require 'osc_ruby/validations_module'
+require 'osc_ruby/class_factory_module'
 require 'json'
 require 'uri'
 
@@ -80,7 +81,7 @@ module OSCRuby
 
 	    def create(client,return_json = false)
 
-	    	ValidationsModule.check_client(client)
+	    	ValidationsModule::check_client(client)
 
 	    	new_answer = self
 
@@ -106,35 +107,16 @@ module OSCRuby
 
 	    def self.find(client,id = nil,return_json = false)
 
-	    	ValidationsModule.check_client(client)
+	    	@obj_info = {'client' => client, 'id' => id, 'obj_query' => 'answers', 'return_json' => return_json}
 
-	    	if id.nil? == true
-	    		raise ArgumentError, 'ID cannot be nil'
-	    	elsif id.class != Fixnum
-	    		raise ArgumentError, 'ID must be an integer'
-	    	end
-	    		
-	    	resource = URI.escape("queryResults/?query=select * from Answers where id = #{id}")
-
-	    	service_product_json = QueryModule::find(client,resource)
-
-			if return_json == true
-
-				service_product_json
-
-			else
-
-				service_product_json_final = JSON.parse(service_product_json)
-
-				new_from_fetch(service_product_json_final[0])
-
-			end
+	    	ClassFactoryModule.find(@obj_info,OSCRuby::Answer)
 
 	    end
 
+
 # 	    def self.all(client, return_json = false)
 
-# 	    	ValidationsModule.check_client(client)
+# 	    	ValidationsModule::check_client(client)
 	    	
 # 	    	resource = URI.escape("queryResults/?query=select * from Answers")
 
@@ -156,9 +138,9 @@ module OSCRuby
 
 # 	    def self.where(client, query = '', return_json = false)
 
-# 	    	ValidationsModule.check_client(client)
+# 	    	ValidationsModule::check_client(client)
 
-# 	    	ValidationsModule.check_query(query)
+# 	    	ValidationsModule::check_query(query)
 
 # 	    	@query = URI.escape("queryResults/?query=select * from Answers where #{query}")
 
@@ -180,7 +162,7 @@ module OSCRuby
 
 # 	    def update(client, return_json = false)
 
-# 	    	ValidationsModule.check_client(client)
+# 	    	ValidationsModule::check_client(client)
 
 # 	    	product_to_update = self
 
@@ -216,7 +198,7 @@ module OSCRuby
 
 # 	    def destroy(client, return_json = false)
 
-# 	    	ValidationsModule.check_client(client)
+# 	    	ValidationsModule::check_client(client)
 
 # 	    	product_to_destroy = self
 
@@ -278,7 +260,7 @@ module OSCRuby
 
 		def self.new_from_fetch(attributes)
 
-	    	ValidationsModule.check_attributes(attributes)
+	    	ValidationsModule::check_attributes(attributes)
 
 	    	OSCRuby::Answer.new(attributes)
 
@@ -296,7 +278,7 @@ module OSCRuby
 
 		def self.check_self(obj,is_update = false)
 
-			obj_attrs = ValidationsModule.extract_attributes(obj)
+			obj_attrs = ValidationsModule::extract_attributes(obj)
 
 			if is_update == true
 			

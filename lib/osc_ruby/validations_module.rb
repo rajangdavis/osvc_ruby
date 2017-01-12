@@ -27,6 +27,20 @@ module OSCRuby
 
 			end
 
+			def check_for_id(id)
+
+				if id.nil? == true
+
+		    		raise ArgumentError, 'ID cannot be nil'
+
+		    	elsif id.class != Fixnum
+
+		    		raise ArgumentError, 'ID must be an integer'
+
+		    	end
+
+			end
+
 			def check_attributes(attributes)
 
 				if attributes.class != Hash
