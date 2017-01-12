@@ -303,8 +303,6 @@ module OSCRuby
 			else
 
 				obj_attrs = check_for_language_and_type(obj_attrs)
-
-				obj_attrs = check_for_answertype(obj_attrs)
 				
 			end
 
