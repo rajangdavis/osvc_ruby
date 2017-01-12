@@ -312,19 +312,25 @@ module OSCRuby
 
 		def self.check_for_language_and_type(obj_attrs)
 
-			if obj_attrs[0]['language']['id'].nil? || obj_attrs[0]['language']['id'].class != Fixnum
+			if attr_hash_exists_and_is_type_of(obj_attrs,'language','id',Fixnum)
 				
 				raise ArgumentError, 'Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")'
 			
 			end
-
-			if (obj_attrs[0]['answerType']['id'].nil? || obj_attrs[0]['answerType']['id'].class != Fixnum) && (obj_attrs[0]['answerType']['lookupName'].nil? || obj_attrs[0]['answerType']['lookupName'].class != String)
-
+			if attr_hash_exists_and_is_type_of(obj_attrs,'answerType','id',Fixnum) && 
+				attr_hash_exists_and_is_type_of(obj_attrs,'answerType','lookupName',String)
+				
 				raise ArgumentError, 'Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")'
 
 			end
 
 			obj_attrs
+
+		end
+
+		def self.attr_hash_exists_and_is_type_of(obj,key,val,class_of_value)
+
+			return obj[0][key][val].nil? || obj[0][key][val].class != class_of_value
 
 		end
 
