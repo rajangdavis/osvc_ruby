@@ -248,7 +248,7 @@ module OSCRuby
 
 	    # Convenience Methods for making the CRUD operations nicer to use
 
-	    def set_attributes(response_body)
+		def set_attributes(response_body)
 	    	self.id = response_body['id'].to_i
 			self.lookupName = response_body['lookupName'].to_i
 			self.createdTime = response_body['createdTime']
@@ -302,7 +302,7 @@ module OSCRuby
 			
 			else
 
-				obj_attrs = check_for_language(obj_attrs)
+				obj_attrs = check_for_language_and_type(obj_attrs)
 
 				obj_attrs = check_for_answertype(obj_attrs)
 				
@@ -312,19 +312,13 @@ module OSCRuby
 
 		end
 
-		def self.check_for_language(obj_attrs)
+		def self.check_for_language_and_type(obj_attrs)
 
 			if obj_attrs[0]['language']['id'].nil? || obj_attrs[0]['language']['id'].class != Fixnum
 				
 				raise ArgumentError, 'Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")'
 			
 			end
-
-			obj_attrs
-
-		end
-
-		def self.check_for_answertype(obj_attrs)
 
 			if (obj_attrs[0]['answerType']['id'].nil? || obj_attrs[0]['answerType']['id'].class != Fixnum) && (obj_attrs[0]['answerType']['lookupName'].nil? || obj_attrs[0]['answerType']['lookupName'].class != String)
 
