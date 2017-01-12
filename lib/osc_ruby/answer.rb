@@ -92,29 +92,7 @@ module OSCRuby
 
 	    	if response.code.to_i == 201 && return_json == false
 
-				self.id = response_body['id'].to_i
-				self.lookupName = response_body['lookupName'].to_i
-				self.createdTime = response_body['createdTime']
-				self.updatedTime = response_body['updatedTime']
-				self.accessLevels = response_body['accessLevels']
-				self.adminLastAccessTime = response_body['adminLastAccessTime']
-				self.answerType = response_body['answerType']
-				self.expiresDate = response_body['expiresDate']
-				self.guidedAssistance = response_body['guidedAssistance']
-				self.keywords = response_body['keywords']
-				self.language = response_body['language']
-				self.lastAccessTime = response_body['lastAccessTime']
-				self.lastNotificationTime = response_body['lastNotificationTime']
-				self.name = response_body['name'].to_i
-				self.nextNotificationTime = response_body['nextNotificationTime']
-				self.originalReferenceNumber = response_body['originalReferenceNumber']
-				self.positionInList = response_body['positionInList']
-				self.publishOnDate = response_body['publishOnDate']
-				self.question = response_body['question']
-				self.solution = response_body['solution']
-				self.summary = response_body['summary']
-				self.updatedByAccount = response_body['updatedByAccount']
-				self.uRL = response_body['uRL']
+				set_attributes(response_body)
 
 	    	elsif return_json == true
 
@@ -269,6 +247,32 @@ module OSCRuby
 
 
 	    # Convenience Methods for making the CRUD operations nicer to use
+
+	    def set_attributes(response_body)
+	    	self.id = response_body['id'].to_i
+			self.lookupName = response_body['lookupName'].to_i
+			self.createdTime = response_body['createdTime']
+			self.updatedTime = response_body['updatedTime']
+			self.accessLevels = response_body['accessLevels']
+			self.adminLastAccessTime = response_body['adminLastAccessTime']
+			self.answerType = response_body['answerType']
+			self.expiresDate = response_body['expiresDate']
+			self.guidedAssistance = response_body['guidedAssistance']
+			self.keywords = response_body['keywords']
+			self.language = response_body['language']
+			self.lastAccessTime = response_body['lastAccessTime']
+			self.lastNotificationTime = response_body['lastNotificationTime']
+			self.name = response_body['name'].to_i
+			self.nextNotificationTime = response_body['nextNotificationTime']
+			self.originalReferenceNumber = response_body['originalReferenceNumber']
+			self.positionInList = response_body['positionInList']
+			self.publishOnDate = response_body['publishOnDate']
+			self.question = response_body['question']
+			self.solution = response_body['solution']
+			self.summary = response_body['summary']
+			self.updatedByAccount = response_body['updatedByAccount']
+			self.uRL = response_body['uRL']
+		end
 
 		def self.new_from_fetch(attributes)
 
