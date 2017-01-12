@@ -107,9 +107,7 @@ module OSCRuby
 
 	    def self.find(client,id = nil,return_json = false)
 
-	    	@obj_info = {'client' => client, 'id' => id, 'obj_query' => 'answers', 'return_json' => return_json}
-
-	    	ClassFactoryModule.find(@obj_info,OSCRuby::Answer)
+	    	ClassFactoryModule.find(client,id,'answers',return_json,OSCRuby::Answer)
 
 	    end
 

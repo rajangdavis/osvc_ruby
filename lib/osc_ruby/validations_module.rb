@@ -33,11 +33,11 @@ module OSCRuby
 
 		    		raise ArgumentError, 'ID cannot be nil'
 
-		    	elsif id.class != Fixnum
+				elsif id.class != Fixnum
 
 		    		raise ArgumentError, 'ID must be an integer'
 
-		    	end
+				end
 
 			end
 

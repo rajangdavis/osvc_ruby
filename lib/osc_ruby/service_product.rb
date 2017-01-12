@@ -93,9 +93,7 @@ module OSCRuby
 
 	    def self.find(client,id = nil,return_json = false)
 
-			@obj_info = {'client' => client, 'id' => id, 'obj_query' => 'serviceproducts', 'return_json' => return_json}
-
-	    	ClassFactoryModule.find(@obj_info,OSCRuby::ServiceProduct)
+	    	ClassFactoryModule.find(client,id,'serviceproducts',return_json,OSCRuby::ServiceProduct)
 
 	    end
 
@@ -207,14 +205,6 @@ module OSCRuby
 
 
 	    # Convenience Methods for making the CRUD operations nicer to use
-
-		# def self.new_from_fetch(attributes)
-
-	 #    	ValidationsModule::check_attributes(attributes)
-
-	 #    	OSCRuby::ServiceProduct.new(attributes)
-
-		# end
 
 		def self.check_for_id(obj)
 

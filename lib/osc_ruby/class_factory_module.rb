@@ -16,19 +16,19 @@ module OSCRuby
 
 			end
 
-			def find(hash,class_name)
+			def find(client,id,obj_query,return_json,class_name)
 
-		    	ValidationsModule::check_client(hash['client'])
+		    	ValidationsModule::check_client(client)
 
-		    	ValidationsModule::check_for_id(hash['id'])
+		    	ValidationsModule::check_for_id(id)
 
-		    	url = "queryResults/?query=select * from #{hash['obj_query']} where id = #{hash['id']}"
+		    	url = "queryResults/?query=select * from #{obj_query} where id = #{id}"
 		    		
 		    	resource = URI.escape(url)
 
-		    	class_json = QueryModule::find(hash['client'],resource)
+		    	class_json = QueryModule::find(client,resource)
 
-				if hash['return_json'] == true
+				if return_json == true
 
 					class_json
 
