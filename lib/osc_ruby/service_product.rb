@@ -1,5 +1,6 @@
 require 'osc_ruby/client'
 require 'osc_ruby/query_module'
+require 'osc_ruby/validations_module'
 require 'json'
 require 'uri'
 
@@ -8,6 +9,7 @@ module OSCRuby
 	class ServiceProduct
 
 		include QueryModule
+		include ValidationsModule
 		
 		attr_accessor :names, :parent, :displayOrder, :adminVisibleInterfaces, :endUserVisibleInterfaces, :id, :lookupName, :createdTime, :updatedTime, :name
 
@@ -253,7 +255,9 @@ module OSCRuby
 
 		def self.check_self(obj,is_update = false)
 
-			obj_attrs = self.extract_attributes(obj)
+			obj_attrs = ValidationsModule.extract_attributes(obj)
+
+			obj_attrs = check_interfaces(obj_attrs)
 
 			if is_update == true
 			
@@ -317,21 +321,7 @@ module OSCRuby
 
 		end
 
-		def self.extract_attributes(obj)
-
-			empty_arr = [{}]
-
-			obj_vars = obj.instance_variables
-
-			obj_vars.each do |var| 
-
-				obj_attr = var.to_s.delete("@")
-
-				obj_attr_val = obj.instance_variable_get(var)
-
-				empty_arr[0][obj_attr] = obj_attr_val
-
-			end
+		def self.check_interfaces(empty_arr)
 
 			if empty_arr[0]['adminVisibleInterfaces'].empty?
 				
@@ -346,9 +336,7 @@ module OSCRuby
 			end
 
 			empty_arr
-
 		end
-
 
 
 		# Will probably extract the following into a Validations class or something
@@ -376,7 +364,9 @@ module OSCRuby
 		def self.check_client(client)
 
 			if client.class != OSCRuby::Client || client.nil?
+
 				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+
 			end
 
 		end

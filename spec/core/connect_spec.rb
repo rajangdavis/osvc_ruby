@@ -217,7 +217,7 @@ describe OSCRuby::Connect do
 
 	context '#get' do
 
-		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
+		it 'should take at least a config parameter that is an instance of an OSCRuby::Client', :vcr do
 
 			expect(client).to be_an(OSCRuby::Client)
 

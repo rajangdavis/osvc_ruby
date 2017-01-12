@@ -139,7 +139,7 @@ describe OSCRuby::Answer do
 
 		end
 
-		it 'should check the object and make sure that it at least has a language, answerType, and summary set' do
+		it 'should check the object and make sure that it at least has a language, answerType, and summary set', :vcr do
 
 			expect{new_answer.create(client)}.to raise_error('Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")')
 
@@ -173,7 +173,7 @@ describe OSCRuby::Answer do
 
 		end
 
-		it 'should expect the answerType as a hash with an lookupName as a key with a value of "HTML","URL", or "File Attachment"' do
+		it 'should expect the answerType as a hash with an lookupName as a key with a value of "HTML","URL", or "File Attachment"', :vcr do
 
 			new_answer.language['id'] = 1
 			new_answer.answerType['lookupName'] = "HTML"

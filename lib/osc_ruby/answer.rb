@@ -1,5 +1,6 @@
 require 'osc_ruby/client'
 require 'osc_ruby/query_module'
+require 'osc_ruby/validations_module'
 require 'json'
 require 'uri'
 
@@ -8,6 +9,7 @@ module OSCRuby
 	class Answer
 
 		include QueryModule
+		include ValidationsModule
 		
 		attr_accessor :answerType, :language, :summary, :id, :lookupName, :createdTime, :updatedTime, :accessLevels, :name, :adminLastAccessTime, :expiresDate, :guidedAssistance, :keywords, :lastAccessTime, :lastNotificationTime, :nextNotificationTime, :originalReferenceNumber, :positionInList,
 			:publishOnDate, :question, :solution, :updatedByAccount, :uRL
@@ -294,7 +296,7 @@ module OSCRuby
 
 		def self.check_self(obj,is_update = false)
 
-			obj_attrs = self.extract_attributes(obj)
+			obj_attrs = ValidationsModule.extract_attributes(obj)
 
 			if is_update == true
 			
@@ -368,6 +370,11 @@ module OSCRuby
 
 # 		end
 
+
+
+
+# 		# Will probably extract the following into a Validations class or something
+
 		def self.extract_attributes(obj)
 
 			empty_arr = [{}]
@@ -388,10 +395,6 @@ module OSCRuby
 
 		end
 
-
-
-# 		# Will probably extract the following into a Validations class or something
-
 		def self.check_attributes(attributes)
 
 			if attributes.class != Hash
@@ -402,15 +405,15 @@ module OSCRuby
 
 		end
 
-# 	    def self.check_query(query)
+	    def self.check_query(query)
 
-# 			if query.empty?
+			if query.empty?
 				
-# 				raise ArgumentError, 'A query must be specified when using the "where" method'
+				raise ArgumentError, 'A query must be specified when using the "where" method'
 
-# 			end
+			end
 
-# 	    end
+	    end
 
 		def self.check_client(client)
 
