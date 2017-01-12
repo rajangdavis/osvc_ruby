@@ -13,8 +13,13 @@ This gem was tested against Oracle Service Cloud November 2016 using Ruby versio
 The create, update, and destroy methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before November 2016. This is because I am using the ROQL queries to generate values for Common Objects
 
 Currently supporting the following objects:
-**ServiceProduct**
 
+**ServiceProduct**
+**Answer** (only new, create, and find methods supported as of 1/11)
+
+At this time, subclasses such as ServiceProduct.CategoryLinks are not currently supported. 
+
+I am trying to build a few more classes and have a pretty solid testing suite and codebase before implementing this functionality.
 
 ## Installation
 
@@ -33,8 +38,9 @@ Or install it yourself as:
     $ gem install osc_ruby
 
 
-## Example (still coding this out, but trying to get this pretty simple)
+## ServiceProduct Example
 ```ruby
+
 # Configuration is as simple as requiring the gem
 # and adding a config block (Completed 12/2016)
 
