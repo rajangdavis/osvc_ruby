@@ -49,7 +49,7 @@ module OSCRuby
 
 	    def create(client,return_json = false)
 
-	    	self.class.check_client(client)
+	    	ValidationsModule.check_client(client)
 
 	    	new_product = self
 
@@ -91,7 +91,7 @@ module OSCRuby
 
 	    def self.find(client,id = nil,return_json = false)
 
-	    	check_client(client)
+			ValidationsModule.check_client(client)
 
 	    	if id.nil? == true
 	    		raise ArgumentError, 'ID cannot be nil'
@@ -119,7 +119,7 @@ module OSCRuby
 
 	    def self.all(client, return_json = false)
 
-	    	check_client(client)
+			ValidationsModule.check_client(client)
 	    	
 	    	resource = URI.escape("queryResults/?query=select * from serviceproducts")
 
@@ -141,9 +141,9 @@ module OSCRuby
 
 	    def self.where(client, query = '', return_json = false)
 
-	    	check_client(client)
+			ValidationsModule.check_client(client)
 
-	    	check_query(query)
+			ValidationsModule.check_query(query)
 
 	    	@query = URI.escape("queryResults/?query=select * from serviceproducts where #{query}")
 
@@ -165,7 +165,7 @@ module OSCRuby
 
 	    def update(client, return_json = false)
 
-	    	self.class.check_client(client)
+			ValidationsModule.check_client(client)
 
 	    	product_to_update = self
 
@@ -201,7 +201,7 @@ module OSCRuby
 
 	    def destroy(client, return_json = false)
 
-	    	self.class.check_client(client)
+	    	ValidationsModule.check_client(client)
 
 	    	product_to_destroy = self
 
@@ -237,7 +237,7 @@ module OSCRuby
 
 		def self.new_from_fetch(attributes)
 
-	    	check_attributes(attributes)
+	    	ValidationsModule.check_attributes(attributes)
 
 	    	OSCRuby::ServiceProduct.new(attributes)
 
@@ -336,38 +336,6 @@ module OSCRuby
 			end
 
 			empty_arr
-		end
-
-
-		# Will probably extract the following into a Validations class or something
-
-		def self.check_attributes(attributes)
-
-			if attributes.class != Hash
-				
-				raise ArgumentError, "Attributes must be a hash; please use the appropriate data structure"
-		
-			end
-
-		end
-
-	    def self.check_query(query)
-
-			if query.empty?
-				
-				raise ArgumentError, 'A query must be specified when using the "where" method'
-
-			end
-
-	    end
-
-		def self.check_client(client)
-
-			if client.class != OSCRuby::Client || client.nil?
-
-				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
-
-			end
 
 		end
 
