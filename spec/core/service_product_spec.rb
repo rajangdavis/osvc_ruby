@@ -35,16 +35,16 @@ describe OSCRuby::ServiceProduct do
 
 	end
 
-	let(:attributes){
-		{'id' => 1, 
-		 'lookupName' => 'Test Product Lookup Name',
-		 'createdTime'=>nil,
-		 'updatedTime'=>nil,
-		 'displayOrder'=>1,
-		 'name'=>'Test Product Lookup Name',
-		 'parent' => nil
-		}
-	}
+	# let(:attributes){
+	# 	{'id' => 1, 
+	# 	 'lookupName' => 'Test Product Lookup Name',
+	# 	 'createdTime'=>nil,
+	# 	 'updatedTime'=>nil,
+	# 	 'displayOrder'=>1,
+	# 	 'name'=>'Test Product Lookup Name',
+	# 	 'parent' => nil
+	# 	}
+	# }
 
 	# context '#new_from_fetch' do
 
