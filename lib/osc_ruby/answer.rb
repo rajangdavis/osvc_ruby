@@ -265,16 +265,6 @@ module OSCRuby
 
 		end
 
-# 		def self.check_for_id(obj)
-
-# 			if obj.id.nil?
-
-# 				raise ArgumentError, 'OSCRuby::Answer must have a valid ID set'
-
-# 			end
-
-# 		end
-
 		def self.check_self(obj,is_update = false)
 
 			obj_attrs = ValidationsModule::extract_attributes(obj)

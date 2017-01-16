@@ -41,6 +41,16 @@ module OSCRuby
 
 			end
 
+			def check_object_for_id(obj,class_name)
+
+				if obj.id.nil?
+
+					raise ArgumentError, "#{class_name} must have a valid ID set"
+
+				end
+
+			end
+
 			def check_attributes(attributes)
 
 				if attributes.class != Hash

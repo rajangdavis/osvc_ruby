@@ -16,6 +16,30 @@ module OSCRuby
 
 			end
 
+			def create(client,obj,resource_uri,return_json,class_name)
+
+				ValidationsModule::check_client(client)
+
+		    	final_json = obj.class.check_self(obj)
+
+		    	resource = URI.escape(resource_uri)
+
+		    	response = QueryModule::create(client,resource,final_json)
+
+		    	response_body = JSON.parse(response.body)
+
+		    	if response.code.to_i == 201 && return_json == false
+
+					obj.set_attributes(response_body)
+
+		    	elsif return_json == true
+
+		    		response.body
+
+		    	end
+
+			end
+
 			def find(client,id,obj_query,return_json,class_name)
 
 		    	ValidationsModule::check_client(client)
@@ -48,43 +72,19 @@ module OSCRuby
 	    	
 				resource = URI.escape("queryResults/?query=select * from #{obj_query}")
 
-				service_product_json = QueryModule::find(client,resource)
+				object_json = QueryModule::find(client,resource)
 
 				if return_json == true
 
-					service_product_json
+					object_json
 
 				else
 
-					service_product_json_final = JSON.parse(service_product_json)
+					object_json_final = JSON.parse(object_json)
 
-					service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,OSCRuby::ServiceProduct) }
+					object_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
 
 			    end
-
-			end
-
-			def create(client,obj,resource_uri,return_json,class_name)
-
-				ValidationsModule::check_client(client)
-
-		    	final_json = obj.class.check_self(obj)
-
-		    	resource = URI.escape(resource_uri)
-
-		    	response = QueryModule::create(client,resource,final_json)
-
-		    	response_body = JSON.parse(response.body)
-
-		    	if response.code.to_i == 201 && return_json == false
-
-					obj.set_attributes(response_body)
-
-		    	elsif return_json == true
-
-		    		response.body
-
-		    	end
 
 			end
 
@@ -96,19 +96,45 @@ module OSCRuby
 
 		    	@query = URI.escape("queryResults/?query=select * from #{object_in_query} where #{query}")
 
-		    	service_product_json = QueryModule::find(client,@query)
+		    	object_json = QueryModule::find(client,@query)
 
 		    	if return_json == true
 
-		    		service_product_json
+		    		object_json
 
 		    	else
 
-			    	service_product_json_final = JSON.parse(service_product_json)
+			    	object_json_final = JSON.parse(object_json)
 
-			    	service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
+			    	object_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
 
 			    end
+
+			end
+
+		    def update(client,obj,resource_uri,return_json)
+
+				ValidationsModule::check_client(client)
+
+		    	ValidationsModule::check_object_for_id(obj,obj.class)
+
+		    	final_json = obj.class.check_self(obj,true)
+
+		    	resource = URI.escape("#{resource_uri}/#{obj.id}")
+
+		    	response = QueryModule::update(client,resource,final_json)
+
+		    	if response.code.to_i == 200 && return_json == false
+
+		    		updated_obj = obj.class.find(client,obj.id)
+
+		    		obj.update_attributes(updated_obj)
+
+		    	elsif return_json == true
+
+		    		response.body
+
+		    	end
 
 		    end
 
@@ -116,7 +142,7 @@ module OSCRuby
 
 		    	ValidationsModule::check_client(client)
 
-		    	obj.class.check_for_id(obj)
+		    	ValidationsModule::check_object_for_id(obj,obj.class)
 
 		    	resource = URI.escape("/#{resource_uri}/#{obj.id}")
 

@@ -40,65 +40,41 @@ module OSCRuby
 
 	    end
 
+	    
 	    def create(client,return_json = false)
 
 	    	ClassFactoryModule.create(client,self,"/serviceProducts",return_json,OSCRuby::ServiceProduct)
 
 	    end
 
+	    
 	    def self.find(client,id = nil,return_json = false)
 
 	    	ClassFactoryModule.find(client,id,'serviceproducts',return_json,OSCRuby::ServiceProduct)
 
 	    end
 
+	    
 	    def self.all(client, return_json = false)
 
 	    	ClassFactoryModule.all(client,'serviceproducts',return_json,OSCRuby::ServiceProduct)
 
 	    end
 
+	    
 	    def self.where(client, query = '', return_json = false)
 
 			ClassFactoryModule.where(client,query,'serviceproducts',return_json,OSCRuby::ServiceProduct)
 
 	    end
 
+	    
 	    def update(client, return_json = false)
 
-			ValidationsModule::check_client(client)
-
-	    	product_to_update = self
-
-	    	self.class.check_for_id(product_to_update)
-
-	    	final_json = self.class.check_self(product_to_update,true)
-
-	    	resource = URI.escape("/serviceProducts/#{product_to_update.id}")
-
-	    	response = QueryModule::update(client,resource,final_json)
-
-	    	if response.code.to_i == 200 && return_json == false
-
-	    		updated_product = OSCRuby::ServiceProduct.find(client,product_to_update.id)
-
-	    		self.lookupName = updated_product.lookupName
-
-				self.createdTime = updated_product.createdTime
-
-				self.updatedTime = updated_product.updatedTime
-
-				self.name = updated_product.name
-
-				self.parent = updated_product.parent
-
-	    	elsif return_json == true
-
-	    		response.body
-
-	    	end
+	    	ClassFactoryModule::update(client,self,"serviceProducts",return_json)
 
 	    end
+
 
 	    def destroy(client, return_json = false)
 
@@ -107,21 +83,13 @@ module OSCRuby
 	    end
 
 
+	    
+
 	    # Convenience Methods for making the CRUD operations nicer to use
-
-		def self.check_for_id(obj)
-
-			if obj.id.nil?
-
-				raise ArgumentError, 'OSCRuby::ServiceProduct must have a valid ID set'
-
-			end
-
-		end
 
 		def set_attributes(response_body)
 
-			self.id = response_body['id'].to_i
+			self.id = response_body["id"]
 
     		self.name = response_body["lookupName"]
 
@@ -138,6 +106,20 @@ module OSCRuby
 				self.parent = nil
 
 			end
+
+		end
+
+		def update_attributes(updated_product)
+
+			self.lookupName = updated_product.lookupName
+
+			self.createdTime = updated_product.createdTime
+
+			self.updatedTime = updated_product.updatedTime
+
+			self.name = updated_product.name
+
+			self.parent = updated_product.parent
 
 		end
 
