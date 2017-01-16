@@ -64,6 +64,76 @@ module OSCRuby
 
 			end
 
+			def create(client,obj,resource_uri,return_json,class_name)
+
+				ValidationsModule::check_client(client)
+
+		    	final_json = obj.class.check_self(obj)
+
+		    	resource = URI.escape(resource_uri)
+
+		    	response = QueryModule::create(client,resource,final_json)
+
+		    	response_body = JSON.parse(response.body)
+
+		    	if response.code.to_i == 201 && return_json == false
+
+					obj.set_attributes(response_body)
+
+		    	elsif return_json == true
+
+		    		response.body
+
+		    	end
+
+			end
+
+			def where(client,query,object_in_query,return_json,class_name)
+
+				ValidationsModule::check_client(client)
+
+				ValidationsModule::check_query(query)
+
+		    	@query = URI.escape("queryResults/?query=select * from #{object_in_query} where #{query}")
+
+		    	service_product_json = QueryModule::find(client,@query)
+
+		    	if return_json == true
+
+		    		service_product_json
+
+		    	else
+
+			    	service_product_json_final = JSON.parse(service_product_json)
+
+			    	service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
+
+			    end
+
+		    end
+
+		    def destroy(client,obj,resource_uri,return_json)
+
+		    	ValidationsModule::check_client(client)
+
+		    	obj.class.check_for_id(obj)
+
+		    	resource = URI.escape("/#{resource_uri}/#{obj.id}")
+
+		    	response = QueryModule::destroy(client,resource)
+
+		    	if response.code.to_i == 200 && return_json == false
+
+		    		nil
+
+		    	elsif return_json == true
+
+		    		response.body
+
+		    	end
+
+		    end
+
 		end
 
 	end

@@ -13,36 +13,27 @@ module OSCRuby
 		include ValidationsModule
 		include ClassFactoryModule
 		
-		attr_accessor :names, :parent, :displayOrder, :adminVisibleInterfaces, :endUserVisibleInterfaces, :id, :lookupName, :createdTime, :updatedTime, :name
+		attr_accessor :names,:parent,:displayOrder,:adminVisibleInterfaces,:endUserVisibleInterfaces,:id,:lookupName,:createdTime,:updatedTime,:name
 
 	    def initialize(attributes = nil)
 
     		@names = []
-
 			@adminVisibleInterfaces = []
-
 			@endUserVisibleInterfaces = []
 
 			if attributes.nil?
 
 				@parent = {}
-
 				@displayOrder = 1
 
 			else
 
 				@id = attributes["id"]
-		      
 				@lookupName = attributes["lookupName"]
-		      
 				@createdTime = attributes["createdTime"]
-		      
 				@updatedTime = attributes["updatedTime"]
-		      
 				@displayOrder = attributes["displayOrder"]
-		      
 				@name = attributes["name"]
-		      
 				@parent = attributes["parent"]
 
 			end
@@ -51,43 +42,7 @@ module OSCRuby
 
 	    def create(client,return_json = false)
 
-	    	ValidationsModule::check_client(client)
-
-	    	new_product = self
-
-	    	final_json = self.class.check_self(new_product)
-
-	    	resource = URI.escape("/serviceProducts")
-
-	    	response = QueryModule::create(client,resource,final_json)
-
-	    	response_body = JSON.parse(response.body)
-
-	    	if response.code.to_i == 201 && return_json == false
-
-	    		self.id = response_body['id'].to_i
-
-	    		self.name = response_body["lookupName"]
-
-	    		self.lookupName = response_body["lookupName"]
-
-				self.displayOrder = response_body["displayOrder"]
-
-				if !response_body["parent"].nil?
-
-					self.parent = response_body["parent"]["links"][0]["href"].split('/').pop.to_i
-
-				else
-
-					self.parent = nil
-
-				end
-
-	    	elsif return_json == true
-
-	    		response.body
-
-	    	end
+	    	ClassFactoryModule.create(client,self,"/serviceProducts",return_json,OSCRuby::ServiceProduct)
 
 	    end
 
@@ -105,25 +60,7 @@ module OSCRuby
 
 	    def self.where(client, query = '', return_json = false)
 
-			ValidationsModule::check_client(client)
-
-			ValidationsModule::check_query(query)
-
-	    	@query = URI.escape("queryResults/?query=select * from serviceproducts where #{query}")
-
-	    	service_product_json = QueryModule::find(client,@query)
-
-	    	if return_json == true
-
-	    		service_product_json
-
-	    	else
-
-		    	service_product_json_final = JSON.parse(service_product_json)
-
-		    	service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,OSCRuby::ServiceProduct) }
-
-		    end
+			ClassFactoryModule.where(client,query,'serviceproducts',return_json,OSCRuby::ServiceProduct)
 
 	    end
 
@@ -165,25 +102,7 @@ module OSCRuby
 
 	    def destroy(client, return_json = false)
 
-	    	ValidationsModule::check_client(client)
-
-	    	product_to_destroy = self
-
-	    	self.class.check_for_id(product_to_destroy)
-
-	    	resource = URI.escape("/serviceProducts/#{product_to_destroy.id}")
-
-	    	response = QueryModule::destroy(client,resource)
-
-	    	if response.code.to_i == 200 && return_json == false
-
-	    		nil
-
-	    	elsif return_json == true
-
-	    		response.body
-
-	    	end
+	    	ClassFactoryModule.destroy(client,self,'serviceProducts',return_json)
 
 	    end
 
@@ -195,6 +114,28 @@ module OSCRuby
 			if obj.id.nil?
 
 				raise ArgumentError, 'OSCRuby::ServiceProduct must have a valid ID set'
+
+			end
+
+		end
+
+		def set_attributes(response_body)
+
+			self.id = response_body['id'].to_i
+
+    		self.name = response_body["lookupName"]
+
+    		self.lookupName = response_body["lookupName"]
+
+			self.displayOrder = response_body["displayOrder"]
+
+			if !response_body["parent"].nil?
+
+				self.parent = response_body["parent"]["links"][0]["href"].split('/').pop.to_i
+
+			else
+
+				self.parent = nil
 
 			end
 
