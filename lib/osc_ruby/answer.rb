@@ -11,6 +11,7 @@ module OSCRuby
 
 		include QueryModule
 		include ValidationsModule
+		include ClassFactoryModule
 		
 		attr_accessor :answerType, :language, :summary, :id, :lookupName, :createdTime, :updatedTime, :accessLevels, :name, :adminLastAccessTime, :expiresDate, :guidedAssistance, :keywords, :lastAccessTime, :lastNotificationTime, :nextNotificationTime, :originalReferenceNumber, :positionInList,
 			:publishOnDate, :question, :solution, :updatedByAccount, :uRL

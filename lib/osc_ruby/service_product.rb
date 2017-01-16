@@ -99,23 +99,7 @@ module OSCRuby
 
 	    def self.all(client, return_json = false)
 
-			ValidationsModule::check_client(client)
-	    	
-	    	resource = URI.escape("queryResults/?query=select * from serviceproducts")
-
-	    	service_product_json = QueryModule::find(client,resource)
-
-	    	if return_json == true
-
-	    		service_product_json
-
-	    	else
-
-		    	service_product_json_final = JSON.parse(service_product_json)
-
-		    	service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,OSCRuby::ServiceProduct) }
-
-		    end
+	    	ClassFactoryModule.all(client,'serviceproducts',return_json,OSCRuby::ServiceProduct)
 
 	    end
 

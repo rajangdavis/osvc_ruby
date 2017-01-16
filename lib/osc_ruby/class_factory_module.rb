@@ -42,6 +42,28 @@ module OSCRuby
 
 			end
 
+			def all(client,obj_query,return_json,class_name)
+
+				ValidationsModule::check_client(client)
+	    	
+				resource = URI.escape("queryResults/?query=select * from #{obj_query}")
+
+				service_product_json = QueryModule::find(client,resource)
+
+				if return_json == true
+
+					service_product_json
+
+				else
+
+					service_product_json_final = JSON.parse(service_product_json)
+
+					service_product_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,OSCRuby::ServiceProduct) }
+
+			    end
+
+			end
+
 		end
 
 	end
