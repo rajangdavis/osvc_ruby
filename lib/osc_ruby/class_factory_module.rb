@@ -16,7 +16,7 @@ module OSCRuby
 
 			end
 
-			def create(client,obj,resource_uri,return_json,class_name)
+			def create(client,obj,resource_uri,return_json)
 
 				ValidationsModule::check_client(client)
 
@@ -74,17 +74,7 @@ module OSCRuby
 
 				object_json = QueryModule::find(client,resource)
 
-				if return_json == true
-
-					object_json
-
-				else
-
-					object_json_final = JSON.parse(object_json)
-
-					object_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
-
-			    end
+				ClassFactoryModule::instantiate_multiple_objects(return_json, object_json, class_name)
 
 			end
 
@@ -94,21 +84,11 @@ module OSCRuby
 
 				ValidationsModule::check_query(query)
 
-		    	@query = URI.escape("queryResults/?query=select * from #{object_in_query} where #{query}")
+				@query = URI.escape("queryResults/?query=select * from #{object_in_query} where #{query}")
 
 		    	object_json = QueryModule::find(client,@query)
 
-		    	if return_json == true
-
-		    		object_json
-
-		    	else
-
-			    	object_json_final = JSON.parse(object_json)
-
-			    	object_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
-
-			    end
+		    	ClassFactoryModule::instantiate_multiple_objects(return_json, object_json, class_name)
 
 			end
 
@@ -157,6 +137,22 @@ module OSCRuby
 		    		response.body
 
 		    	end
+
+		    end
+
+		    def instantiate_multiple_objects(return_json, object_json, class_name)
+
+		    	if return_json == true
+
+		    		object_json
+
+		    	else
+
+			    	object_json_final = JSON.parse(object_json)
+
+			    	object_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
+
+			    end
 
 		    end
 

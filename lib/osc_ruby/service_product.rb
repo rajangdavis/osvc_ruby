@@ -43,7 +43,7 @@ module OSCRuby
 	    
 	    def create(client,return_json = false)
 
-	    	ClassFactoryModule.create(client,self,"/serviceProducts",return_json,OSCRuby::ServiceProduct)
+	    	ClassFactoryModule.create(client,self,"/serviceProducts",return_json)
 
 	    end
 
