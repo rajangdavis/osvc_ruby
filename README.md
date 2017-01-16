@@ -14,8 +14,11 @@ The create, update, and destroy methods should work on any version of Oracle Ser
 
 Currently supporting the following objects:
 
-**ServiceProduct**
-**Answer** (only new, create, and find methods supported as of 1/11)
+	ServiceProduct
+
+	ServiceCategory
+
+	Answer
 
 At this time, subclasses such as ServiceProduct.CategoryLinks are not currently supported. 
 
