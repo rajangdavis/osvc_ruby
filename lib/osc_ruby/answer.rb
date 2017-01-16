@@ -21,59 +21,34 @@ module OSCRuby
 			if attributes.nil?
 
    				@answerType = {}
-   				
    				@summary = "Answer summary text"
-   				
    				@language = {}
-
    				@question = nil
 
 			else
 
 				@id = attributes["id"]
-		      
 				@lookupName = attributes["lookupName"]
-		      
 				@createdTime = attributes["createdTime"]
-		      
 				@updatedTime = attributes["updatedTime"]
-
 				@accessLevels = attributes["accessLevels"]
-		      
 				@name = attributes["name"]
-		      
 				@adminLastAccessTime = attributes["adminLastAccessTime"]
-
 				@answerType = attributes["answerType"]
-
 				@expiresDate = attributes["expiresDate"]
-
 				@guidedAssistance = attributes["guidedAssistance"]
-
 				@keywords = attributes["keywords"]
-
 				@language = attributes["language"]
-
 				@lastAccessTime = attributes["lastAccessTime"]
-
 				@lastNotificationTime = attributes["lastNotificationTime"]
-
 				@nextNotificationTime = attributes["nextNotificationTime"]
-
 				@originalReferenceNumber = attributes["originalReferenceNumber"]
-
 				@positionInList = attributes["positionInList"]
-
 				@publishOnDate = attributes["publishOnDate"]
-
 				@question = attributes["question"]
-
 				@solution = attributes["solution"]
-
 				@summary = attributes["summary"]
-
 				@updatedByAccount = attributes["updatedByAccount"]
-
 				@uRL = attributes["uRL"]
 
 			end
@@ -82,29 +57,10 @@ module OSCRuby
 
 	    def create(client,return_json = false)
 
-	    	ValidationsModule::check_client(client)
-
-	    	new_answer = self
-
-	    	final_json = self.class.check_self(new_answer)
-
-	    	resource = URI.escape("/answers")
-
-	    	response = QueryModule::create(client,resource,final_json)
-
-	    	response_body = JSON.parse(response.body)
-
-	    	if response.code.to_i == 201 && return_json == false
-
-				set_attributes(response_body)
-
-	    	elsif return_json == true
-
-	    		response.body
-
-	    	end
+			ClassFactoryModule.create(client,self,"/answers",return_json)
 
 	    end
+
 
 	    def self.find(client,id = nil,return_json = false)
 
@@ -113,111 +69,29 @@ module OSCRuby
 	    end
 
 
-# 	    def self.all(client, return_json = false)
+	    def self.all(client, return_json = false)
 
-# 	    	ValidationsModule::check_client(client)
-	    	
-# 	    	resource = URI.escape("queryResults/?query=select * from Answers")
+	    	ClassFactoryModule.all(client,'answers',return_json,OSCRuby::Answer)
 
-# 	    	service_product_json = QueryModule::find(client,resource)
+	    end
 
-# 	    	if return_json == true
+	    def self.where(client, query = '', return_json = false)
 
-# 	    		service_product_json
+	    	ClassFactoryModule.where(client,query,'answers',return_json,OSCRuby::Answer)
 
-# 	    	else
+	    end
 
-# 		    	service_product_json_final = JSON.parse(service_product_json)
+	    def update(client, return_json = false)
 
-# 		    	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
+	    	ClassFactoryModule::update(client,self,"answers",return_json)
 
-# 		    end
+	    end
 
-# 	    end
+	    def destroy(client, return_json = false)
 
-# 	    def self.where(client, query = '', return_json = false)
+	    	ClassFactoryModule.destroy(client,self,'answers',return_json)
 
-# 	    	ValidationsModule::check_client(client)
-
-# 	    	ValidationsModule::check_query(query)
-
-# 	    	@query = URI.escape("queryResults/?query=select * from Answers where #{query}")
-
-# 	    	service_product_json = QueryModule::find(client,@query)
-
-# 	    	if return_json == true
-
-# 	    		service_product_json
-
-# 	    	else
-
-# 		    	service_product_json_final = JSON.parse(service_product_json)
-
-# 		    	service_product_json_final.map { |attributes| new_from_fetch(attributes) }
-
-# 		    end
-
-# 	    end
-
-# 	    def update(client, return_json = false)
-
-# 	    	ValidationsModule::check_client(client)
-
-# 	    	product_to_update = self
-
-# 	    	self.class.check_for_id(product_to_update)
-
-# 	    	final_json = self.class.check_self(product_to_update,true)
-
-# 	    	resource = URI.escape("/Answers/#{product_to_update.id}")
-
-# 	    	response = QueryModule::update(client,resource,final_json)
-
-# 	    	if response.code.to_i == 200 && return_json == false
-
-# 	    		updated_product = OSCRuby::Answer.find(client,product_to_update.id)
-
-# 	    		self.lookupName = updated_product.lookupName
-
-# 				self.createdTime = updated_product.createdTime
-
-# 				self.updatedTime = updated_product.updatedTime
-
-# 				self.name = updated_product.name
-
-# 				self.parent = updated_product.parent
-
-# 	    	elsif return_json == true
-
-# 	    		response.body
-
-# 	    	end
-
-# 	    end
-
-# 	    def destroy(client, return_json = false)
-
-# 	    	ValidationsModule::check_client(client)
-
-# 	    	product_to_destroy = self
-
-# 	    	self.class.check_for_id(product_to_destroy)
-
-# 	    	resource = URI.escape("/Answers/#{product_to_destroy.id}")
-
-# 	    	response = QueryModule::destroy(client,resource)
-
-# 	    	if response.code.to_i == 200 && return_json == false
-
-# 	    		nil
-
-# 	    	elsif return_json == true
-
-# 	    		response.body
-
-# 	    	end
-
-# 	    end
+	    end
 
 
 
@@ -257,23 +131,11 @@ module OSCRuby
 			self.uRL = response_body['uRL']
 		end
 
-		def self.new_from_fetch(attributes)
-
-	    	ValidationsModule::check_attributes(attributes)
-
-	    	OSCRuby::Answer.new(attributes)
-
-		end
-
 		def self.check_self(obj,is_update = false)
 
 			obj_attrs = ValidationsModule::extract_attributes(obj)
 
-			if is_update == true
-			
-				obj_attrs = remove_unused_new_attrs(obj_attrs)
-			
-			else
+			if is_update == false
 
 				obj_attrs = check_for_language_and_type(obj_attrs)
 				
@@ -285,13 +147,14 @@ module OSCRuby
 
 		def self.check_for_language_and_type(obj_attrs)
 
-			if attr_hash_exists_and_is_type_of(obj_attrs,'language','id',Fixnum)
+			if ValidationsModule::attr_hash_exists_and_is_type_of(obj_attrs,'language','id',Fixnum)
 				
 				raise ArgumentError, 'Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")'
 			
 			end
-			if attr_hash_exists_and_is_type_of(obj_attrs,'answerType','id',Fixnum) && 
-				attr_hash_exists_and_is_type_of(obj_attrs,'answerType','lookupName',String)
+			
+			if ValidationsModule::attr_hash_exists_and_is_type_of(obj_attrs,'answerType','id',Fixnum) && 
+				ValidationsModule::attr_hash_exists_and_is_type_of(obj_attrs,'answerType','lookupName',String)
 				
 				raise ArgumentError, 'Answer should at least the language, answerType, and summary set (new_answer.language = {"id" => 1}; new_answer.answerType = {"id" => 1}}; new_answer.summary = "This is the Answer Title")'
 
@@ -300,46 +163,6 @@ module OSCRuby
 			obj_attrs
 
 		end
-
-		def self.attr_hash_exists_and_is_type_of(obj,key,val,class_of_value)
-
-			return obj[0][key][val].nil? || obj[0][key][val].class != class_of_value
-
-		end
-
-# 		def self.check_for_parents(obj_attrs)
-
-# 			if !obj_attrs[0]['parent'].nil? && obj_attrs[0]['parent'].is_a?(Hash) && !obj_attrs[0]['parent'].key?('id') && !obj_attrs[0]['parent'].key?('lookupName')
-			
-# 				obj_attrs[0].delete('parent')
-			
-# 			end
-
-# 			obj_attrs
-
-# 		end
-
-# 		def self.remove_unused_new_attrs(obj_attrs)
-
-# 			obj_attrs[0].delete('id')
-			
-# 			obj_attrs[0].delete('lookupName')
-			
-# 			obj_attrs[0].delete('createdTime')
-			
-# 			obj_attrs[0].delete('updatedTime')
-			
-# 			obj_attrs[0].delete('name')
-			
-# 			if !obj_attrs[0]['parent'].nil?
-			
-# 				obj_attrs[0].delete('parent')
-			
-# 			end
-
-# 			obj_attrs
-
-# 		end
 
 	end
 

@@ -81,6 +81,12 @@ module OSCRuby
 
 			end
 
+			def attr_hash_exists_and_is_type_of(obj,key,val,class_of_value)
+
+				return obj[0][key][val].nil? || obj[0][key][val].class != class_of_value
+
+			end
+
 		end
 
 	end
