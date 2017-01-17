@@ -121,7 +121,7 @@ describe OSCRuby::ServiceProduct do
 
 		it 'should check the object and make sure that it at least has a name set' do
 
-			expect{new_service_product.create(client)}.to raise_error('ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			expect{new_service_product.create(client)}.to raise_error('ServiceProduct should at least have one name set')
 
 		end
 
@@ -129,7 +129,7 @@ describe OSCRuby::ServiceProduct do
 
 			new_service_product.names[0] = "new product name"
 
-			expect{new_service_product.create(client)}.to raise_error('ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			expect{new_service_product.create(client)}.to raise_error('ServiceProduct should at least have one name set')
 
 		end
 
@@ -137,7 +137,7 @@ describe OSCRuby::ServiceProduct do
 
 			new_service_product.names[0] = {"labelText" => "QTH45-test"}
 
-			expect{new_service_product.create(client)}.to raise_error('ServiceProduct should at least have one name set (new_service_product.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			expect{new_service_product.create(client)}.to raise_error('ServiceProduct should at least have one name set')
 
 		end
 

@@ -121,7 +121,7 @@ describe OSCRuby::ServiceCategory do
 
 		it 'should check the object and make sure that it at least has a name set' do
 
-			expect{new_service_category.create(client)}.to raise_error('ServiceCategory should at least have one name set (new_service_category.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			expect{new_service_category.create(client)}.to raise_error('ServiceCategory should at least have one name set')
 
 		end
 
@@ -129,7 +129,7 @@ describe OSCRuby::ServiceCategory do
 
 			new_service_category.names[0] = "new category name"
 
-			expect{new_service_category.create(client)}.to raise_error('ServiceCategory should at least have one name set (new_service_category.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			expect{new_service_category.create(client)}.to raise_error('ServiceCategory should at least have one name set')
 
 		end
 
@@ -137,7 +137,7 @@ describe OSCRuby::ServiceCategory do
 
 			new_service_category.names[0] = {"labelText" => "New Category"}
 
-			expect{new_service_category.create(client)}.to raise_error('ServiceCategory should at least have one name set (new_service_category.names[0] = {"labelText" => "QTH45-test", "language" => {"id" => 1}} )')
+			expect{new_service_category.create(client)}.to raise_error('ServiceCategory should at least have one name set')
 
 		end
 
