@@ -87,6 +87,48 @@ module OSCRuby
 
 			end
 
+			def check_for_names(obj_attrs,class_name)
+
+				if obj_attrs[0]['names'].count == 0 || obj_attrs[0]['names'][0]['labelText'].nil? || obj_attrs[0]['names'][0]['language'].nil?
+					
+					raise ArgumentError, "#{class_name} should at least have one name set"
+				
+				end
+
+				obj_attrs
+
+			end
+
+			def check_for_parents(obj_attrs)
+
+				if !obj_attrs[0]['parent'].nil? && obj_attrs[0]['parent'].is_a?(Hash) && !obj_attrs[0]['parent'].key?('id') && !obj_attrs[0]['parent'].key?('lookupName')
+				
+					obj_attrs[0].delete('parent')
+				
+				end
+
+				obj_attrs
+
+			end
+
+			def check_interfaces(empty_arr)
+
+				if empty_arr[0]['adminVisibleInterfaces'].empty?
+					
+					empty_arr[0].delete('adminVisibleInterfaces')
+				
+				end
+
+				if empty_arr[0]['endUserVisibleInterfaces'].empty?
+					
+					empty_arr[0].delete('endUserVisibleInterfaces')
+				
+				end
+
+				empty_arr
+
+			end
+
 		end
 
 	end

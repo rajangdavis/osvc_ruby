@@ -1,17 +1,6 @@
-require 'osc_ruby/client'
-require 'osc_ruby/query_module'
-require 'osc_ruby/validations_module'
-require 'osc_ruby/class_factory_module'
-require 'json'
-require 'uri'
-
 module OSCRuby
 	
-	class Answer
-
-		include QueryModule
-		include ValidationsModule
-		include ClassFactoryModule
+	class Answer < ServiceClass
 		
 		attr_accessor :answerType, :language, :summary, :id, :lookupName, :createdTime, :updatedTime, :accessLevels, :name, :adminLastAccessTime, :expiresDate, :guidedAssistance, :keywords, :lastAccessTime, :lastNotificationTime, :nextNotificationTime, :originalReferenceNumber, :positionInList,
 			:publishOnDate, :question, :solution, :updatedByAccount, :uRL
@@ -54,53 +43,6 @@ module OSCRuby
 			end
 
 	    end
-
-	    def create(client,return_json = false)
-
-			ClassFactoryModule.create(client,self,"/answers",return_json)
-
-	    end
-
-
-	    def self.find(client,id = nil,return_json = false)
-
-	    	ClassFactoryModule.find(client,id,'answers',return_json,OSCRuby::Answer)
-
-	    end
-
-
-	    def self.all(client, return_json = false)
-
-	    	ClassFactoryModule.all(client,'answers',return_json,OSCRuby::Answer)
-
-	    end
-
-	    def self.where(client, query = '', return_json = false)
-
-	    	ClassFactoryModule.where(client,query,'answers',return_json,OSCRuby::Answer)
-
-	    end
-
-	    def update(client, return_json = false)
-
-	    	ClassFactoryModule::update(client,self,"answers",return_json)
-
-	    end
-
-	    def destroy(client, return_json = false)
-
-	    	ClassFactoryModule.destroy(client,self,'answers',return_json)
-
-	    end
-
-
-
-
-
-
-
-
-
 
 
 	    # Convenience Methods for making the CRUD operations nicer to use

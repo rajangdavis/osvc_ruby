@@ -1,6 +1,7 @@
 language: ruby
 rvm:
 - 2.2.0
+- jruby
 addons:
   code_climate:
     repo_token:
