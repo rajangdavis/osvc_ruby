@@ -47,7 +47,7 @@ module OSCRuby
 
 	    end
 
-	    
+    
 	    def update(client, return_json = false)
 
 	    	ClassFactoryModule::update(client,self,self.class.url,return_json)

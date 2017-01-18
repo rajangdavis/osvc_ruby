@@ -3,7 +3,7 @@ module OSCRuby
 	class Answer < ServiceClass
 		
 		attr_accessor :answerType, :language, :summary, :id, :lookupName, :createdTime, :updatedTime, :accessLevels, :name, :adminLastAccessTime, :expiresDate, :guidedAssistance, :keywords, :lastAccessTime, :lastNotificationTime, :nextNotificationTime, :originalReferenceNumber, :positionInList,
-			:publishOnDate, :question, :solution, :updatedByAccount, :uRL
+			:publishOnDate, :question, :solution, :updatedByAccount, :uRL, :categories
 
 	    def initialize(attributes = nil)
 
@@ -13,6 +13,7 @@ module OSCRuby
    				@summary = "Answer summary text"
    				@language = {}
    				@question = nil
+   				@categories = []
 
 			else
 

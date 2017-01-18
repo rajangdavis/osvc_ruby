@@ -182,6 +182,25 @@ describe OSCRuby::Answer do
 
 		end
 
+		it 'should expect the categories to be an array' do
+
+			expect(new_answer.categories).to be_an(Array)
+
+		end
+
+		it 'should expect that a hash with an id key for categories should create an answer without issue', :vcr do
+
+			new_answer.language['id'] = 1
+			new_answer.answerType['lookupName'] = "HTML"
+
+			new_answer.categories[0] = {'id' => 6}
+
+			new_answer.create(client)
+
+			expect(new_answer).to be_a(OSCRuby::Answer)
+
+		end
+
 		it 'should return an instance of an OSCRuby::Answer if the json_response param is set to false (which it is by default)', :vcr do
 
 			new_answer.language['id'] = 1

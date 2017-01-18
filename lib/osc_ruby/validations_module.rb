@@ -71,6 +71,16 @@ module OSCRuby
 
 		    end
 
+		    def check_attributes_request(attributes_request,class_name)
+
+				if attributes_request.empty?
+					
+					raise ArgumentError, "The attributes you are requesting for the #{class_name} object must be specified when using the 'select' method"
+
+				end
+
+		    end
+
 			def check_client(client)
 
 				if client.class != OSCRuby::Client || client.nil?
