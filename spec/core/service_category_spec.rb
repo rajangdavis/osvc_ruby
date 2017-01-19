@@ -287,7 +287,7 @@ describe OSCRuby::ServiceCategory do
 
 		it 'should raise an error if there is no query' do
 
-			expect{OSCRuby::ServiceCategory.where(client)}.to raise_error('A query must be specified when using the "where" method')
+			expect{OSCRuby::ServiceCategory.where(client)}.to raise_error("A query must be specified when using the 'where' method")
 
 		end
 

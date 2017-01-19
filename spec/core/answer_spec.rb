@@ -356,7 +356,7 @@ describe OSCRuby::Answer do
 
 		it 'should raise an error if there is no query' do
 
-			expect{OSCRuby::Answer.where(client)}.to raise_error('A query must be specified when using the "where" method')
+			expect{OSCRuby::Answer.where(client)}.to raise_error("A query must be specified when using the 'where' method")
 
 		end
 

@@ -61,11 +61,11 @@ module OSCRuby
 
 			end
 
-		    def check_query(query)
+		    def check_query(query,method_name = "where")
 
 				if query.empty?
 					
-					raise ArgumentError, 'A query must be specified when using the "where" method'
+					raise ArgumentError, "A query must be specified when using the '#{method_name}' method"
 
 				end
 

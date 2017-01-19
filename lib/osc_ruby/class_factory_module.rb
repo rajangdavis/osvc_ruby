@@ -82,7 +82,7 @@ module OSCRuby
 
 				ValidationsModule::check_client(client)
 
-				ValidationsModule::check_query(query)
+				ValidationsModule::check_query(query,'where')
 
 				@query = URI.escape("queryResults/?query=select * from #{object_in_query} where #{query}")
 

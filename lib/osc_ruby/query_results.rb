@@ -9,11 +9,13 @@ module OSCRuby
 		include QueryModule
 		include ValidationsModule
 
-		def self.select(client,query,return_json = false)
+		def initialize; end
+
+		def select(client,query,return_json = false)
 
 			ValidationsModule::check_client(client)
 
-			ValidationsModule::check_query(query)
+			ValidationsModule::check_query(query,"select")
 
 			@query = URI.escape("queryResults/?query=select #{query}")
 
