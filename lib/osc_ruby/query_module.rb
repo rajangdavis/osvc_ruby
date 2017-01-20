@@ -20,7 +20,7 @@ module OSCRuby
 
 					check_obj_for_errors(obj_to_find)
 
-					normalize(obj_to_find)
+					normalize(obj_to_find,resource)
 				else
 
 					obj_to_find.body
@@ -47,7 +47,7 @@ module OSCRuby
 				
 			end
 
-			def normalize(input)
+			def normalize(input,resource)
 
 				if input.code.to_i == 404
 
@@ -59,15 +59,29 @@ module OSCRuby
 
 					final_hash = []
 
-					json_input['items'][0]['rows'].each do |row|
+					query_capture = URI.unescape(resource).split('=')[1]
 
-						obj_hash = {}
-						
-						json_input['items'][0]['columnNames'].each_with_index do |column,i|
-							obj_hash[column] = if !row[i].nil? && row[i].is_i? == true then row[i].to_i else row[i] end
+					queries = query_capture.split(';')
+
+					json_input['items'].each do |item|
+
+						item['rows'].each_with_index do |row,row_i|
+
+							obj_hash = {}
+							
+							item['columnNames'].each_with_index do |column,i|
+								obj_hash[column] = if !row[i].nil? && row[i].is_i? == true then row[i].to_i else row[i] end
+							end
+
+							final_hash.push(obj_hash)
+
+							if json_input['items'].count > 1 && (item['rows'].count-1 == row_i)
+
+								final_hash.push("\n")
+
+							end
+
 						end
-
-						final_hash.push(obj_hash)
 
 					end
 

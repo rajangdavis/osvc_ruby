@@ -47,6 +47,8 @@ describe OSCRuby::QueryResults do
 
 			expect(query_results.select(client,"describe answers")).to eq(nil)
 
+			expect(query_results.select(client,"describe answers;describe servicecategories")).to eq(nil)
+
 		end
 		
 	end

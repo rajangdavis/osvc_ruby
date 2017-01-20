@@ -23,8 +23,6 @@ module OSCRuby
 
 	    	json_response = JSON.parse(response) 
 
-	    	puts "Results for '#{query}'"
-	    	puts
 	    	puts json_response
 	    	puts
 	 
