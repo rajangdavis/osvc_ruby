@@ -33,14 +33,22 @@ describe OSCRuby::QueryResults do
 
 		end
 
-		it 'should expect a query ' do
+		it 'should expect a query' do
 
 			expect(client).to be_an(OSCRuby::Client)
 
 			expect{query_results.select(client,"")}.to raise_error("A query must be specified when using the 'select' method")
 
 		end
+
+		it 'should put results in array of hashes',:vcr do 
+
+			expect(query_results.select(client,"describe")).to eq(nil)
+
+			expect(query_results.select(client,"describe answers")).to eq(nil)
+
+		end
 		
 	end
 
-end
+end	

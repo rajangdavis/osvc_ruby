@@ -12,13 +12,15 @@ This gem was tested against Oracle Service Cloud November 2016 using Ruby versio
 
 The create, update, and destroy methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before November 2016. This is because I am using the ROQL queries to generate values for Common Objects
 
-Currently supporting the following objects:
+Currently supporting the following objects from the REST API:
 
 	ServiceProduct
 
 	ServiceCategory
 
 	Answer
+
+	QueryResults (does not support CRUD)
 
 At this time, subclasses such as ServiceProduct.CategoryLinks are not currently supported. 
 

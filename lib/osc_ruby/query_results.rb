@@ -11,27 +11,22 @@ module OSCRuby
 
 		def initialize; end
 
-		def select(client,query,return_json = false)
+		def select(client,query)
 
 			ValidationsModule::check_client(client)
 
 			ValidationsModule::check_query(query,"select")
 
-			@query = URI.escape("queryResults/?query=select #{query}")
+			@query = URI.escape("queryResults/?query=#{query}")
 
 	    	response = QueryModule::find(client,@query)
 
-	    	response_body = JSON.parse(response.body)
+	    	json_response = JSON.parse(response) 
 
-	    	if response.code.to_i == 201 && return_json == false
-
-				response_body
-
-	    	elsif return_json == true
-
-	    		response.body
-
-	    	end
+	    	puts "Results for '#{query}'"
+	    	puts
+	    	puts json_response
+	    	puts
 	 
 		end
 	
