@@ -2,30 +2,21 @@ module OSCRuby
 
 	class Account < ServiceClass
 
-		attr_accessor :names,:parent,:displayOrder,:adminVisibleInterfaces,:endUserVisibleInterfaces,:id,:lookupName,:createdTime,:updatedTime,:name
+		attr_accessor :displayName,:login,:name,:nameFurigana,:attributes,:profile,:name,:staffGroup,:newPassword,:country,:emails
 
 	    def initialize(attributes = nil)
 
-    		@names = []
-			@adminVisibleInterfaces = []
-			@endUserVisibleInterfaces = []
-
-			if attributes.nil?
-
-				@parent = {}
-				@displayOrder = 1
-
-			else
-
-				@id = attributes["id"]
-				@lookupName = attributes["lookupName"]
-				@createdTime = attributes["createdTime"]
-				@updatedTime = attributes["updatedTime"]
-				@displayOrder = attributes["displayOrder"]
-				@name = attributes["name"]
-				@parent = attributes["parent"]
-
-			end
+	    	@displayName = 'Display Name'
+	    	@login = 'Login'
+	    	@name = {}
+	    	@nameFurigana = {}
+	    	@attributes = {}
+	    	@profile = {}
+	    	@name = {}
+	    	@staffGroup = {}
+	    	@newPassword = 'default_password'
+	    	@country = {}
+	    	@emails = []
 
 	    end
 
@@ -40,16 +31,6 @@ module OSCRuby
     		self.lookupName = response_body["lookupName"]
 
 			self.displayOrder = response_body["displayOrder"]
-
-			if !response_body["parent"].nil?
-
-				self.parent = response_body["parent"]["links"][0]["href"].split('/').pop.to_i
-
-			else
-
-				self.parent = nil
-
-			end
 
 		end
 
