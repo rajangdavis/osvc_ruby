@@ -225,12 +225,18 @@ product_to_delete.destroy(rn_client)
 
 - [x] Make version default to 1.3 but an option to be set in the config class
 
+- [ ] Follow with next Classes (Accounts,ServiceCategories, Answers, Incidents)
+
+- [ ] Need to update QueryResults to split the queries
+
+- [ ] Need to update QueryResults to be able to manipulate the results
+
+- [ ] Need to finish up the Account object
+
 - [ ] Allow for the prefer:exclude-null-properties header => update config and connect class, update tests
 
 - [ ] Allow for Session Authorization => update config class and connect classes, update tests
 
 - [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby ORM
-
-- [ ] Follow with next Classes (ServiceCategories, Answers, Incidents)
 
 - [ ] Release MVP
