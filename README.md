@@ -225,13 +225,13 @@ product_to_delete.destroy(rn_client)
 
 - [x] Make version default to 1.3 but an option to be set in the config class
 
+- [x] Need to update QueryResults to split the queries
+
+- [x] Need to update QueryResults to be able to manipulate the results
+
+- [ ] Figure out subclasses
+
 - [ ] Follow with next Classes (Accounts,ServiceCategories, Incidents)
-
-- [ ] Need to update QueryResults to split the queries
-
-- [ ] Need to update QueryResults to be able to manipulate the results
-
-- [ ] Need to finish up the Account object
 
 - [ ] Allow for the prefer:exclude-null-properties header => update config and connect class, update tests
 

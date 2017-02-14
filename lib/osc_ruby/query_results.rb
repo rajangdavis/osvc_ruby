@@ -23,13 +23,15 @@ module OSCRuby
 
 	    	json_response = JSON.parse(response) 
 
+	    	json_response.unshift("\n")
+
 	    	if return_json == true
-	    		puts json_response
-	    		puts
+	    		json_response_final = QueryModule::query_injection(query,json_response)
+	    		puts json_response_final
 	    	end
 
-	    	json_response
-	 
+	    	QueryModule::remove_new_lines(json_response)
+ 
 		end
 	
 	end
