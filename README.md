@@ -225,7 +225,7 @@ product_to_delete.destroy(rn_client)
 
 - [x] Make version default to 1.3 but an option to be set in the config class
 
-- [ ] Follow with next Classes (Accounts,ServiceCategories, Answers, Incidents)
+- [ ] Follow with next Classes (Accounts,ServiceCategories, Incidents)
 
 - [ ] Need to update QueryResults to split the queries
 
