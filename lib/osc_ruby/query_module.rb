@@ -107,7 +107,7 @@ module OSCRuby
 
 				json_response.each_with_index do |hash,i|
 					if hash == "\n" && queries.count > 1
-						json_response[i] = "Results for #{queries[count]}:"
+						json_response[i] = "\nResults for #{queries[count]}:"
 						count += 1
 					elsif hash == "\n"
 						json_response.delete_at(i)
