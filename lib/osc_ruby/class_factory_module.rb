@@ -8,7 +8,7 @@ module OSCRuby
 
 		class << self
 
-			def new_from_fetch(attributes,class_name)
+			def new_from_fetch(attributes,class_name,custom_or_nested = nil)
 
 		    	ValidationsModule.check_attributes(attributes)
 
@@ -40,7 +40,7 @@ module OSCRuby
 
 			end
 
-			def find(client,id,obj_query,return_json,class_name)
+			def find(client,id,obj_query,return_json,class_name,custom_or_nested = nil)
 
 		    	ValidationsModule::check_client(client)
 
@@ -60,13 +60,13 @@ module OSCRuby
 
 					class_json_final = JSON.parse(class_json)
 
-					ClassFactoryModule::new_from_fetch(class_json_final[0],class_name)
+					ClassFactoryModule::new_from_fetch(class_json_final[0],class_name,custom_or_nested = nil)
 
 				end
 
 			end
 
-			def all(client,obj_query,return_json,class_name)
+			def all(client,obj_query,return_json,class_name,custom_or_nested = nil)
 
 				ValidationsModule::check_client(client)
 	    	
@@ -74,11 +74,11 @@ module OSCRuby
 
 				object_json = QueryModule::find(client,resource)
 
-				ClassFactoryModule::instantiate_multiple_objects(return_json, object_json, class_name)
+				ClassFactoryModule::instantiate_multiple_objects(return_json, object_json, class_name,custom_or_nested = nil)
 
 			end
 
-			def where(client,query,object_in_query,return_json,class_name)
+			def where(client,query,object_in_query,return_json,class_name,custom_or_nested = nil)
 
 				ValidationsModule::check_client(client)
 
@@ -88,7 +88,7 @@ module OSCRuby
 
 		    	object_json = QueryModule::find(client,@query)
 
-		    	ClassFactoryModule::instantiate_multiple_objects(return_json, object_json, class_name)
+		    	ClassFactoryModule::instantiate_multiple_objects(return_json, object_json, class_name,custom_or_nested = nil)
 
 			end
 
@@ -140,7 +140,7 @@ module OSCRuby
 
 		    end
 
-		    def instantiate_multiple_objects(return_json, object_json, class_name)
+		    def instantiate_multiple_objects(return_json, object_json, class_name,custom_or_nested = nil)
 
 		    	if return_json == true
 
@@ -150,7 +150,7 @@ module OSCRuby
 
 			    	object_json_final = JSON.parse(object_json)
 
-			    	object_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name) }
+			    	object_json_final.map { |attributes| ClassFactoryModule::new_from_fetch(attributes,class_name,custom_or_nested = nil) }
 
 			    end
 

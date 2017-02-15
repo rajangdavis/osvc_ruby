@@ -1,6 +1,9 @@
+require 'osc_ruby/nested_resource_module'
+
 module OSCRuby
 	
 	class Answer < ServiceClass
+		include NestedResourceModule
 		
 		attr_accessor :answerType, :language, :summary, :id, :lookupName, :createdTime, :updatedTime, :accessLevels, :name, :adminLastAccessTime, :expiresDate, :guidedAssistance, :keywords, :lastAccessTime, :lastNotificationTime, :nextNotificationTime, :originalReferenceNumber, :positionInList,
 			:publishOnDate, :question, :solution, :updatedByAccount, :uRL, :categories
