@@ -139,6 +139,20 @@ module OSCRuby
 
 			end
 
+			def check_obj_for_errors(obj_to_check)
+
+				json_obj = JSON.parse(obj_to_check.body)
+
+				if !json_obj.nil? && json_obj['items'][0]['rows'].count == 0
+
+					puts obj_to_check.body
+
+					raise ArgumentError, 'There were no objects matching your query; please try again.'
+
+				end
+
+			end
+
 		end
 
 	end

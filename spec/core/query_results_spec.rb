@@ -21,6 +21,38 @@ describe OSCRuby::QueryResults do
 		OSCRuby::QueryResults.new
 	}
 
+
+
+	let(:table){ "answers" } 
+	let(:nested_attributes){
+ 		[ "*",
+		  "accessLevels.namedIDList.*",
+		  "answerType.*",
+		  "assignedTo.account.*",
+		  "assignedTo.staffGroup.*",
+		  "banner.*",
+		  "banner.importanceFlag.*",
+		  "banner.updatedByAccount.*",
+		  "categories.categoriesList.*",
+		  "commonAttachments.fileAttachmentList.*",
+		  "commonAttachments.fileAttachmentList.names.labelList.labelText",
+		  "commonAttachments.fileAttachmentList.names.labelList.language.*",
+		  "fileAttachments.fileAttachmentList.*",
+		  "guidedAssistance.*",
+		  "language.*",
+		  "notes.noteList.*",
+		  "positionInList.*",
+		  "products.productsList.*",
+		  "relatedAnswers.answerRelatedAnswerList.*",
+		  "relatedAnswers.answerRelatedAnswerList.toAnswer.*",
+		  "siblingAnswers.*",
+		  "statusWithType.statusType.*",
+		  "updatedByAccount.*",
+		  "customFields.c.*"
+		]
+	}
+
+
 	context "#query" do
 
 		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
@@ -72,6 +104,28 @@ describe OSCRuby::QueryResults do
 				expect{@answer = OSCRuby::Answer.new(answer)}.not_to raise_error
 
 			end 
+
+		end
+
+		context "#nested_query" do
+
+			it 'should take nested queries and return multiple objects',:vcr do
+
+				query = nested_attributes.map{|q| "select #{table}.#{q} from #{table} where ID = 2222" }.join("; ")
+
+
+				expect do
+					
+					results = query_results.nested_query(client,query,true)
+					expect(results.length).to eq(nested_attributes.length)
+
+					puts "Results : #{results.length} | Queries: #{nested_attributes.length}"
+
+				end.not_to raise_error
+
+
+				
+			end
 
 		end
 		

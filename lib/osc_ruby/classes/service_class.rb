@@ -1,10 +1,10 @@
 require 'osc_ruby/client'
-require 'osc_ruby/query_module'
-require 'osc_ruby/validations_module'
-require 'osc_ruby/class_factory_module'
+require 'osc_ruby/modules/query_module'
+require 'osc_ruby/modules/validations_module'
+require 'osc_ruby/modules/class_factory_module'
 require 'json'
 require 'uri'
-require_relative '../ext/string'
+require_relative '../../ext/string.rb'
 
 module OSCRuby
 	

@@ -216,6 +216,17 @@ describe OSCRuby::Answer do
 
 		end
 
+		# it 'should be able to set the status of an answer', do
+
+		# 	new_answer.language['id'] = 1
+		# 	new_answer.answerType['lookupName'] = "HTML"
+
+		# 	new_answer.create(client)
+
+		# 	expect(new_answer).to be_a(OSCRuby::Answer)
+
+		# end
+
 
 		it 'should return the body object if the json_response param is set to true', :vcr do
 

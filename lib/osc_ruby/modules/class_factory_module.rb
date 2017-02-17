@@ -1,5 +1,5 @@
 require 'osc_ruby/connect'
-require 'osc_ruby/validations_module'
+require 'osc_ruby/modules/validations_module'
 require 'json'
 
 module OSCRuby
