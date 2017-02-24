@@ -15,11 +15,18 @@ module OSCRuby
 
 				obj_vars.each do |var| 
 
-					obj_attr = var.to_s.delete("@")
+					# Make sure to get rid of the empty ID
+					# otherwise everything gets all screwed up
 
-					obj_attr_val = obj.instance_variable_get(var)
+					if var.to_s != '@id'
 
-					empty_arr[0][obj_attr] = obj_attr_val
+						obj_attr = var.to_s.delete("@")
+
+						obj_attr_val = obj.instance_variable_get(var)
+
+						empty_arr[0][obj_attr] = obj_attr_val
+
+					end
 
 				end
 

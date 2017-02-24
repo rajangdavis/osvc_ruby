@@ -237,6 +237,10 @@ describe OSCRuby::Answer do
 
 			expect(new_answer.create(client,true)).to be_a(String)
 
+			10.times do |test| 
+				puts new_answer.create(client,true)
+			end
+
 		end
 
 
