@@ -206,7 +206,9 @@ describe OSCRuby::Answer do
 			new_answer.language['id'] = 1
 			new_answer.answerType['lookupName'] = "HTML"
 
-			new_answer.create(client)
+			10.times do |test| 
+				new_answer.create(client)
+			end
 
 			expect(new_answer).to be_a(OSCRuby::Answer)
 
