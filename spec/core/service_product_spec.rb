@@ -162,6 +162,8 @@ describe OSCRuby::ServiceProduct do
 
 			expect(new_service_product.parent).to eq(102)
 
+			expect(new_service_product.id).to_not eq(nil)
+
 		end
 
 

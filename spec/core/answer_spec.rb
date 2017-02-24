@@ -212,7 +212,7 @@ describe OSCRuby::Answer do
 
 			expect(new_answer.summary).to eq("Answer summary text")
 
-			expect(new_answer.language).to eq({"id"=>1, "lookupName"=>"en_US"})
+			expect(new_answer.language).to eq({"id"=>1})
 
 		end
 
@@ -234,6 +234,18 @@ describe OSCRuby::Answer do
 			new_answer.answerType['lookupName'] = "HTML"
 
 			expect(new_answer.create(client,true)).to be_a(String)
+
+		end
+
+
+		it 'should return the answer attrs and assign them to the answer object', :vcr do
+
+			new_answer.language['id'] = 1
+			new_answer.answerType['lookupName'] = "HTML"
+
+			new_answer.create(client,true)
+
+			expect(new_answer.id).to_not be(nil)
 
 		end
 

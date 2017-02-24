@@ -13,10 +13,12 @@ module OSCRuby
 			if attributes.nil?
 
    				@answerType = {}
+   				@accessLevels = []
    				@summary = "Answer summary text"
    				@language = {}
    				@question = nil
    				@categories = []
+   				@id = 0
 
 			else
 
@@ -51,30 +53,30 @@ module OSCRuby
 
 	    # Convenience Methods for making the CRUD operations nicer to use
 
-		def set_attributes(response_body)
-	    	self.id = response_body['id'].to_i
-			self.lookupName = response_body['lookupName'].to_i
-			self.createdTime = response_body['createdTime']
-			self.updatedTime = response_body['updatedTime']
-			self.accessLevels = response_body['accessLevels']
-			self.adminLastAccessTime = response_body['adminLastAccessTime']
-			self.answerType = response_body['answerType']
-			self.expiresDate = response_body['expiresDate']
-			self.guidedAssistance = response_body['guidedAssistance']
-			self.keywords = response_body['keywords']
-			self.language = response_body['language']
-			self.lastAccessTime = response_body['lastAccessTime']
-			self.lastNotificationTime = response_body['lastNotificationTime']
-			self.name = response_body['name'].to_i
-			self.nextNotificationTime = response_body['nextNotificationTime']
-			self.originalReferenceNumber = response_body['originalReferenceNumber']
-			self.positionInList = response_body['positionInList']
-			self.publishOnDate = response_body['publishOnDate']
-			self.question = response_body['question']
-			self.solution = response_body['solution']
-			self.summary = response_body['summary']
-			self.updatedByAccount = response_body['updatedByAccount']
-			self.uRL = response_body['uRL']
+		def self.set_attributes(response_body)
+	    	id = response_body['id'].to_i
+			lookupName = response_body['lookupName'].to_i
+			createdTime = response_body['createdTime']
+			updatedTime = response_body['updatedTime']
+			accessLevels = response_body['accessLevels']
+			adminLastAccessTime = response_body['adminLastAccessTime']
+			answerType = response_body['answerType']
+			expiresDate = response_body['expiresDate']
+			guidedAssistance = response_body['guidedAssistance']
+			keywords = response_body['keywords']
+			language = response_body['language']
+			lastAccessTime = response_body['lastAccessTime']
+			lastNotificationTime = response_body['lastNotificationTime']
+			name = response_body['name'].to_i
+			nextNotificationTime = response_body['nextNotificationTime']
+			originalReferenceNumber = response_body['originalReferenceNumber']
+			positionInList = response_body['positionInList']
+			publishOnDate = response_body['publishOnDate']
+			question = response_body['question']
+			solution = response_body['solution']
+			summary = response_body['summary']
+			updatedByAccount = response_body['updatedByAccount']
+			uRL = response_body['uRL']
 		end
 
 		def self.check_self(obj,is_update = false)

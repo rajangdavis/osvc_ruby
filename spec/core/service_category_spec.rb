@@ -160,6 +160,8 @@ describe OSCRuby::ServiceCategory do
 
 			expect(new_service_category.displayOrder).to eq(1)
 
+			expect(new_service_category.id).to_not eq(nil)
+
 		end
 
 
