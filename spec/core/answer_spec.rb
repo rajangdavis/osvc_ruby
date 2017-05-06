@@ -310,10 +310,10 @@ describe OSCRuby::Answer do
 			expect(known_working_answer.publishOnDate).to eq(nil)
 			expect(known_working_answer.question).to eq(nil)
 			expect(known_working_answer.summary).to eq("QT Series: (VIDEO) Scan 'N View Setup")
-			expect(known_working_answer.updatedByAccount).to eq(47)
 			expect(known_working_answer.uRL).to eq(nil)
 			
 			# not a very reliable metrics.....
+			# expect(known_working_answer.updatedByAccount).to eq(47)
 			# expect(known_working_answer.updatedTime).to eq("2016-12-13T09:55:45Z")
 			# expect(known_working_answer.adminLastAccessTime).to eq("2016-11-23T22:54:26Z")
 			# expect(known_working_answer.lastAccessTime).to eq("2016-12-10T07:27:37Z")
