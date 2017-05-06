@@ -15,6 +15,8 @@ describe OSCRuby::Connect do
 			config.username = ENV['OSC_ADMIN']
 		
 			config.password = ENV['OSC_PASSWORD']
+
+			config.suppress_rules = true
 		
 		end
 	}

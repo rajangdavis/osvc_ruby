@@ -26,6 +26,9 @@ module OSCRuby
 				request = Net::HTTP::Get.new @uri.request_uri
 
 				request.add_field('Content-Type', 'application/x-www-form-urlencoded')
+				if @final_config['suppress_rules'] == true
+					request.add_field 'OSvC-CREST-Suppress-All',true
+				end
 
 				request.basic_auth @username, @password
 
@@ -52,6 +55,9 @@ module OSCRuby
 				request.content_type = "application/json"
 				if @final_config['patch_request'] == true
 					request.add_field 'X-HTTP-Method-Override','PATCH'
+				end
+				if @final_config['suppress_rules'] == true
+					request.add_field 'OSvC-CREST-Suppress-All',true
 				end
 				request.body = JSON.dump(json_content)
 
@@ -93,15 +99,9 @@ module OSCRuby
 
 			@version = @config.version
 
-			if @config.no_ssl_verify == true
+			@ssl_verification = ssl_check(@config)
 
-				@ssl_verification = OpenSSL::SSL::VERIFY_NONE
-				
-			else
-				
-				@ssl_verification = OpenSSL::SSL::VERIFY_PEER
-
-			end
+			@rule_suppression = rule_suppress_check(@config)
 
 		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/#{@version}/#{resource_url}"
 		  	
@@ -109,7 +109,41 @@ module OSCRuby
 
 		  	@patch_request = patch_request == true ? true : false
 		  	
-		  	@final_config = {'site_url' => @final_uri, 'username' => @config.username, 'password' => @config.password, 'patch_request' => @patch_request, 'ssl' => @ssl_verification}
+		  	@final_config = {'site_url' => @final_uri,
+		  					 'username' => @config.username, 
+		  					 'password' => @config.password, 
+		  					 'patch_request' => @patch_request, 
+		  					 'ssl' => @ssl_verification, 
+		  					 'suppress_rules' => @rule_suppression
+		  					}
+
+		end
+
+		def self.rule_suppress_check(config)
+
+			if config.suppress_rules == true || config.suppress_rules == "Yes"
+
+				true
+				
+			else
+				
+				false
+
+			end
+
+		end
+
+		def self.ssl_check(config)
+
+			if config.no_ssl_verify == true
+
+				OpenSSL::SSL::VERIFY_NONE
+				
+			else
+				
+				OpenSSL::SSL::VERIFY_PEER
+
+			end
 
 		end
 
