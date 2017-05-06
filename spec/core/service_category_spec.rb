@@ -219,7 +219,7 @@ describe OSCRuby::ServiceCategory do
 
 			expect(known_working_category).to be_an(OSCRuby::ServiceCategory)
 
-			expect(known_working_category.name).to eq('Manuals & Guides')
+			expect(known_working_category.name).to eq('Manuals and Guides')
 
 			expect(known_working_category.displayOrder).to eq(2)
 
