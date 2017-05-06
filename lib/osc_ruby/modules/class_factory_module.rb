@@ -28,19 +28,17 @@ module OSCRuby
 
 		    	response_body = JSON.parse(response.body)
 
-		    	if response.code.to_i == 201 && return_json == false
+		    	if return_json == true
 
-		    		if obj.class.respond_to? :set_attributes
-						obj.class.new(response_body)
-					else
-						obj.set_attributes(response_body)
-					end
-
-		    	elsif return_json == true
-
-		    		response.body
+		    		puts response.body
 
 		    	end
+
+	    		if obj.class.respond_to? :set_attributes
+					obj.class.new(response_body)
+				else
+					obj.set_attributes(response_body)
+				end
 
 			end
 

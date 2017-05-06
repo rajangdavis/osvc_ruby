@@ -230,15 +230,15 @@ describe OSCRuby::Answer do
 		# end
 
 
-		it 'should return the body object if the json_response param is set to true', :vcr do
+		it 'should print the body object if the json_response param is set to true', :vcr do
 
 			new_answer.language['id'] = 1
 			new_answer.answerType['lookupName'] = "HTML"
 
-			expect(new_answer.create(client,true)).to be_a(String)
+			expect(new_answer.create(client,true)).to be_a(OSCRuby::Answer)
 
 			10.times do |test| 
-				puts new_answer.create(client,true)
+				new_answer.create(client,true)
 			end
 
 		end

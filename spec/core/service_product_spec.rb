@@ -167,12 +167,14 @@ describe OSCRuby::ServiceProduct do
 		end
 
 
-		it 'should return the body object if the json_response param is set to true', :vcr do
+		it 'should print the body object if the json_response param is set to true', :vcr do
 
 			new_service_product.names[0] = {"labelText" => "TEST-PRODUCT", "language" => {"id" => 1}}
 			new_service_product.names[1] = {'labelText' => 'TEST-PRODUCT', 'language' => {'id' => 11}} 	
 
-			expect(new_service_product.create(client,true)).to be_a(String)
+			new_service_product.create(client,true)
+
+			expect(new_service_product).to be_a(OSCRuby::ServiceProduct)
 
 		end
 

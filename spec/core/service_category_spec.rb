@@ -165,7 +165,7 @@ describe OSCRuby::ServiceCategory do
 		end
 
 
-		it 'should return the body object if the json_response param is set to true', :vcr do
+		it 'should print the body object if the json_response param is set to true', :vcr do
 
 			new_service_category.displayOrder = 11
 
@@ -174,7 +174,9 @@ describe OSCRuby::ServiceCategory do
 			new_service_category.names[0] = {"labelText" => "TEST-CATEGORY", "language" => {"id" => 1}}
 			new_service_category.names[1] = {'labelText' => 'TEST-CATEGORY', 'language' => {'id' => 11}} 	
 
-			expect(new_service_category.create(client,true)).to be_a(String)
+			new_service_category.create(client,true)
+
+			expect(new_service_category).to be_a(OSCRuby::ServiceCategory)
 
 		end
 
