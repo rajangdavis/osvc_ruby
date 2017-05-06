@@ -221,7 +221,7 @@ describe OSCRuby::ServiceCategory do
 
 			expect(known_working_category.name).to eq('Manuals and Guides')
 
-			expect(known_working_category.displayOrder).to eq(2)
+			expect(known_working_category.displayOrder).to eq(1)
 
 		end
 

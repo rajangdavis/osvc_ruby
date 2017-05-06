@@ -299,13 +299,14 @@ describe OSCRuby::Answer do
 			# not a very reliable metric.....
 			# expect(known_working_answer.updatedTime).to eq("2016-12-13T09:55:45Z")
 			expect(known_working_answer.accessLevels).to eq(3)
-			expect(known_working_answer.adminLastAccessTime).to eq("2016-11-23T22:54:26Z")
+			# not a very reliable metric.....
+			# expect(known_working_answer.adminLastAccessTime).to eq("2016-11-23T22:54:26Z")
 			expect(known_working_answer.answerType).to eq(1)
 			expect(known_working_answer.expiresDate).to eq(nil)
 			expect(known_working_answer.guidedAssistance).to eq(nil)
 			expect(known_working_answer.keywords).to eq("AbCbEbAb")
 			expect(known_working_answer.language).to eq(1)
-			expect(known_working_answer.lastAccessTime).to eq("2016-12-10T07:27:37Z")
+			# expect(known_working_answer.lastAccessTime).to eq("2016-12-10T07:27:37Z")
 			expect(known_working_answer.lastNotificationTime).to eq(nil)
 			expect(known_working_answer.name).to eq(2222)
 			expect(known_working_answer.nextNotificationTime).to eq(nil)
