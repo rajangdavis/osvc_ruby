@@ -54,7 +54,7 @@ require 'osc_ruby'
 rn_client = OSCRuby::Client.new do |config|
 	config.username = ENV['OSC_ADMIN']
 	config.password = ENV['OSC_PASSWORD']
-	config.interface = ENV['OSC_TEST_SITE']
+	config.interface = ENV['OSC_TEST1_SITE']
 end
 
 

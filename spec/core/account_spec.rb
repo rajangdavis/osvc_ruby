@@ -96,7 +96,7 @@ describe OSCRuby::Account do
 
 		OSCRuby::Client.new do |config|
 		
-			config.interface = ENV['OSC_TEST_SITE']
+			config.interface = ENV['OSC_TEST1_SITE']
 		
 			config.username = ENV['OSC_ADMIN']
 		

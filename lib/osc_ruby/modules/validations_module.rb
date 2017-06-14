@@ -61,6 +61,8 @@ module OSCRuby
 			def check_attributes(attributes)
 
 				if attributes.class != Hash
+
+					puts attributes
 					
 					raise ArgumentError, "Attributes must be a hash; please use the appropriate data structure"
 			
