@@ -18,12 +18,12 @@ Gem::Specification.new do |spec|
     spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
     spec.require_paths = ["lib"]
 
-    spec.add_development_dependency "simplecov", '~> 0'   
+    spec.add_development_dependency "simplecov"   
     spec.add_development_dependency "codeclimate-test-reporter", '~> 1.0', '>= 1.0.0'   
-    spec.add_development_dependency "bundler", '~> 0'
+    spec.add_development_dependency "bundler"
     spec.add_development_dependency "rake", "~> 10.0"
     spec.add_development_dependency 'rspec', '~> 3.2', '>= 3.2.0'
     spec.add_development_dependency 'vcr', '~> 3.0', '>= 3.0.3'
-    spec.add_development_dependency "fakeweb", '~> 0'
-    spec.add_development_dependency 'yard', '~> 0'
+    spec.add_development_dependency "fakeweb"
+    spec.add_development_dependency 'yard'
 end
