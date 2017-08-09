@@ -8,11 +8,13 @@ describe OSCRuby::QueryResults do
 
 		OSCRuby::Client.new do |config|
 		
-			config.interface = ENV['OSC_TEST1_SITE']
+			config.interface = ENV['OSC_SITE']
 		
 			config.username = ENV['OSC_ADMIN']
 		
 			config.password = ENV['OSC_PASSWORD']
+
+			config.demo_site = true
 		
 		end
 	}
@@ -91,41 +93,13 @@ describe OSCRuby::QueryResults do
 
 		it 'should be able to manipulate and assign results data',:vcr do 
 
-			@answers = query_results.query(client,"select * from answers where ID > 2500")
+			@incidents = query_results.query(client,"select * from incidents where ID > 2500 LIMIT 10")
 
-			@answers.each do |answer|
+			@incidents.each do |incident|
 
-				expect(answer['id'].to_i).to be_a(Integer)
-
-				expect(answer['answerType']).not_to be(nil)
-
-				expect(answer['answerType']).not_to eq("\n")
-
-				expect{@answer = OSCRuby::Answer.new(answer)}.not_to raise_error
+				expect(incident['id'].to_i).to be_a(Integer)
 
 			end 
-
-		end
-
-		context "#nested_query" do
-
-			it 'should take nested queries and return multiple objects',:vcr do
-
-				query = nested_attributes.map{|q| "select #{table}.#{q} from #{table} where ID = 2222" }.join("; ")
-
-
-				expect do
-					
-					results = query_results.nested_query(client,query,true)
-					expect(results.length).to eq(nested_attributes.length)
-
-					puts "Results : #{results.length} | Queries: #{nested_attributes.length}"
-
-				end.not_to raise_error
-
-
-				
-			end
 
 		end
 		

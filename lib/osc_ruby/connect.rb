@@ -41,7 +41,6 @@ module OSCRuby
 		def self.post_or_patch(client,resource_url = nil, json_content = nil,patch_request = false)
 
 			@final_config = post_and_patch_check(client,resource_url, json_content, patch_request)
-
 			@uri = @final_config['site_url']
 			@username = @final_config['username']
 			@password = @final_config['password']
@@ -103,7 +102,9 @@ module OSCRuby
 
 			@rule_suppression = rule_suppress_check(@config)
 
-		  	@url = "https://" + @config.interface + ".custhelp.com/services/rest/connect/#{@version}/#{resource_url}"
+			@cust_or_demo = demo_check(@config)
+
+		  	@url = "https://" + @config.interface + ".#{@cust_or_demo}.com/services/rest/connect/#{@version}/#{resource_url}"
 		  	
 		  	@final_uri = URI(@url)
 
@@ -117,6 +118,14 @@ module OSCRuby
 		  					 'suppress_rules' => @rule_suppression
 		  					}
 
+		end
+
+		def self.demo_check(config)
+			if config.demo_site == true
+				"rightnowdemo"
+			else
+				"custhelp"
+			end
 		end
 
 		def self.rule_suppress_check(config)

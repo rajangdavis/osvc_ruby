@@ -10,16 +10,19 @@ describe OSCRuby::Connect do
 
 		OSCRuby::Client.new do |config|
 		
-			config.interface = ENV['OSC_TEST1_SITE']
+			config.interface = ENV['OSC_SITE']
 		
 			config.username = ENV['OSC_ADMIN']
 		
 			config.password = ENV['OSC_PASSWORD']
 
 			config.suppress_rules = true
+
+			config.demo_site = true
 		
 		end
 	}
+
 
 	context '#generate_url_and_config' do
 
@@ -49,7 +52,7 @@ describe OSCRuby::Connect do
 
 			interface = client.config.interface
 
-			expect(test['site_url']).to eq(URI("https://#{interface}.custhelp.com/services/rest/connect/v1.3/serviceProducts"))
+			expect(test['site_url']).to eq(URI("https://#{interface}.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts"))
 
 			expect(test['site_url']).to be_an(URI::HTTPS)
 		end
@@ -185,9 +188,9 @@ describe OSCRuby::Connect do
 			names = []
 
 			names[0] = {:labelText => 'PRODUCT-TEST', :language => {:id => 1}}
-			names[1] = {:labelText => 'PRODUCT-TEST', :language => {:id => 11}}
+			# names[1] = {:labelText => 'PRODUCT-TEST', :language => {:id => 11}}
 
-			parent = {:id => 102}
+			# parent = {:id => 102}
 
 			displayOrder = {:id => 4}
 
@@ -198,8 +201,7 @@ describe OSCRuby::Connect do
 			end_user_visible_interfaces[0] = {:id => 1}
 
 			new_prod = []
-			new_prod[0] = {:names => names, 
-			               :parent => parent, 
+			new_prod[0] = {:names => names,
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
@@ -286,9 +288,9 @@ describe OSCRuby::Connect do
 			names = []
 
 			names[0] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 1}}
-			names[1] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 11}}
+			# names[1] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 11}}
 
-			parent = {:id => 102}
+			# parent = {:id => 102}
 
 			displayOrder = {:id => 4}
 
@@ -300,7 +302,7 @@ describe OSCRuby::Connect do
 
 			new_prod = []
 			new_prod[0] = {:names => names, 
-			               :parent => parent, 
+			               # :parent => parent, 
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 

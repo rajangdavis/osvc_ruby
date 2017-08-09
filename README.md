@@ -10,21 +10,9 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]. Additionally,
 [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests against Ruby version 2.2.0 as well as jruby version 1.7.19
 
-The create, update, and destroy methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before November 2016. This is because I am using the ROQL queries to generate values for Common Objects
+The create, update, and destroy methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
-Currently supporting the following objects from the REST API:
-
-	ServiceProduct
-
-	ServiceCategory
-
-	Answer
-
-	QueryResults (does not support CRUD)
-
-At this time, subclasses such as ServiceProduct.CategoryLinks are not currently supported. 
-
-I am trying to build a few more classes and have a pretty solid testing suite and codebase before implementing this functionality.
+There is only support for except for ROQL Queries. There is still the capacity to create, read, update, and destroy a Service Cloud object; more on this below.
 
 ## Installation
 
@@ -47,85 +35,39 @@ Or install it yourself as:
 ```ruby
 
 # Configuration is as simple as requiring the gem
-# and adding a config block (Completed 12/2016)
 
 require 'osc_ruby'
 
 rn_client = OSCRuby::Client.new do |config|
 	config.username = ENV['OSC_ADMIN']
 	config.password = ENV['OSC_PASSWORD']
-	config.interface = ENV['OSC_TEST1_SITE']
+	config.interface = ENV['OSC_SITE']
 end
 
+# use Ruby hashes and arrays to set field information
 
-# ServiceProduct Creation example (Completed 12/30/2016)
+new_product = {}
+new_product['names'] = []
+new_product['names'][0] = {'labelText' => 'NEW_PRODUCT', 'language' => {'id' => 1}}
+new_product['displayOrder'] = 4
 
-new_product = OSCRuby::ServiceProduct.new
+new_product['adminVisibleInterfaces'] = []
+new_product['adminVisibleInterfaces'][0] = {'id' => 1}
+new_product['endUserVisibleInterfaces'] = []
+new_product['endUserVisibleInterfaces'][0] = {'id' => 1}
 
-# use Ruby hashes to set field information
+res = OSCRuby::Connect.post_or_patch(rn_client,'/serviceProducts',new_product)
 
-new_product.names[0] = {'labelText' => 'QTH45-test', 'language' => {'id' => 1}}
-new_product.names[1] = {'labelText' => 'QTH45-test', 'language' => {'id' => 11}}
+puts res.code # => 201
 
-new_product.parent = {'id' => 102}
-
-new_product.displayOrder = 4
-
-new_product.adminVisibleInterfaces[0] = {'id' => 1}
-
-new_product.endUserVisibleInterfaces[0] = {'id' => 1}
-
-new_product.create(rn_client)
+puts res.body # => JSON body
 
 # callback with JSON details
 
 
 
 
-# NOTE: Make sure that in a production environment
-# that the following methods are wrapped in a begin/rescue block.
-
-# If a null set is returned by your query
-# an exception will be raised
-# this is to ensure that you 
-# handle your errors explicitly
-# when writing scripts
-
-
-# ServiceProduct fetch example (Completed 12/28/2016)
-
-product = OSCRuby::ServiceProduct.find(rn_client,100)
-
-puts product
-# => #<ServiceProduct:0x007fd0fa87e588>
-
-puts product.name
-# => QR404
-
-puts product.displayOrder
-# => 3
-
-# ServiceProduct fetch all example (Completed 01/05/2017)
-
-products = OSCRuby::ServiceProduct.all(rn_client)
-
-products.each do |p|
-
-	puts p.name
-
-end
-
-# => Unsure
-# => DVR/NVR
-# => QC Series
-# => QR Series
-# => QR404
-# => QS Series
-# => QT Series
-
-
-# ServiceProduct where example (Completed 01/05/2017) 
-
+# QueryResults example
 # NOTE: Make sure to put your queries wrapped in doublequotes("")
 # this is because when Ruby converts the queries into a URI
 # the REST API does not like it when the queries are wrapped in single quotes ('')
@@ -136,107 +78,18 @@ end
 # 'parent is null and lookupName!="Unsure"' => don't do this
 # it will spit back an error from the REST API!
 
-products_lvl_1 = OSCRuby::ServiceProduct.where(rn_client,"parent is null and lookupName!='Unsure'")
-
-products_lvl_1.each do |p|
-
-	puts p.name
-
+rn_client = OSCRuby::Client.new do |config|
+	config.username = ENV['OSC_ADMIN']
+	config.password = ENV['OSC_PASSWORD']
+	config.interface = ENV['OSC_SITE']
 end
 
-# => DVR/NVR
-# => Cameras
-# => Accessories
+q = OSCRuby::QueryResults.new
 
+query = "select * from answers where ID = 1557"
 
-# ServiceProduct update example (Completed 01/05/2017)
+results = q.query(rn_client,query) # => will return an array of results
 
-product_to_update = OSCRuby::ServiceProduct.find(rn_client,100)
+puts results[0] => "{'id':1557,'name':...}"
 
-product_to_update.names[0] = {'labelText' => 'name-updated', 'language' => {'id' => 1}}
-
-product_to_update.update(rn_client)
-
-# ServiceProduct updated
-
-
-
-
-# ServiceProduct destroy example (Completed 01/06/2017)
-
-product_to_delete = OSCRuby::ServiceProduct.find(rn_client,100)
-
-product_to_delete.destroy(rn_client)
-
-# ServiceProduct destroyed
 ```
-
-## To do list
-
-- [x] Create a URL generator method into the Connect Class
-
-- [x] Move tests for the get method into the URL generator method
-
-- [x] Move check_config method into the URL generator method so that tests pass
-
-- [x] Create more tests to validate the generated URL
-
-- [x] Add in TravisCI into workflow to run tests and push and publish gem
-
-- [x] Add in Code Climate or something to show the percentage of covered methods for testing
-
-- [x] Put the URL generator method into the get class
-
-- [x] Have the get method make a get request using the Net::HTTP class
-
-- [x] Need to add tests for passing resources, query/id/other param into the URL generator class
-
-- [x] Need to figure out how to pass resources and some sort of query/id/other param into the URL generator class
-
-- [x] Add in tests for Post requests
-
-- [x] Make a Post method
-
-- [x] Add in tests for patch requests
-
-- [x] Make a patch method
-
-- [x] Add in tests for delete requests
-
-- [x] Make a delete method
-
-- [x] Create a OSCRuby::ServiceProduct class
-
-- [x] Build a QueryModule Module with the following query methods to be shared between most if not all classes:
-
-- [x] create, find, where, all, update, destroy
-
-- [x] QueryModule converts JSON response into a Ruby Hash => new instance of the object being queried
-
-- [x] Create some validations for creating a ServiceProduct object
-
-- [x] Add in VCR and WebMock as dependencies
-
-- [x] Figure out how to record and stub responses for a good response and bad response
-
-- [x] Simulate these responses for ALL Connect HTTP methods
-
-- [x] Make OpenSSL::SSL::VERIFY_PEER the default with OpenSSL::SSL::VERIFY_NONE option set in the config class 
-
-- [x] Make version default to 1.3 but an option to be set in the config class
-
-- [x] Need to update QueryResults to split the queries
-
-- [x] Need to update QueryResults to be able to manipulate the results
-
-- [ ] Figure out subclasses
-
-- [ ] Follow with next Classes (Accounts,ServiceCategories, Incidents)
-
-- [ ] Allow for the prefer:exclude-null-properties header => update config and connect class, update tests
-
-- [ ] Allow for Session Authorization => update config class and connect classes, update tests
-
-- [ ] Figure out how to do RDoc/Yardoc documentation or best in class documentation for using this Ruby ORM
-
-- [ ] Release MVP
