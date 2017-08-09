@@ -10,15 +10,13 @@ describe OSCRuby::Connect do
 
 		OSCRuby::Client.new do |config|
 		
-			config.interface = ENV['OSC_SITE']
+			config.interface = ENV['REDBOX_TEST']
 		
-			config.username = ENV['OSC_ADMIN']
+			config.username = ENV['REDBOX_ADMIN']
 		
-			config.password = ENV['OSC_PASSWORD']
+			config.password = ENV['REDBOX_PASSWORD']
 
 			config.suppress_rules = true
-
-			config.demo_site = true
 		
 		end
 	}
@@ -51,8 +49,12 @@ describe OSCRuby::Connect do
 			test = OSCRuby::Connect.generate_url_and_config(client, 'serviceProducts')
 
 			interface = client.config.interface
-
-			expect(test['site_url']).to eq(URI("https://#{interface}.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts"))
+			if test['site_url'].to_s.match(/custhelp/)
+				demo_or_cust = "custhelp"
+			else
+				demo_or_cust = "rightnowdemo"
+			end
+			expect(test['site_url']).to eq(URI("https://#{interface}.#{demo_or_cust}.com/services/rest/connect/v1.3/serviceProducts"))
 
 			expect(test['site_url']).to be_an(URI::HTTPS)
 		end
@@ -126,9 +128,9 @@ describe OSCRuby::Connect do
 
 			expect(final_config['site_url']).to be_an(URI::HTTPS)
 
-			expect(final_config['username']).to eq(ENV['OSC_ADMIN'])
+			expect(final_config['username']).to eq(ENV['REDBOX_ADMIN'])
 
-			expect(final_config['password']).to eq(ENV['OSC_PASSWORD'])
+			expect(final_config['password']).to eq(ENV['REDBOX_PASSWORD'])
 
 		end
 
