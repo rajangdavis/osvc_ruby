@@ -13,7 +13,7 @@ module OSCRuby
 
 		def initialize; end
 
-		def query(client,query,return_json = false)
+		def query(client,query)
 
 			ValidationsModule::check_client(client)
 
@@ -23,11 +23,11 @@ module OSCRuby
 
 	    	response = QueryModule::find(client,@query)
 
-	    	json_response = JSON.parse(response) 
-
-	    	json_response
+	    	JSON.parse(response) 
  			
 		end
+
+
 	
 	end
 

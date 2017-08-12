@@ -83,7 +83,7 @@ describe OSCRuby::QueryResults do
 
 			# expect(query_results.query(client,"describe answers")).not_to eq(nil)
 
-			expect(query_results.query(client,"describe answers;describe serviceproducts",true)).to be_an(Array)
+			expect(query_results.query(client,"describe answers;describe serviceproducts")).to be_an(Array)
 
 			# expect(query_results.query(client,"describe answers;describe servicecategories")).not_to eq(nil)
 

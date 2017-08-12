@@ -22,6 +22,8 @@ module OSCRuby
 					# loop through the items from the returned JSON response
 					json_input['items'].each do |item|
 
+							results_array = []
+
 					        # loop through rows
 					        item['rows'].each_with_index do |row,row_i|
 
@@ -34,17 +36,24 @@ module OSCRuby
 					                        # set the object property to the value of the row
 					                        # where the index of the value within that row
 					                        # matches the index of the column name
-					                        obj_hash[column] = row[i]
+					                        obj_hash[column] = if !row[i].nil? && row[i].is_i? == true then row[i].to_i else row[i] end
 					                end
 
-					    # push the hash into the array
-					                final_hash.push(obj_hash)
+					    			# push the hash into the array
+					    			results_array.push(obj_hash)
 
 					        end
 
+			    			# puts "this is an array:  #{final_hash}"
+					        final_hash.push(results_array)
+
+
 					end
 
-					puts final_hash.to_json
+					if final_hash.size === 1
+						final_hash = final_hash.flatten!
+					end
+
 
 					final_hash.to_json
 
@@ -61,7 +70,7 @@ module OSCRuby
 				else
 
 					json_input = JSON.parse(input.body)
-
+					
 					final_hash = []
 
 					json_input['items'].each do |item|
@@ -84,7 +93,6 @@ module OSCRuby
 
 					end
 
-					puts JSON.pretty_generate(final_hash)
 					
 					final_hash.to_json
 
