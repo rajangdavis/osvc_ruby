@@ -10,13 +10,15 @@ describe OSCRuby::Connect do
 
 		OSCRuby::Client.new do |config|
 		
-			config.interface = ENV['REDBOX_TEST']
+			config.interface = ENV['OSC_SITE']
 		
-			config.username = ENV['REDBOX_ADMIN']
+			config.username = ENV['OSC_ADMIN']
 		
-			config.password = ENV['REDBOX_PASSWORD']
+			config.password = ENV['OSC_PASSWORD']
 
 			config.suppress_rules = true
+
+			config.demo_site = true
 		
 		end
 	}
@@ -128,9 +130,9 @@ describe OSCRuby::Connect do
 
 			expect(final_config['site_url']).to be_an(URI::HTTPS)
 
-			expect(final_config['username']).to eq(ENV['REDBOX_ADMIN'])
+			expect(final_config['username']).to eq(ENV['OSC_ADMIN'])
 
-			expect(final_config['password']).to eq(ENV['REDBOX_PASSWORD'])
+			expect(final_config['password']).to eq(ENV['OSC_PASSWORD'])
 
 		end
 

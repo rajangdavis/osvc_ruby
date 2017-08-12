@@ -25,17 +25,7 @@ module OSCRuby
 
 	    	json_response = JSON.parse(response) 
 
-	    	if return_json == true
-	    		json_response_final = NormalizeModule::query_injection(query,json_response)
-	    		puts json_response_final
-	    	end
-
-	    	if return_json.class == Hash
-	    		puts json_response.body
-	    	else
-		    	json_response.unshift("\n")
-		    	NormalizeModule::remove_new_lines(json_response)
- 			end
+	    	json_response
  			
 		end
 	

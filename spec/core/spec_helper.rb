@@ -9,7 +9,7 @@ VCR.configure do |c|
 	c.allow_http_connections_when_no_cassette = true
 	c.filter_sensitive_data('<OSC_ADMIN_USERNAME>') { ENV['OSC_ADMIN'] }
 	c.filter_sensitive_data('<OSC_ADMIN_PASSWORD>') { ENV['OSC_PASSWORD'] }
-	c.filter_sensitive_data('<TEST_INTERFACE>') { ENV['OSC_TEST1_SITE'] }
+	c.filter_sensitive_data('<TEST_INTERFACE>') { ENV['OSC_SITE'] }
 	c.filter_sensitive_data('<BASIC_AUTH>') { ENV['OSC_BASIC_64'] } 
 end
 

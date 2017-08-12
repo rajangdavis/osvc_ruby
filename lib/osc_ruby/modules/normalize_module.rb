@@ -16,29 +16,35 @@ module OSCRuby
 
 					json_input = JSON.parse(input.body)
 
+					# initialize an array to hold all of the objects
 					final_hash = []
 
+					# loop through the items from the returned JSON response
 					json_input['items'].each do |item|
 
-						item['rows'].each_with_index do |row,row_i|
+					        # loop through rows
+					        item['rows'].each_with_index do |row,row_i|
 
-							obj_hash = {}
-							
-							item['columnNames'].each_with_index do |column,i|
-								obj_hash[column] = if !row[i].nil? && row[i].is_i? == true then row[i].to_i else row[i] end
-							end
+					                # initialize a hash to create the object
+					                obj_hash = {}
+					                
+					                # loop through the column names from the query
+					                item['columnNames'].each_with_index do |column,i|
 
-							final_hash.push(obj_hash)
+					                        # set the object property to the value of the row
+					                        # where the index of the value within that row
+					                        # matches the index of the column name
+					                        obj_hash[column] = row[i]
+					                end
 
-							if json_input['items'].count > 1 && (item['rows'].count-1 <= row_i)
+					    # push the hash into the array
+					                final_hash.push(obj_hash)
 
-								final_hash.push("\n")
-
-							end
-
-						end
+					        end
 
 					end
+
+					puts final_hash.to_json
 
 					final_hash.to_json
 
@@ -86,37 +92,8 @@ module OSCRuby
 
 			end
 
-			def query_injection(query,json_response)
-
-				queries = query.split(';')
-
-				count = 0
-
-				json_response.each_with_index do |hash,i|
-					if hash == "\n" && queries.count > 1
-						json_response[i] = "\nResults for #{queries[count]}:"
-						count += 1
-					elsif hash == "\n"
-						json_response.delete_at(i)
-					elsif json_response.last == "\n" 
-						json_response.delete_at(json_response.count - 1)
-					end
-				end
-
-				json_response
-
-			end
-
-			def remove_new_lines(json_response)
-				json_response.each_with_index do |hash,i|
-					if hash == "\n"
-						json_response.delete_at(i)
-					end
-				end
-
-				json_response
-			end
-
 		end
+
 	end
+	
 end

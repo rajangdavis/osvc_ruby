@@ -8,11 +8,13 @@ describe OSCRuby::QueryResults do
 
 		OSCRuby::Client.new do |config|
 		
-			config.interface = ENV['REDBOX_TEST']
+			config.interface = ENV['OSC_SITE']
 		
-			config.username = ENV['REDBOX_ADMIN']
+			config.username = ENV['OSC_ADMIN']
 		
-			config.password = ENV['REDBOX_PASSWORD']
+			config.password = ENV['OSC_PASSWORD']
+
+			config.demo_site = true
 		
 		end
 	}
