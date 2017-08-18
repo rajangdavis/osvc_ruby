@@ -22,6 +22,8 @@ module OSCRuby
 					NormalizeModule::normalize(obj_to_find,resource)
 				else
 
+					puts obj_to_find.body
+
 					obj_to_find.body
 
 				end
@@ -38,6 +40,8 @@ module OSCRuby
 
 					NormalizeModule::nested_normalize(obj_to_find,resource)
 				else
+
+					puts obj_to_find.body
 
 					obj_to_find.body
 

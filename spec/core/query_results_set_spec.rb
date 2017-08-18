@@ -23,8 +23,6 @@ describe OSCRuby::QueryResultsSet do
 		OSCRuby::QueryResultsSet.new
 	}
 
-
-
 	let(:table){ "answers" } 
 	let(:nested_attributes){
  		[ "*",

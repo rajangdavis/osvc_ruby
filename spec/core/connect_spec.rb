@@ -221,7 +221,93 @@ describe OSCRuby::Connect do
 				
 		end
 
+	end
+
+	context '#post' do
+
+		it 'should produce a Net::HTTPResponse, should produce a 201 response code, and should produce a JSON Response form the response body', :vcr do
+
+			names = []
+
+			names[0] = {:labelText => 'PRODUCT-TEST', :language => {:id => 1}}
+			# names[1] = {:labelText => 'PRODUCT-TEST', :language => {:id => 11}}
+
+			# parent = {:id => 102}
+
+			displayOrder = {:id => 4}
+
+			admin_user_visible_interfaces = []
+			admin_user_visible_interfaces[0] = {:id => 1}
+
+			end_user_visible_interfaces = []
+			end_user_visible_interfaces[0] = {:id => 1}
+
+			new_prod = []
+			new_prod[0] = {:names => names,
+			               :adminVisibleInterfaces => admin_user_visible_interfaces,
+			               :endUserVisibleInterfaces => end_user_visible_interfaces}
+
+		    test = OSCRuby::Connect.post(client,'serviceProducts',new_prod[0])
+
+			expect(test).to be_an(Net::HTTPResponse)
+
+			expect(test.code).to eq("201")
+
+			expect(test.body).to be_an(String)
+
+			expect{JSON.parse(test.body)}.not_to raise_error
+				
+		end
+
 	end	
+
+	context '#patch' do
+
+		it 'should make a patch request', :vcr do
+
+			resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST';")
+
+			product_test = OSCRuby::Connect.get(client,resource)
+
+			prod_json = JSON.parse(product_test.body).to_hash
+
+			product_test_id = prod_json['items'][0]['rows'][0][0].to_i
+
+			names = []
+
+			names[0] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 1}}
+			# names[1] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 11}}
+
+			# parent = {:id => 102}
+
+			displayOrder = {:id => 4}
+
+			admin_user_visible_interfaces = []
+			admin_user_visible_interfaces[0] = {:id => 1}
+
+			end_user_visible_interfaces = []
+			end_user_visible_interfaces[0] = {:id => 1}
+
+			new_prod = []
+			new_prod[0] = {:names => names, 
+			               # :parent => parent, 
+			               :adminVisibleInterfaces => admin_user_visible_interfaces,
+			               :endUserVisibleInterfaces => end_user_visible_interfaces}
+
+		    test = OSCRuby::Connect.patch(client,"serviceProducts/#{product_test_id}",new_prod[0])
+
+			expect(test).to be_an(Net::HTTPResponse)
+
+			expect(test.body).to eq("")
+
+			expect(test.code).to eq("200")
+				
+		end
+
+	end	
+
+
+
 
 	context '#get' do
 
@@ -274,6 +360,12 @@ describe OSCRuby::Connect do
 			expect{JSON.parse(test.body)}.not_to raise_error
 		end
 
+		it 'should bring back a list of service products when specified',:vcr do
+			res = OSCRuby::Connect.get(client,'/serviceProducts?limit=3')
+			
+			expect(res.body).to be_an(String)
+		end
+
 	end
 
 
@@ -317,6 +409,7 @@ describe OSCRuby::Connect do
 			expect(test.body).to eq("")
 
 			expect(test.code).to eq("200")
+
 				
 		end
 
@@ -348,15 +441,12 @@ describe OSCRuby::Connect do
 
 		it 'it should produce a Net::HTTPResponse, should produce a 200 code', :vcr do
 
-			resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';")
+			q = OSCRuby::QueryResults.new
+		    query = "select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';"
 
-			product_test_updated = OSCRuby::Connect.get(client,resource)
+			product_test_updated = q.query(client,query)
 
-			prod_json = JSON.parse(product_test_updated.body).to_hash
-
-			product_test_updated_id = prod_json['items'][0]['rows'][0][0].to_i
-
-		    test = OSCRuby::Connect.delete(client,"serviceProducts/#{product_test_updated_id}")
+		    test = OSCRuby::Connect.delete(client,"serviceProducts/#{product_test_updated[0]['id']}")
 
 			expect(test).to be_an(Net::HTTPResponse)
 
@@ -365,6 +455,8 @@ describe OSCRuby::Connect do
 			expect(test.code).to eq("200")
 				
 		end
+
+
 
 	end
 

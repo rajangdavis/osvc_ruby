@@ -66,6 +66,14 @@ module OSCRuby
 
 		end
 
+		def self.post(client,resource_url = nil, json_content = nil)
+			self.post_or_patch(client,resource_url, json_content)
+		end
+
+		def self.patch(client,resource_url = nil, json_content = nil)
+			self.post_or_patch(client,resource_url, json_content,true)
+		end
+
 		def self.delete(client,resource_url = nil)
 
 			@final_config = delete_check(client,resource_url)

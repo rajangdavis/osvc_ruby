@@ -1,4 +1,3 @@
-require 'osc_ruby/connect'
 require 'osc_ruby/modules/validations_module'
 require 'osc_ruby/modules/normalize_module'
 require 'osc_ruby/modules/query_module'
