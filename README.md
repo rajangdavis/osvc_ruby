@@ -8,13 +8,14 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 ## Compatibility
 
 This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
+
 It is now being tested against ruby 2.3.3p222 (2016-11-21 revision 56859) [i386-mingw32].
 
-Additionally,[TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests against Ruby version 2.2.0.
+Additionally, [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests against Ruby version 2.2.0.
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
-You can use this Ruby API for basic scripting and microservices. The main features that word to date are as follows:
+You can use this Ruby API for basic scripting and microservices. The main features that work to date are as follows:
 	
 	1. Running ROQL queries either 1 at a time or multiple queries in a set
 	2. Running Reports with filters
