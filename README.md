@@ -341,7 +341,7 @@ You can set the following keys:
 1. name => The filter name
 2. prompt => The prompt for this filter
 
-These are under development, but these should work if you treat them like the the data-type they are as mentioned in the REST API.
+These are under development, but these should work if you treat them like the the data-type they are as mentioned in the REST API:
 1.[attributes](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-namedIDs-analyticsReports-filters-attributes)
 2. [dataType](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-namedIDs-analyticsReports-filters-dataType)
 3. [operator](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-namedIDs-analyticsReports-filters-operator)
