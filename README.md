@@ -21,15 +21,15 @@ You can use this Ruby API for basic scripting and microservices. The main featur
 
 1. [Simple configuration](#client-configuration)
 2. Running ROQL queries [either 1 at a time](#oscrubyqueryresults-example) or [multiple queries in a set](#oscrubyqueryresultsset-example)
-3. [Running Reports with filters](#)
-4. [Convenience methods for Analytics filters and setting dates](#)
-	1. ['arrf', an analytics report results filter](#)
-	2. ['dti', converts a date string to ISO8601 format](#)
-5. [Basic CRUD Operations via HTTP Methods](#)
-	1. [Create => Post](#)
-	2. [Read => Get](#)
-	3. [Update => Patch](#)
-	4. [Destroy => Delete](#)
+3. [Running Reports with filters](#oscrubyanalyticsreportsresults)
+4. Convenience methods for Analytics filters and setting dates
+	1. ['arrf', an analytics report results filter](#arrf--analytics-report-results-filter)
+	2. ['dti', converts a date string to ISO8601 format](#dti--date-to-iso8601)
+5. Basic CRUD Operations via HTTP Methods
+	1. [Create => Post](#create)
+	2. [Read => Get](#read)
+	3. [Update => Patch](#update)
+	4. [Destroy => Delete](#delete)
 
 
 ## Installation
@@ -295,7 +295,7 @@ puts JSON.pretty_generate(r.products) # => Results for "SELECT * FROM SERVICEPRO
 
 ## OSCRuby::AnalyticsReportsResults
 
-You can create a new instance either by the report id or lookupName.
+You can create a new instance either by the report 'id' or 'lookupName'.
 
 OSCRuby::AnalyticsReportsResults only has one function: 'run', which takes an OSCRuby::Client object.
 
@@ -332,15 +332,15 @@ puts last_updated.run(rn_client)
 
 ### 'arrf' => analytics report results filter
 
-arrf lets you set filters for an OSCRuby::AnalyticsReportsResults Object.
+'arrf' lets you set filters for an OSCRuby::AnalyticsReportsResults Object.
 
 You can set the following keys:
-	:attributes
-	:dataType
-	:name
-	:operator
-	:prompt
-	:values
+1. :attributes
+2. :dataType
+3. :name
+4. :operator
+5. :prompt
+6. :values
 
 ```ruby
 require 'osc_ruby'
