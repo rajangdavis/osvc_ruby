@@ -73,10 +73,10 @@ rn_client = OSCRuby::Client.new do |c|
 	c.no_ssl_verify = true			# => Defaults to false. 
 	
 	# Sets the version of the REST API to use
-	c.version = 'v1.4'				# => Defaults to 'v1.3'. 
+	c.version = 'v1.4'			# => Defaults to 'v1.3'. 
 	
 	# Let's you supress business rules
-	c.suppress_rules = true		# => Defaults to false. 
+	c.suppress_rules = true			# => Defaults to false. 
 	
 	# Use 'rightnowdemo' namespace instead of 'custhelp'
 	c.demo_site = true			# => Defaults to false. 
