@@ -21,13 +21,13 @@ You can use this Ruby API for basic scripting and microservices. The main featur
 2. Running ROQL queries either 1 at a time or multiple queries in a set
 3. Running Reports with filters
 4. Convenience methods for Analytics filters and setting dates
-	a. 'arrf', an analytics report results filter
-	b. 'dti', converts a date string to ISO8601 format
+	1. 'arrf', an analytics report results filter
+	2. 'dti', converts a date string to ISO8601 format
 5. Basic CRUD Operations via HTTP Methods
-	a. Create => Post
-	b. Read => Get
-	c. Update => Patch
-	d. Destroy => Delete
+	1. Create => Post
+	2. Read => Get
+	3. Update => Patch
+	4. Destroy => Delete
 
 
 ## Installation
