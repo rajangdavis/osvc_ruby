@@ -16,15 +16,18 @@ Additionally, [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests again
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
 You can use this Ruby API for basic scripting and microservices. The main features that work to date are as follows:
-	
-	1. Running ROQL queries either 1 at a time or multiple queries in a set
-	2. Running Reports with filters
-	3. Convenience methods for Analytics filters and setting dates
-	4. Basic CRUD Operations via HTTP Methods
-		a. Create => Post
-		b. Read => Get
-		c. Update => Patch
-		d. Destroy => Delete
+
+1. Simple configuration	
+2. Running ROQL queries either 1 at a time or multiple queries in a set
+3. Running Reports with filters
+4. Convenience methods for Analytics filters and setting dates
+	a. 'arrf', an analytics report results filter
+	b. 'dti', converts a date string to ISO8601 format
+5. Basic CRUD Operations via HTTP Methods
+	a. Create => Post
+	b. Read => Get
+	c. Update => Patch
+	d. Destroy => Delete
 
 
 ## Installation
@@ -48,7 +51,10 @@ Or install it yourself as:
 
 
 
-## Basic Examples
+## Client Configuration
+
+Configuration is required as means of authentication for the Oracle Service Cloud interface that you will interact with.
+
 ```ruby
 
 # Configuration is as simple as requiring the gem
@@ -81,9 +87,11 @@ end
 
 
 
-## QueryResults example
+## OSCRuby::QueryResults example
 
 This is for running one ROQL query. Whatever is allowed by the REST API (limits and sorting) is allowed with this library.
+
+OSCRuby::QueryResults only has one function: 'query', which takes an OSCRuby::Client object and string query (example below).
 
 ```ruby
 # NOTE: Make sure to put your queries WRAPPED in doublequotes("")
@@ -95,6 +103,13 @@ This is for running one ROQL query. Whatever is allowed by the REST API (limits 
 # 'parent is null and lookupName!="Unsure"' => don't do this
 # it will spit back an error from the REST API!
 
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
 
 q = OSCRuby::QueryResults.new
 
@@ -112,9 +127,15 @@ puts results[0] # => "{'id':1557,'name':...}"
 
 
 
-## QueryResultsSet example
 
-This is for running multiple queries and assigning theresults of each query to a key.
+
+
+
+## OSCRuby::QueryResultsSet example
+
+This is for running multiple queries and assigning the results of each query to a key for further manipulation.
+
+OSCRuby::QueryResultsSet only has one function: 'query_set', which takes an OSCRuby::Client object and multiple query hashes (example below).
 
 ```ruby
 # NOTE: Make sure to put your queries WRAPPED in doublequotes("")
@@ -122,6 +143,13 @@ This is for running multiple queries and assigning theresults of each query to a
 	# set query: to the query you want to execute
 	# set key: to the value you want the results to of the query to be referenced to
 
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
 
 mq = OSCRuby::QueryResultsSet.new
 r = mq.query_set(rn_client,
@@ -260,11 +288,25 @@ puts JSON.pretty_generate(r.products) # => Results for "SELECT * FROM SERVICEPRO
 
 
 
-## AnalyticsReportsResults
 
-You can create a new instance either by the report id or lookupName
+
+
+## OSCRuby::AnalyticsReportsResults
+
+You can create a new instance either by the report id or lookupName.
+
+OSCRuby::AnalyticsReportsResults only has one function: 'run', which takes an OSCRuby::Client object.
+
+OSCRuby::AnalyticsReportsResults have the following properties: 'id', 'lookupName', and 'filters'. More on filters and supported datetime methods are below this OSCRuby::AnalyticsReportsResults example script.
 
 ```ruby
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
 
 last_updated = OSCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
 
@@ -274,7 +316,6 @@ puts last_updated.run(rn_client)
 #{"Status"=>"Updated", "Incidents"=>461, "Average Time Since Last Response"=>"39267070.331683"}
 
 ```
-More on filters and datetime methods below
 
 
 
@@ -287,16 +328,41 @@ More on filters and datetime methods below
 
 ## Convenience Methods
 
-### 'arrf' => stands for 'analytics_report_results_filter'
+### 'arrf' => analytics report results filter
 
-arrf lets you set filters for an OSCRuby::AnalyticsReportsResults Object
+arrf lets you set filters for an OSCRuby::AnalyticsReportsResults Object.
+
+You can set the following keys:
+	:attributes
+	:dataType
+	:name
+	:operator
+	:prompt
+	:values
 
 ```ruby
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
 
 answers_search = OSCRuby::AnalyticsReportResults.new(id: 176)
 
 keywords = arrf(name: "search_ex", values: "Maestro")
 answers_search.filters << keywords
+
+# To add more filters, create another 
+# "arrf" filter structure
+# and "shovel" it into 
+# the OSCRuby::AnalyticsReportResults
+# "filters" property
+#
+# date_created = arrf(name: "date_created", values: dti("August 7th, 2017"), operator: ">")
+# answers_search.filters << date_created
+
 
 answers = answers_search.run(rn_client)		
 
@@ -327,7 +393,7 @@ end
 
 
 
-### 'dti' => stands for 'date_to_iso8601'
+### 'dti' => date to iso8601
 
 dti lets you type in a date and get it in ISO8601 format. Explicit date formatting is best.
 
@@ -344,12 +410,12 @@ dti("January 1st") # => 2017-01-01T00:00:00-08:00 # => 12:00 AM, January First o
 ```
 
 
-But you should be careful! Sometimes the dates will not be what you expect; try to write dates as explicitly/predictably when possible.
+Be careful! Sometimes the dates will not be what you expect; try to write dates as explicitly/predictably when possible.
 
 
 ```ruby
 
-# EXAMPLES OF DATES NOT BEIBG WHAT YOU MIGHT EXPECT
+# EXAMPLES OF DATES NOT BEING WHAT YOU MIGHT EXPECT
 
 #Full dates should be formatted as 
 # %d/%m/%y %h:%m tt
@@ -357,8 +423,6 @@ But you should be careful! Sometimes the dates will not be what you expect; try 
 dti("01/02/14") # => 2001-02-14T00:00:00-08:00 # => 12:00 AM, February 14th, 2001
 
 dti("01/02/2014") # => 2014-02-01T00:00:00-08:00 # => 12:00 AM, February 14th, 2014
-
-dti("Jan-02-14") # => 2014-01-02T00:00:00-08:00 # => 12:00 AM, January 2nd, 2014
 
 dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM, August 1st, 2017 Pacific Time (?)
 
@@ -375,13 +439,20 @@ dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM,
 ## Basic CRUD operations
 
 ### CREATE
-
-#### OSCRuby::Connect.post( <client>, <url>, <json_data> )
-
-
 ```ruby
+#### OSCRuby::Connect.post( <client>, <url>, <json_data> )
+#### returns a NetHTTPRequest object
+
 # Here's how you could create a new ServiceProduct object
 # using Ruby variables, hashes(sort of like JSON), and arrays to set field information
+
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
 
 new_product = {}
 new_product['names'] = []
@@ -410,12 +481,18 @@ puts res.body # => JSON body
 
 
 ### READ
-
-#### OSCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
-
 ```ruby
+#### OSCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
+#### returns a NetHTTPRequest object
 # Here's how you could get a list of ServiceProducts
-# using Ruby variables, hashes(sort of like JSON), and arrays to set field information
+
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
 
 res = OSCRuby::Connect.get(rn_client,'/serviceProducts?limit=3')
 
@@ -459,7 +536,7 @@ puts JSON.pretty_generate(res.body)
 #	 ... and everything else ... 
 #	
 #}
-```ruby
+```
 
 
 
@@ -467,14 +544,22 @@ puts JSON.pretty_generate(res.body)
 
 
 ### UPDATE
- 
-#### OSCRuby::Connect.patch( <client>, <url>, <json_data> )
-
 ```ruby
+#### OSCRuby::Connect.patch( <client>, <url>, <json_data> )
+#### returns a NetHTTPRequest object
 # Here's how you could update the previously created ServiceProduct object
 # using Ruby variables, arrays, hashes, 
 # and symbols (read only string values, eg :example)
 # to set field information
+
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
+
 
 names = []
 
@@ -506,13 +591,20 @@ puts updated_product.body # => "" if successful...
 
 
 ### DELETE
-
-#### OSCRuby::Connect.delete( <client>, <url> )
-
 ```ruby
+#### OSCRuby::Connect.delete( <client>, <url> )
+#### returns a NetHTTPRequest object
 # Here's how you could delete the previously updated ServiceProduct object
 # using the OSCRuby::QueryResults 
 # and OSCRuby::Connect classes
+
+require 'osc_ruby'
+
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN']
+	c.password = ENV['OSC_PASSWORD']
+	c.interface = ENV['OSC_SITE']	
+end
 
 q = OSCRuby::QueryResults.new
 query = "select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';"
@@ -527,5 +619,3 @@ puts updated_product.body # => "" if successful...
 
 
 ```
-
-If you want something specific with this API, feel free to make a pull request.
