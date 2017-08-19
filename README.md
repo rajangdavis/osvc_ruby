@@ -15,19 +15,21 @@ Additionally, [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests again
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
+
+## Use Cases
 You can use this Ruby API for basic scripting and microservices. The main features that work to date are as follows:
 
-1. Simple configuration	
-2. Running ROQL queries either 1 at a time or multiple queries in a set
-3. Running Reports with filters
-4. Convenience methods for Analytics filters and setting dates
-	1. 'arrf', an analytics report results filter
-	2. 'dti', converts a date string to ISO8601 format
-5. Basic CRUD Operations via HTTP Methods
-	1. Create => Post
-	2. Read => Get
-	3. Update => Patch
-	4. Destroy => Delete
+1. [Simple configuration](#client-configuration)
+2. Running ROQL queries [either 1 at a time](#oscrubyqueryresults-example) or [multiple queries in a set](#oscrubyqueryresultsset-example)
+3. [Running Reports with filters](#)
+4. [Convenience methods for Analytics filters and setting dates](#)
+	1. ['arrf', an analytics report results filter](#)
+	2. ['dti', converts a date string to ISO8601 format](#)
+5. [Basic CRUD Operations via HTTP Methods](#)
+	1. [Create => Post](#)
+	2. [Read => Get](#)
+	3. [Update => Patch](#)
+	4. [Destroy => Delete](#)
 
 
 ## Installation
