@@ -38,7 +38,7 @@ module OSCRuby
 			json_data = {}
 			check_for_id_and_name(s)
 			s.instance_variables.each do|iv|
-				key = iv.to_s.gsub("@",'')
+				key = iv.to_s.delete("@")
 				value = instance_variable_get iv
 				json_data[key] = value unless value.nil?
 			end
@@ -57,18 +57,7 @@ module OSCRuby
 				response.body
 			else
 				body = JSON.parse(response.body)
-				final_json = []
-				body['rows'].each_with_index do |r,_j|
-					
-					hash = {}
-					
-					body['columnNames'].each_with_index do |cn,i|
-						hash[cn] = if !r[i].nil? && r[i].is_i? == true then r[i].to_i else r[i] end
-					end
-					
-					final_json << hash
-				end 
-				final_json
+				final_json = NormalizeModule.iterate_through_rows(body)
 			end
 		end
 
