@@ -15,6 +15,7 @@ All of the HTTP methods should work on any version of Oracle Service Cloud since
 
 ## Installing Ruby
 [Try this link.](https://bitnami.com/stack/ruby/installer)
+
 If you get SSL Errors (you probably will), follow [this link for instructions on resolving SSL things that I know nothing about](http://guides.rubygems.org/ssl-certificate-update/#installing-using-update-packages).
 
 ## Use Cases
