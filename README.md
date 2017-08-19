@@ -70,10 +70,10 @@ rn_client = OSCRuby::Client.new do |c|
 
 	### optional configuration
 	# Turns off SSL verification; don't use in production
-	c.no_ssl_verify = true		# => Defaults to false. 
+	c.no_ssl_verify = true			# => Defaults to false. 
 	
 	# Sets the version of the REST API to use
-	c.version = 'v1.4'			# => Defaults to 'v1.3'. 
+	c.version = 'v1.4'				# => Defaults to 'v1.3'. 
 	
 	# Let's you supress business rules
 	c.suppress_rules = true		# => Defaults to false. 
