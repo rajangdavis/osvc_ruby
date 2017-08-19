@@ -48,23 +48,23 @@ Or install it yourself as:
 ## Basic Examples
 ```ruby
 
-	# Configuration is as simple as requiring the gem
-	# and writing a Ruby block
+# Configuration is as simple as requiring the gem
+# and writing a Ruby block
 
-	require 'osc_ruby'
+require 'osc_ruby'
 
-	rn_client = OSCRuby::Client.new do |c|
-		c.username = ENV['OSC_ADMIN'] 		# => These are interface credentials
-		c.password = ENV['OSC_PASSWORD'] 	# => store these in environmental
-		c.interface = ENV['OSC_SITE'] 		# => variables in your .bash_profile
+rn_client = OSCRuby::Client.new do |c|
+	c.username = ENV['OSC_ADMIN'] 		# => These are interface credentials
+	c.password = ENV['OSC_PASSWORD'] 	# => store these in environmental
+	c.interface = ENV['OSC_SITE'] 		# => variables in your .bash_profile
 
-		### optional configuration
-		c.no_ssl_verify = true		# => Defaults to false. Turns off SSL verification; don't use in production
-		c.version = 'v1.4'			# => Defaults to 'v1.3'. Sets the version of the REST API to use
-		c.suppress_rules = true		# => Defaults to false. Let's you supress business rules
-		c.demo_site = true			# => Defaults to false. Use 'rightnowdemo' namespace instead of 'custhelp'
+	### optional configuration
+	c.no_ssl_verify = true		# => Defaults to false. Turns off SSL verification; don't use in production
+	c.version = 'v1.4'			# => Defaults to 'v1.3'. Sets the version of the REST API to use
+	c.suppress_rules = true		# => Defaults to false. Let's you supress business rules
+	c.demo_site = true			# => Defaults to false. Use 'rightnowdemo' namespace instead of 'custhelp'
 
-	end
+end
 
 
 
@@ -72,23 +72,24 @@ Or install it yourself as:
 
 
 # QueryResults example
+# NOTE: Make sure to put your queries WRAPPED in doublequotes("")
+# this is because when Ruby converts the queries into a URI
+# the REST API does not like it when the queries are WRAPPED in single quotes ('')
 
-	q = OSCRuby::QueryResults.new
-
-	# NOTE: Make sure to put your queries WRAPPED in doublequotes("")
-	# this is because when Ruby converts the queries into a URI
-	# the REST API does not like it when the queries are WRAPPED in single quotes ('')
-
-	# For example
-	# "parent is null and lookupName!='Unsure'" => great!
-	# 'parent is null and lookupName!="Unsure"' => don't do this
-	# it will spit back an error from the REST API!
+# For example
+# "parent is null and lookupName!='Unsure'" => great!
+# 'parent is null and lookupName!="Unsure"' => don't do this
+# it will spit back an error from the REST API!
 
 
-	query = "select * from answers where ID = 1557"
-	results = q.query(rn_client,query) # => will return an array of results
 
-	puts results[0] # => "{'id':1557,'name':...}"
+q = OSCRuby::QueryResults.new
+
+query = "select * from answers where ID = 1557"
+
+results = q.query(rn_client,query) # => will return an array of results
+
+puts results[0] # => "{'id':1557,'name':...}"
 
 
 
@@ -99,136 +100,136 @@ Or install it yourself as:
 
 
 # QueryResultsSet example
+# NOTE: Make sure to put your queries WRAPPED in doublequotes("")
+# Pass in each query into a hash
+	# set query: to the query you want to execute
+	# set key: to the value you want the results to of the query to be referenced to
 
-	mq = OSCRuby::QueryResultsSet.new
 
-	# NOTE: Make sure to put your queries WRAPPED in doublequotes("")
-	# Pass in each query into a hash
-		# set query: to the query you want to execute
-		# set key: to the value you want the results to of the query to be referenced to
 
-	r = mq.query_set(rn_client,
-			 	{query:"DESCRIBE ANSWERS", key: "answerSchema"},
-			 	{query:"SELECT * FROM ANSWERS LIMIT 1", key: "answers"},
-			 	{query:"DESCRIBE SERVICECATEGORIES", key: "categoriesSchema"},
-			 	{query:"SELECT * FROM SERVICECATEGORIES", key:"categories"},
-			 	{query:"DESCRIBE SERVICEPRODUCTS", key: "productsSchema"},
-			 	{query:"SELECT * FROM SERVICEPRODUCTS", key:"products"})
+mq = OSCRuby::QueryResultsSet.new
+r = mq.query_set(rn_client,
+		 	{query:"DESCRIBE ANSWERS", key: "answerSchema"},
+		 	{query:"SELECT * FROM ANSWERS LIMIT 1", key: "answers"},
+		 	{query:"DESCRIBE SERVICECATEGORIES", key: "categoriesSchema"},
+		 	{query:"SELECT * FROM SERVICECATEGORIES", key:"categories"},
+		 	{query:"DESCRIBE SERVICEPRODUCTS", key: "productsSchema"},
+		 	{query:"SELECT * FROM SERVICEPRODUCTS", key:"products"})
 
-	puts JSON.pretty_generate(r.answerSchema)
+puts JSON.pretty_generate(r.answerSchema)
 
-	#  [
-	#    {
-	#      "Name": "id",
-	#      "Type": "Integer",
-	#      "Path": ""
-	#    },
-	#    {
-	#      "Name": "lookupName",
-	#      "Type": "String",
-	#      "Path": ""
-	#    },
-	#    {
-	#      "Name": "createdTime",
-	#      "Type": "String",
-	#      "Path": ""
-	#    }
-	#    ... everything else including customfields and objects...
-	#  ]
+#  [
+#    {
+#      "Name": "id",
+#      "Type": "Integer",
+#      "Path": ""
+#    },
+#    {
+#      "Name": "lookupName",
+#      "Type": "String",
+#      "Path": ""
+#    },
+#    {
+#      "Name": "createdTime",
+#      "Type": "String",
+#      "Path": ""
+#    }
+#    ... everything else including customfields and objects...
+#  ]
 
-	puts JSON.pretty_generate(r.answers)
+puts JSON.pretty_generate(r.answers)
 
-	#[
-	#  {
-	#    "id": 1,
-	#    "lookupName": 1,
-	#    "createdTime": "2016-03-04T18:25:50Z",
-	#    "updatedTime": "2016-09-12T17:12:14Z",
-	#    "accessLevels": 1,
-	#    "adminLastAccessTime": "2016-03-04T18:25:50Z",
-	#    "answerType": 1,
-	#    "expiresDate": null,
-	#    "guidedAssistance": null,
-	#    "keywords": null,
-	#    "language": 1,
-	#    "lastAccessTime": "2016-03-04T18:25:50Z",
-	#    "lastNotificationTime": null,
-	#    "name": 1,
-	#    "nextNotificationTime": null,
-	#    "originalReferenceNumber": null,
-	#    "positionInList": 1,
-	#    "publishOnDate": null,
-	#    "question": null,
-	#    "solution": "<HTML SOLUTION WITH INLINE CSS>",
-	#    "summary": "SPRING IS ALMOST HERE!",
-	#    "updatedByAccount": 16,
-	#    "uRL": null
-	#  }
-	#]
+#[
+#  {
+#    "id": 1,
+#    "lookupName": 1,
+#    "createdTime": "2016-03-04T18:25:50Z",
+#    "updatedTime": "2016-09-12T17:12:14Z",
+#    "accessLevels": 1,
+#    "adminLastAccessTime": "2016-03-04T18:25:50Z",
+#    "answerType": 1,
+#    "expiresDate": null,
+#    "guidedAssistance": null,
+#    "keywords": null,
+#    "language": 1,
+#    "lastAccessTime": "2016-03-04T18:25:50Z",
+#    "lastNotificationTime": null,
+#    "name": 1,
+#    "nextNotificationTime": null,
+#    "originalReferenceNumber": null,
+#    "positionInList": 1,
+#    "publishOnDate": null,
+#    "question": null,
+#    "solution": "<HTML SOLUTION WITH INLINE CSS>",
+#    "summary": "SPRING IS ALMOST HERE!",
+#    "updatedByAccount": 16,
+#    "uRL": null
+#  }
+#]
 
-	puts JSON.pretty_generate(r.categoriesSchema)
+puts JSON.pretty_generate(r.categoriesSchema)
 
-	[
-	... skipping the first few ... 
-	 {
-	    "Name": "adminVisibleInterfaces",
-	    "Type": "SubTable",
-	    "Path": "serviceCategories.adminVisibleInterfaces"
-	  },
-	  {
-	    "Name": "descriptions",
-	    "Type": "SubTable",
-	    "Path": "serviceCategories.descriptions"
-	  },
-	  {
-	    "Name": "displayOrder",
-	    "Type": "Integer",
-	    "Path": ""
-	  },
-	  {
-	    "Name": "endUserVisibleInterfaces",
-	    "Type": "SubTable",
-	    "Path": "serviceCategories.endUserVisibleInterfaces"
-	  },
-	  ... everything else include parents and children ...
-	]
+#	[
+#	... skipping the first few ... 
+#	 {
+#	    "Name": "adminVisibleInterfaces",
+#	    "Type": "SubTable",
+#	    "Path": "serviceCategories.adminVisibleInterfaces"
+#	  },
+#	  {
+#	    "Name": "descriptions",
+#	    "Type": "SubTable",
+#	    "Path": "serviceCategories.descriptions"
+#	  },
+#	  {
+#	    "Name": "displayOrder",
+#	    "Type": "Integer",
+#	    "Path": ""
+#	  },
+#	  {
+#	    "Name": "endUserVisibleInterfaces",
+#	    "Type": "SubTable",
+#	    "Path": "serviceCategories.endUserVisibleInterfaces"
+#	  },
+#	  ... everything else include parents and children ...
+#	]
 
-	puts JSON.pretty_generate(r.categories)
+puts JSON.pretty_generate(r.categories)
 
-	[
-	  {
-	    "id": 3,
-	    "lookupName": "Manuals",
-	    "createdTime": null,
-	    "updatedTime": null,
-	    "displayOrder": 3,
-	    "name": "Manuals",
-	    "parent": 60
-	  },
-	  {
-	    "id": 4,
-	    "lookupName": "Installations",
-	    "createdTime": null,
-	    "updatedTime": null,
-	    "displayOrder": 4,
-	    "name": "Installations",
-	    "parent": 60
-	  },
-	  {
-	    "id": 5,
-	    "lookupName": "Downloads",
-	    "createdTime": null,
-	    "updatedTime": null,
-	    "displayOrder": 2,
-	    "name": "Downloads",
-	    "parent": 60
-	  },
-	  ... you should get the idea by now ...
-	]
+#	[
+#	  {
+#	    "id": 3,
+#	    "lookupName": "Manuals",
+#	    "createdTime": null,
+#	    "updatedTime": null,
+#	    "displayOrder": 3,
+#	    "name": "Manuals",
+#	    "parent": 60
+#	  },
+#	  {
+#	    "id": 4,
+#	    "lookupName": "Installations",
+#	    "createdTime": null,
+#	    "updatedTime": null,
+#	    "displayOrder": 4,
+#	    "name": "Installations",
+#	    "parent": 60
+#	  },
+#	  {
+#	    "id": 5,
+#	    "lookupName": "Downloads",
+#	    "createdTime": null,
+#	    "updatedTime": null,
+#	    "displayOrder": 2,
+#	    "name": "Downloads",
+#	    "parent": 60
+#	  },
+#	  ... you should get the idea by now ...
+#	]
 
-	### Both of these are similar to the above
-	puts JSON.pretty_generate(r.productsSchema)
-	puts JSON.pretty_generate(r.products)
+### Both of these are similar to the above
+puts JSON.pretty_generate(r.productsSchema)
+puts JSON.pretty_generate(r.products)
 
 
 
@@ -238,13 +239,13 @@ Or install it yourself as:
 
 # AnalyticsReportsResults
 
-	last_updated = OSCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
+# You can create a new instance either by the report id or lookupName
 
-	# You can create a new instance either by the report id or lookupName
+last_updated = OSCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
 
-	report_results = last_updated.run(rn_client)
+report_results = last_updated.run(rn_client)
 
-	# More on filters and datetime methods below
+# More on filters and datetime methods below
 
 
 
@@ -257,68 +258,68 @@ Or install it yourself as:
 
 # Convenience Methods
 
-	# 'arrf' => stands for 'analytics_report_results_filter'
-	
-	# arrf lets you set filters for an OSCRuby::AnalyticsReportsResults Object
+# 'arrf' => stands for 'analytics_report_results_filter'
 
-	answers_search = OSCRuby::AnalyticsReportResults.new(id: 176)
+# arrf lets you set filters for an OSCRuby::AnalyticsReportsResults Object
 
-	keywords = arrf(name: "search_ex", values: "Maestro")
-	answers_search.filters << keywords
+answers_search = OSCRuby::AnalyticsReportResults.new(id: 176)
 
-	answers = answers_search.run(rn_client)		
+keywords = arrf(name: "search_ex", values: "Maestro")
+answers_search.filters << keywords
 
-	answers.each do |answer|
-		puts answer['Summary']
-	end			
-	
-	# How do I get started with the Maestro Smart Thermostat App?
-	
-	# Is my Wi-Fi router compatible with the Maestro Smart Thermostat?
-	
-	# Will the Maestro Smart Thermostat work with my HVAC system?
-	
-	# Maestro Smart Thermostat App
-	
-	# Maestro Smart Thermostat Installation Guide
-	
-	# Maestro Product Warranty
+answers = answers_search.run(rn_client)		
 
-	# ... and so on and so forth
+answers.each do |answer|
+	puts answer['Summary']
+end			
 
+# How do I get started with the Maestro Smart Thermostat App?
 
+# Is my Wi-Fi router compatible with the Maestro Smart Thermostat?
+
+# Will the Maestro Smart Thermostat work with my HVAC system?
+
+# Maestro Smart Thermostat App
+
+# Maestro Smart Thermostat Installation Guide
+
+# Maestro Product Warranty
+
+# ... and so on and so forth
 
 
-	
 
-	
 
-	# 'dti' => stands for 'date_to_iso8601'
 
-	# dti lets you type in a date and get it in ISO8601 format
-	# explicit => better
 
-	dti("January 1st, 2014") # => 2014-01-01T00:00:00-08:00  # => 1200 AM, January First of 2014
-	
-	dti("January 1st, 2014 11:59PM MDT") # => 2014-01-01T23:59:00-06:00 # => 11:59 PM Mountain Time, January First of 2014
-	
-	dti("January 1st, 2014 23:59 PDT") # => 2014-01-01T23:59:00-07:00 # => 11:59 PM Pacific Time, January First of 2014
-	
-	dti("January 1st") # => 2017-01-01T00:00:00-08:00 # => 12:00 AM, January First of this Year
-	
-	# But you should be careful! 
-	# Sometimes the dates will not be what you expect
-	# So try to write code as explicitly/predictably as possible
-	# Full dates should be formatted as 
-	# %d/%m/%y %h:%m tt
-	
-	dti("01/02/14") # => 2001-02-14T00:00:00-08:00 # => 12:00 AM, February 14th, 2001
-	
-	dti("01/02/2014") # => 2014-02-01T00:00:00-08:00 # => 12:00 AM, February 14th, 2014
-	
-	dti("Jan-02-14") # => 2014-01-02T00:00:00-08:00 # => 12:00 AM, January 2nd, 2014
-	
-	dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM, August 1st, 2017 Pacific Time (?)
+
+
+# 'dti' => stands for 'date_to_iso8601'
+
+# dti lets you type in a date and get it in ISO8601 format
+# explicit => better
+
+dti("January 1st, 2014") # => 2014-01-01T00:00:00-08:00  # => 1200 AM, January First of 2014
+
+dti("January 1st, 2014 11:59PM MDT") # => 2014-01-01T23:59:00-06:00 # => 11:59 PM Mountain Time, January First of 2014
+
+dti("January 1st, 2014 23:59 PDT") # => 2014-01-01T23:59:00-07:00 # => 11:59 PM Pacific Time, January First of 2014
+
+dti("January 1st") # => 2017-01-01T00:00:00-08:00 # => 12:00 AM, January First of this Year
+
+# But you should be careful! 
+# Sometimes the dates will not be what you expect
+# So try to write code as explicitly/predictably as possible
+# Full dates should be formatted as 
+# %d/%m/%y %h:%m tt
+
+dti("01/02/14") # => 2001-02-14T00:00:00-08:00 # => 12:00 AM, February 14th, 2001
+
+dti("01/02/2014") # => 2014-02-01T00:00:00-08:00 # => 12:00 AM, February 14th, 2014
+
+dti("Jan-02-14") # => 2014-01-02T00:00:00-08:00 # => 12:00 AM, January 2nd, 2014
+
+dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM, August 1st, 2017 Pacific Time (?)
 
 
 
@@ -331,33 +332,31 @@ Or install it yourself as:
 
 
 # Basic CRUD operations
-	
-	# CREATE
-	# 
-	# OSCRuby::Connect.post( <client>, <url>, <json_data> )
 
-	# Here's how you could create a new ServiceProduct object
-	# using Ruby variables, hashes(sort of like JSON), and arrays to set field information
-	
-	new_product = {}
-	new_product['names'] = []
-	new_product['names'][0] = {'labelText' => 'NEW_PRODUCT', 'language' => {'id' => 1}}
-	new_product['displayOrder'] = 4
+# CREATE
+# 
+# OSCRuby::Connect.post( <client>, <url>, <json_data> )
 
-	new_product['adminVisibleInterfaces'] = []
-	new_product['adminVisibleInterfaces'][0] = {'id' => 1}
-	new_product['endUserVisibleInterfaces'] = []
-	new_product['endUserVisibleInterfaces'][0] = {'id' => 1}
+# Here's how you could create a new ServiceProduct object
+# using Ruby variables, hashes(sort of like JSON), and arrays to set field information
 
-	res = OSCRuby::Connect.post(rn_client,'/serviceProducts',new_product)
+new_product = {}
+new_product['names'] = []
+new_product['names'][0] = {'labelText' => 'NEW_PRODUCT', 'language' => {'id' => 1}}
+new_product['displayOrder'] = 4
 
-	puts res.code # => 201
+new_product['adminVisibleInterfaces'] = []
+new_product['adminVisibleInterfaces'][0] = {'id' => 1}
+new_product['endUserVisibleInterfaces'] = []
+new_product['endUserVisibleInterfaces'][0] = {'id' => 1}
 
-	puts res.body # => JSON body
+res = OSCRuby::Connect.post(rn_client,'/serviceProducts',new_product)
 
-	# callback with JSON details
+puts res.code # => 201
 
+puts res.body # => JSON body
 
+# callback with JSON details
 
 
 
@@ -365,118 +364,125 @@ Or install it yourself as:
 
 
 
-	# READ
-	# 
-	# OSCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
-
-	# Here's how you could get a list of ServiceProducts
-	# using Ruby variables, hashes(sort of like JSON), and arrays to set field information
-
-	res = OSCRuby::Connect.get(rn_client,'/serviceProducts?limit=3')
-
-	puts JSON.pretty_generate(res.body)
-
-	#{
-	#    "items": [
-	#        {
-	#            "id": 2,
-	#            "lookupName": "Maestro Smart Thermostat",
-	#            "links": [
-	#                {
-	#                    "rel": "canonical",
-	#                    "href": "https://<OSC_SITE>.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts/2"
-	#                }
-	#            ]
-	#        },
-	#        {
-	#            "id": 6,
-	#            "lookupName": "Home Security",
-	#            "links": [
-	#                {
-	#                    "rel": "canonical",
-	#                    "href": "https://<OSC_SITE>.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts/6"
-	#                }
-	#            ]
-	#        },
-	#        {
-	#            "id": 7,
-	#            "lookupName": "Hubs",
-	#            "links": [
-	#                {
-	#                    "rel": "canonical",
-	#                    "href": "https://<OSC_SITE>.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts/7"
-	#                }
-	#            ]
-	#        }
-	#    ],
-	#    "hasMore": true,
-	#
-	#	 ... and everything else ... 
-	#	
-	#}
 
 
+# READ
+# 
+# OSCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
 
+# Here's how you could get a list of ServiceProducts
+# using Ruby variables, hashes(sort of like JSON), and arrays to set field information
 
+res = OSCRuby::Connect.get(rn_client,'/serviceProducts?limit=3')
 
+puts JSON.pretty_generate(res.body)
 
-
-	# UPDATE
-	# 
-	# OSCRuby::Connect.patch( <client>, <url>, <json_data> )
-
-	# Here's how you could update the previously created ServiceProduct object
-	# using Ruby variables, arrays, hashes, 
-	# and symbols (read only string values, eg :example)
-	# to set field information
-	
-	names = []
-
-	names[0] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 1}}
-	displayOrder = {:id => 4}
-
-	admin_user_visible_interfaces = []
-	admin_user_visible_interfaces[0] = {:id => 1}
-
-	end_user_visible_interfaces = []
-	end_user_visible_interfaces[0] = {:id => 1}
-
-	prod_info_to_change = []
-	prod_info_to_change[0] = {:names => names, 
-				              :adminVisibleInterfaces => admin_user_visible_interfaces,
-				              :endUserVisibleInterfaces => end_user_visible_interfaces}
-
-    updated_product = OSCRuby::Connect.patch(rn_client,"serviceProducts/56",prod_info_to_change[0]) 
-
-    puts updated_product.code # => "200"
-
-    puts updated_product.body # => "" if successful...
+#{
+#    "items": [
+#        {
+#            "id": 2,
+#            "lookupName": "Maestro Smart Thermostat",
+#            "links": [
+#                {
+#                    "rel": "canonical",
+#                    "href": "https://<OSC_SITE>.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts/2"
+#                }
+#            ]
+#        },
+#        {
+#            "id": 6,
+#            "lookupName": "Home Security",
+#            "links": [
+#                {
+#                    "rel": "canonical",
+#                    "href": "https://<OSC_SITE>.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts/6"
+#                }
+#            ]
+#        },
+#        {
+#            "id": 7,
+#            "lookupName": "Hubs",
+#            "links": [
+#                {
+#                    "rel": "canonical",
+#                    "href": "https://<OSC_SITE>.rightnowdemo.com/services/rest/connect/v1.3/serviceProducts/7"
+#                }
+#            ]
+#        }
+#    ],
+#    "hasMore": true,
+#
+#	 ... and everything else ... 
+#	
+#}
 
 
 
 
 
 
-    # DELETE
-    # 
-	# OSCRuby::Connect.delete( <client>, <url> )
 
-	# Here's how you could delete the previously updated ServiceProduct object
-	# using the OSCRuby::QueryResults 
-	# and OSCRuby::Connect classes
+# UPDATE
+# 
+# OSCRuby::Connect.patch( <client>, <url>, <json_data> )
 
-    q = OSCRuby::QueryResults.new
-    query = "select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';"
+# Here's how you could update the previously created ServiceProduct object
+# using Ruby variables, arrays, hashes, 
+# and symbols (read only string values, eg :example)
+# to set field information
 
-	product_test_updated = q.query(rn_client,resource) # => returns array of results
+names = []
 
-    test = OSCRuby::Connect.delete(rn_client,"serviceProducts/#{product_test_updated[0]['id']}")
+names[0] = {:labelText => 'PRODUCT-TEST-updated', :language => {:id => 1}}
+displayOrder = {:id => 4}
 
-    puts updated_product.code # => "200"
+admin_user_visible_interfaces = []
+admin_user_visible_interfaces[0] = {:id => 1}
 
-    puts updated_product.body # => "" if successful...
+end_user_visible_interfaces = []
+end_user_visible_interfaces[0] = {:id => 1}
+
+prod_info_to_change = []
+prod_info_to_change[0] = {:names => names, 
+			              :adminVisibleInterfaces => admin_user_visible_interfaces,
+			              :endUserVisibleInterfaces => end_user_visible_interfaces}
+
+updated_product = OSCRuby::Connect.patch(rn_client,"serviceProducts/56",prod_info_to_change[0]) 
+
+puts updated_product.code # => "200"
+
+puts updated_product.body # => "" if successful...
 
 
 
+
+
+
+
+
+# DELETE
+# 
+# OSCRuby::Connect.delete( <client>, <url> )
+
+# Here's how you could delete the previously updated ServiceProduct object
+# using the OSCRuby::QueryResults 
+# and OSCRuby::Connect classes
+
+q = OSCRuby::QueryResults.new
+query = "select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';"
+
+product_test_updated = q.query(rn_client,resource) # => returns array of results
+
+test = OSCRuby::Connect.delete(rn_client,"serviceProducts/#{product_test_updated[0]['id']}")
+
+puts updated_product.code # => "200"
+
+puts updated_product.body # => "" if successful...
+
+
+
+
+
+If you want something specific with this API, feel free to make a pull request.
 
 ```
