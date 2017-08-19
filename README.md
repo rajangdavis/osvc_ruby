@@ -334,12 +334,12 @@ puts last_updated.run(rn_client)
 'arrf' lets you set filters for an OSCRuby::AnalyticsReportsResults Object.
 
 You can set the following keys:
-1. [attributes](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-attributes)
-2. [dataType](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-dataType)
-3. [name](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#collapseListGroup-request-definitions-analyticsReports-filters-properties)
-4. [operator](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-operator)
-5. [prompt](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#collapseListGroup-request-definitions-analyticsReports-filters-properties)
-6. [values](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-values)
+1. [attributes](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-namedIDs-analyticsReports-filters-attributes)
+2. [dataType](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-namedIDs-analyticsReports-filters-dataType)
+3. name => The filter name
+4. [operator](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-namedIDs-analyticsReports-filters-operator)
+5. prompt => The prompt for this filter
+6. [values](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-namedIDs-definitions-analyticsReports-filters-values)
 
 ```ruby
 require 'osc_ruby'
