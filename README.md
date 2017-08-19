@@ -7,12 +7,14 @@ An (under development) Ruby ORM for using Oracle Service Cloud influenced by the
 
 ## Compatibility
 
-This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]. Additionally,
-[TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests against Ruby version 2.2.0
+This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
+It is now being tested against ruby 2.3.3p222 (2016-11-21 revision 56859) [i386-mingw32].
+
+Additionally,[TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests against Ruby version 2.2.0.
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
-You can use this Ruby API for:
+You can use this Ruby API for basic scripting and microservices. The main features that word to date are as follows:
 	
 	1. Running ROQL queries either 1 at a time or multiple queries in a set
 	2. Running Reports with filters
@@ -54,24 +56,35 @@ Or install it yourself as:
 require 'osc_ruby'
 
 rn_client = OSCRuby::Client.new do |c|
-	c.username = ENV['OSC_ADMIN'] 		# => These are interface credentials
-	c.password = ENV['OSC_PASSWORD'] 	# => store these in environmental
-	c.interface = ENV['OSC_SITE'] 		# => variables in your .bash_profile
+	c.username = ENV['OSC_ADMIN']		# => These are interface credentials
+	c.password = ENV['OSC_PASSWORD']	# => store these in environmental
+	c.interface = ENV['OSC_SITE']		# => variables in your .bash_profile
 
 	### optional configuration
-	c.no_ssl_verify = true		# => Defaults to false. Turns off SSL verification; don't use in production
-	c.version = 'v1.4'			# => Defaults to 'v1.3'. Sets the version of the REST API to use
-	c.suppress_rules = true		# => Defaults to false. Let's you supress business rules
-	c.demo_site = true			# => Defaults to false. Use 'rightnowdemo' namespace instead of 'custhelp'
+	# Turns off SSL verification; don't use in production
+	c.no_ssl_verify = true		# => Defaults to false. 
+	
+	# Sets the version of the REST API to use
+	c.version = 'v1.4'			# => Defaults to 'v1.3'. 
+	
+	# Let's you supress business rules
+	c.suppress_rules = true		# => Defaults to false. 
+	
+	# Use 'rightnowdemo' namespace instead of 'custhelp'
+	c.demo_site = true			# => Defaults to false. 
 
 end
+```
 
 
 
 
 
+## QueryResults example
 
-# QueryResults example
+This is for running one ROQL query. Whatever is allowed by the REST API (limits and sorting) is allowed with this library.
+
+```ruby
 # NOTE: Make sure to put your queries WRAPPED in doublequotes("")
 # this is because when Ruby converts the queries into a URI
 # the REST API does not like it when the queries are WRAPPED in single quotes ('')
@@ -82,7 +95,6 @@ end
 # it will spit back an error from the REST API!
 
 
-
 q = OSCRuby::QueryResults.new
 
 query = "select * from answers where ID = 1557"
@@ -91,6 +103,7 @@ results = q.query(rn_client,query) # => will return an array of results
 
 puts results[0] # => "{'id':1557,'name':...}"
 
+```
 
 
 
@@ -98,13 +111,15 @@ puts results[0] # => "{'id':1557,'name':...}"
 
 
 
+## QueryResultsSet example
 
-# QueryResultsSet example
+This is for running multiple queries and assigning theresults of each query to a key.
+
+```ruby
 # NOTE: Make sure to put your queries WRAPPED in doublequotes("")
 # Pass in each query into a hash
 	# set query: to the query you want to execute
 	# set key: to the value you want the results to of the query to be referenced to
-
 
 
 mq = OSCRuby::QueryResultsSet.new
@@ -118,28 +133,32 @@ r = mq.query_set(rn_client,
 
 puts JSON.pretty_generate(r.answerSchema)
 
-#  [
-#    {
-#      "Name": "id",
-#      "Type": "Integer",
-#      "Path": ""
-#    },
-#    {
-#      "Name": "lookupName",
-#      "Type": "String",
-#      "Path": ""
-#    },
-#    {
-#      "Name": "createdTime",
-#      "Type": "String",
-#      "Path": ""
-#    }
-#    ... everything else including customfields and objects...
-#  ]
+# Results for "DESCRIBE ANSWERS"
+#
+# [
+#  {
+#    "Name": "id",
+#    "Type": "Integer",
+#    "Path": ""
+#  },
+#  {
+#    "Name": "lookupName",
+#    "Type": "String",
+#    "Path": ""
+#  },
+#  {
+#    "Name": "createdTime",
+#    "Type": "String",
+#    "Path": ""
+#  }
+#  ... everything else including customfields and objects...
+#]
 
 puts JSON.pretty_generate(r.answers)
 
-#[
+# Results for "SELECT * FROM ANSWERS LIMIT 1"
+#
+# [
 #  {
 #    "id": 1,
 #    "lookupName": 1,
@@ -169,98 +188,109 @@ puts JSON.pretty_generate(r.answers)
 
 puts JSON.pretty_generate(r.categoriesSchema)
 
-#	[
-#	... skipping the first few ... 
-#	 {
-#	    "Name": "adminVisibleInterfaces",
-#	    "Type": "SubTable",
-#	    "Path": "serviceCategories.adminVisibleInterfaces"
-#	  },
-#	  {
-#	    "Name": "descriptions",
-#	    "Type": "SubTable",
-#	    "Path": "serviceCategories.descriptions"
-#	  },
-#	  {
-#	    "Name": "displayOrder",
-#	    "Type": "Integer",
-#	    "Path": ""
-#	  },
-#	  {
-#	    "Name": "endUserVisibleInterfaces",
-#	    "Type": "SubTable",
-#	    "Path": "serviceCategories.endUserVisibleInterfaces"
-#	  },
-#	  ... everything else include parents and children ...
-#	]
+# Results for "DESCRIBE SERVICECATEGORIES"
+# 
+#[
+#... skipping the first few ... 
+# {
+#    "Name": "adminVisibleInterfaces",
+#    "Type": "SubTable",
+#    "Path": "serviceCategories.adminVisibleInterfaces"
+#  },
+#  {
+#    "Name": "descriptions",
+#    "Type": "SubTable",
+#    "Path": "serviceCategories.descriptions"
+#  },
+#  {
+#    "Name": "displayOrder",
+#    "Type": "Integer",
+#    "Path": ""
+#  },
+#  {
+#    "Name": "endUserVisibleInterfaces",
+#    "Type": "SubTable",
+#    "Path": "serviceCategories.endUserVisibleInterfaces"
+#  },
+#  ... everything else include parents and children ...
+#]
 
 puts JSON.pretty_generate(r.categories)
 
-#	[
-#	  {
-#	    "id": 3,
-#	    "lookupName": "Manuals",
-#	    "createdTime": null,
-#	    "updatedTime": null,
-#	    "displayOrder": 3,
-#	    "name": "Manuals",
-#	    "parent": 60
-#	  },
-#	  {
-#	    "id": 4,
-#	    "lookupName": "Installations",
-#	    "createdTime": null,
-#	    "updatedTime": null,
-#	    "displayOrder": 4,
-#	    "name": "Installations",
-#	    "parent": 60
-#	  },
-#	  {
-#	    "id": 5,
-#	    "lookupName": "Downloads",
-#	    "createdTime": null,
-#	    "updatedTime": null,
-#	    "displayOrder": 2,
-#	    "name": "Downloads",
-#	    "parent": 60
-#	  },
-#	  ... you should get the idea by now ...
-#	]
+# Results for "SELECT * FROM SERVICECATEGORIES"
+#
+# [
+#  {
+#    "id": 3,
+#    "lookupName": "Manuals",
+#    "createdTime": null,
+#    "updatedTime": null,
+#    "displayOrder": 3,
+#    "name": "Manuals",
+#    "parent": 60
+#  },
+#  {
+#    "id": 4,
+#    "lookupName": "Installations",
+#    "createdTime": null,
+#    "updatedTime": null,
+#    "displayOrder": 4,
+#    "name": "Installations",
+#    "parent": 60
+#  },
+#  {
+#    "id": 5,
+#    "lookupName": "Downloads",
+#    "createdTime": null,
+#    "updatedTime": null,
+#    "displayOrder": 2,
+#    "name": "Downloads",
+#    "parent": 60
+#  },
+#  ... you should get the idea by now ...
+#]
 
 ### Both of these are similar to the above
-puts JSON.pretty_generate(r.productsSchema)
-puts JSON.pretty_generate(r.products)
+puts JSON.pretty_generate(r.productsSchema) # => Results for "DESCRIBE SERVICEPRODUCTS"
+puts JSON.pretty_generate(r.products) # => Results for "SELECT * FROM SERVICEPRODUCTS"
+
+```
 
 
 
 
+## AnalyticsReportsResults
 
+You can create a new instance either by the report id or lookupName
 
-
-# AnalyticsReportsResults
-
-# You can create a new instance either by the report id or lookupName
+```ruby
 
 last_updated = OSCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
 
-report_results = last_updated.run(rn_client)
+puts last_updated.run(rn_client)
 
-# More on filters and datetime methods below
+#{"Status"=>"Unresolved", "Incidents"=>704, "Average Time Since Last Response"=>"39029690.149123"}
+#{"Status"=>"Updated", "Incidents"=>461, "Average Time Since Last Response"=>"39267070.331683"}
 
-
-
-
-
-
+```
+More on filters and datetime methods below
 
 
 
 
-# Convenience Methods
 
-# 'arrf' => stands for 'analytics_report_results_filter'
 
-# arrf lets you set filters for an OSCRuby::AnalyticsReportsResults Object
+
+
+
+
+## Convenience Methods
+
+### 'arrf' => stands for 'analytics_report_results_filter'
+
+arrf lets you set filters for an OSCRuby::AnalyticsReportsResults Object
+
+```ruby
 
 answers_search = OSCRuby::AnalyticsReportResults.new(id: 176)
 
@@ -272,6 +302,8 @@ answers = answers_search.run(rn_client)
 answers.each do |answer|
 	puts answer['Summary']
 end			
+
+# =>
 
 # How do I get started with the Maestro Smart Thermostat App?
 
@@ -286,6 +318,7 @@ end
 # Maestro Product Warranty
 
 # ... and so on and so forth
+```
 
 
 
@@ -293,11 +326,11 @@ end
 
 
 
+### 'dti' => stands for 'date_to_iso8601'
 
-# 'dti' => stands for 'date_to_iso8601'
+dti lets you type in a date and get it in ISO8601 format. Explicit date formatting is best.
 
-# dti lets you type in a date and get it in ISO8601 format
-# explicit => better
+```ruby
 
 dti("January 1st, 2014") # => 2014-01-01T00:00:00-08:00  # => 1200 AM, January First of 2014
 
@@ -307,10 +340,17 @@ dti("January 1st, 2014 23:59 PDT") # => 2014-01-01T23:59:00-07:00 # => 11:59 PM 
 
 dti("January 1st") # => 2017-01-01T00:00:00-08:00 # => 12:00 AM, January First of this Year
 
-# But you should be careful! 
-# Sometimes the dates will not be what you expect
-# So try to write code as explicitly/predictably as possible
-# Full dates should be formatted as 
+```
+
+
+But you should be careful! Sometimes the dates will not be what you expect; try to write dates as explicitly/predictably when possible.
+
+
+```ruby
+
+# EXAMPLES OF DATES NOT BEIBG WHAT YOU MIGHT EXPECT
+
+#Full dates should be formatted as 
 # %d/%m/%y %h:%m tt
 
 dti("01/02/14") # => 2001-02-14T00:00:00-08:00 # => 12:00 AM, February 14th, 2001
@@ -321,6 +361,7 @@ dti("Jan-02-14") # => 2014-01-02T00:00:00-08:00 # => 12:00 AM, January 2nd, 2014
 
 dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM, August 1st, 2017 Pacific Time (?)
 
+```
 
 
 
@@ -330,13 +371,14 @@ dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM,
 
 
 
+## Basic CRUD operations
 
-# Basic CRUD operations
+### CREATE
 
-# CREATE
-# 
-# OSCRuby::Connect.post( <client>, <url>, <json_data> )
+#### OSCRuby::Connect.post( <client>, <url>, <json_data> )
 
+
+```ruby
 # Here's how you could create a new ServiceProduct object
 # using Ruby variables, hashes(sort of like JSON), and arrays to set field information
 
@@ -358,6 +400,7 @@ puts res.body # => JSON body
 
 # callback with JSON details
 
+```
 
 
 
@@ -365,11 +408,11 @@ puts res.body # => JSON body
 
 
 
+### READ
 
-# READ
-# 
-# OSCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
+#### OSCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
 
+```ruby
 # Here's how you could get a list of ServiceProducts
 # using Ruby variables, hashes(sort of like JSON), and arrays to set field information
 
@@ -415,17 +458,18 @@ puts JSON.pretty_generate(res.body)
 #	 ... and everything else ... 
 #	
 #}
+```ruby
 
 
 
 
 
 
+### UPDATE
+ 
+#### OSCRuby::Connect.patch( <client>, <url>, <json_data> )
 
-# UPDATE
-# 
-# OSCRuby::Connect.patch( <client>, <url>, <json_data> )
-
+```ruby
 # Here's how you could update the previously created ServiceProduct object
 # using Ruby variables, arrays, hashes, 
 # and symbols (read only string values, eg :example)
@@ -453,17 +497,18 @@ puts updated_product.code # => "200"
 
 puts updated_product.body # => "" if successful...
 
+```
 
 
 
 
 
 
+### DELETE
 
-# DELETE
-# 
-# OSCRuby::Connect.delete( <client>, <url> )
+#### OSCRuby::Connect.delete( <client>, <url> )
 
+```ruby
 # Here's how you could delete the previously updated ServiceProduct object
 # using the OSCRuby::QueryResults 
 # and OSCRuby::Connect classes
@@ -480,9 +525,6 @@ puts updated_product.code # => "200"
 puts updated_product.body # => "" if successful...
 
 
-
-
+```
 
 If you want something specific with this API, feel free to make a pull request.
-
-```
