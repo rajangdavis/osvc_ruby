@@ -57,7 +57,7 @@ module OSCRuby
 				response.body
 			else
 				body = JSON.parse(response.body)
-				final_json = NormalizeModule.iterate_through_rows(body)
+				NormalizeModule.iterate_through_rows(body)
 			end
 		end
 
