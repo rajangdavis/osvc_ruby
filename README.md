@@ -2,16 +2,14 @@
 
 [![Code Climate](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/gpa.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby) [![Test Coverage](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/coverage.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby/coverage) [![Build Status](https://travis-ci.org/rajangdavis/osc_ruby.svg?branch=master)](https://travis-ci.org/rajangdavis/osc_ruby) [![Gem Version](https://badge.fury.io/rb/osc_ruby.svg)](https://badge.fury.io/rb/osc_ruby)
 
-An (under development) Ruby ORM for using Oracle Service Cloud influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
+An (under development) Ruby library for using the [Oracle Service Cloud REST API](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/) influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
 
 ## Compatibility
 
 This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
 
-It is now being tested against ruby 2.3.3p222 (2016-11-21 revision 56859) [i386-mingw32].
-
-Additionally, [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) tests against Ruby version 2.2.0.
+It is now being tested against Oracle Service Cloud May 2017 using Ruby version 2.3.3p222 (2016-11-21 revision 56859) [i386-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) for continuous integration.
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
@@ -55,7 +53,8 @@ Or install it yourself as:
 
 ## Client Configuration
 
-Configuration is required as means of authentication for the Oracle Service Cloud interface that you will interact with.
+An OSCRuby::Client object lets the library know which credentials and interface to use for interacting with the Oracle Service Cloud REST API.
+This is helpful if you need to interact with multiple interfaces or set different headers for different objects.
 
 ```ruby
 
@@ -335,12 +334,12 @@ puts last_updated.run(rn_client)
 'arrf' lets you set filters for an OSCRuby::AnalyticsReportsResults Object.
 
 You can set the following keys:
-1. :attributes
-2. :dataType
-3. :name
-4. :operator
-5. :prompt
-6. :values
+1. [attributes](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-attributes)
+2. [dataType](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-dataType)
+3. [name](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#collapseListGroup-request-definitions-analyticsReports-filters-properties)
+4. [operator](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-operator)
+5. [prompt](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#collapseListGroup-request-definitions-analyticsReports-filters-properties)
+6. [values](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-definitions-analyticsReports-filters-values)
 
 ```ruby
 require 'osc_ruby'
