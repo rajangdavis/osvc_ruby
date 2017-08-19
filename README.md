@@ -13,9 +13,11 @@ It is now being tested against Oracle Service Cloud May 2017 using Ruby version 
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
+## Installing Ruby
+[Try this link.](https://bitnami.com/stack/ruby/installer)
 
 ## Use Cases
-You can use this Ruby API for basic scripting and microservices. The main features that work to date are as follows:
+You can use this Ruby Library for basic scripting and microservices. The main features that work to date are as follows:
 
 1. [Simple configuration](#client-configuration)
 2. Running ROQL queries [either 1 at a time](#oscrubyqueryresults-example) or [multiple queries in a set](#oscrubyqueryresultsset-example)
