@@ -19,26 +19,7 @@ module OSCRuby
 
 					ValidationsModule::check_obj_for_errors(obj_to_find)
 
-					NormalizeModule::normalize(obj_to_find,resource)
-				else
-
-					puts obj_to_find.body
-
-					obj_to_find.body
-
-				end
-
-			end
-
-			def nested_find(rn_client,resource)
-
-				obj_to_find = OSCRuby::Connect.get(rn_client,resource)
-
-				if obj_to_find.code.to_i == 200 || obj_to_find.code.to_i == 201
-
-					ValidationsModule::check_obj_for_errors(obj_to_find)
-
-					NormalizeModule::nested_normalize(obj_to_find,resource)
+					NormalizeModule::normalize(obj_to_find)
 				else
 
 					puts obj_to_find.body

@@ -58,7 +58,7 @@ module OSCRuby
 			else
 				body = JSON.parse(response.body)
 				final_json = []
-				body['rows'].each_with_index do |r,j|
+				body['rows'].each_with_index do |r,_j|
 					
 					hash = {}
 					

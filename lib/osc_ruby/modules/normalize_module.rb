@@ -6,7 +6,7 @@ module OSCRuby
 
 		class << self
 
-			def normalize(input,resource)
+			def normalize(input)
 
 				if input.code.to_i == 404
 
@@ -25,7 +25,7 @@ module OSCRuby
 							results_array = []
 
 					        # loop through rows
-					        item['rows'].each_with_index do |row,row_i|
+					        item['rows'].each_with_index do |row,_row_i|
 
 					                # initialize a hash to create the object
 					                obj_hash = {}
@@ -55,45 +55,6 @@ module OSCRuby
 					end
 
 
-					final_hash.to_json
-
-				end
-
-			end
-
-			def nested_normalize(input,resource)
-
-				if input.code.to_i == 404
-
-					input.body
-
-				else
-
-					json_input = JSON.parse(input.body)
-					
-					final_hash = []
-
-					json_input['items'].each do |item|
-
-						item_array = []
-
-						item['rows'].each_with_index do |row,row_i|
-
-							obj_hash = {}
-							
-							item['columnNames'].each_with_index do |column,i|
-								obj_hash[column] = if !row[i].nil? && row[i].is_i? == true then row[i].to_i else row[i] end
-							end
-
-							item_array.push(obj_hash)
-
-						end
-
-						final_hash.push(item_array)
-
-					end
-
-					
 					final_hash.to_json
 
 				end

@@ -8,7 +8,7 @@ $time_zone = ''
 def dti(date)
 	begin
 		Time.parse(date +' '+$time_zone).iso8601
-	rescue Exception => e
+	rescue => e
 		e.message
 	end
 end
