@@ -17,7 +17,7 @@ module OSCRuby
 
 				if obj_to_find.code.to_i == 200 || obj_to_find.code.to_i == 201
 
-					ValidationsModule::check_obj_for_errors(obj_to_find)
+					# ValidationsModule::check_obj_for_errors(obj_to_find)
 
 					NormalizeModule::normalize(obj_to_find)
 				else
