@@ -1,5 +1,5 @@
 # OSCRuby
-
+ 
 [![Code Climate](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/gpa.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby) [![Test Coverage](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/coverage.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby/coverage) [![Build Status](https://travis-ci.org/rajangdavis/osc_ruby.svg?branch=master)](https://travis-ci.org/rajangdavis/osc_ruby) [![Gem Version](https://badge.fury.io/rb/osc_ruby.svg)](https://badge.fury.io/rb/osc_ruby)
 
 An (under development) Ruby library for using the [Oracle Service Cloud REST API](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/) influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
