@@ -91,7 +91,7 @@ describe OSCRuby::QueryResultsSet do
 													   {key:"serviceCategories", query:"describe serviceCategories"})		
 				expect(test.incidents).to be_an(Array)
 				expect(test.incidents.first).to be_a(Hash)
-				expect(test.incidents.first['id']).to be_a(Fixnum)
+				expect(test.incidents.first['id']).to be_a(Integer)
 				expect(test.serviceCategories).to be_an(Array)
 
 

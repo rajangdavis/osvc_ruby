@@ -5,7 +5,7 @@ require 'json'
 
 VCR.configure do |c|
 	c.cassette_library_dir = "spec/fixtures"
-	c.hook_into :fakeweb
+	c.hook_into :webmock
 	c.allow_http_connections_when_no_cassette = true
 	c.filter_sensitive_data('<OSC_ADMIN_USERNAME>') { ENV['OSC_ADMIN'] }
 	c.filter_sensitive_data('<OSC_ADMIN_PASSWORD>') { ENV['OSC_PASSWORD'] }

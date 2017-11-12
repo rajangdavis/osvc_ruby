@@ -76,7 +76,7 @@ describe OSCRuby::AnalyticsReportResults do
 			answers.each do |answer|
 
 				expect(answer['Summary']).to be_a(String)
-				expect(answer['Answer ID']).to be_a(Fixnum)
+				expect(answer['Answer ID']).to be_a(Integer)
 			end			
 
 		end
