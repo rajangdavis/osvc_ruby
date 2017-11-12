@@ -45,7 +45,9 @@ GEM
     yard (0.9.9)
 
 PLATFORMS
+  ruby
   x86-mingw32
+  x86_64-linux
 
 DEPENDENCIES
   bundler
