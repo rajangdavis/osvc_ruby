@@ -4,12 +4,20 @@
 
 An (under development) Ruby library for using the [Oracle Service Cloud REST API](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/) influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
+## Installing Ruby (for Windows)
+[Try this link.](https://rubyinstaller.org/downloads/). I would highly recommend installing any version before 2.4 for Windows. 
 
+You will also need to install DevKit Tools which are located underneath the Ruby section
+
+If you are using Windows 10, you can use your Linux Subsystem to work with Ruby; [here's instructions for how to do that.](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-and-set-up-a-local-programming-environment-on-windows-10)
+
+If you get SSL Errors (you probably will), follow [this link for instructions on resolving SSL things that I know nothing about](https://stackoverflow.com/a/16134586/2548452).
+   
 ## Compatibility
 
 This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
 
-It is now being tested against Oracle Service Cloud May 2017 using Ruby version 2.3.3p222 (2016-11-21 revision 56859) [i386-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) for continuous integration.
+It is now being tested against Oracle Service Cloud May 2017 using Ruby version ruby 2.2.6p396 (2016-11-15 revision 56800) [x64-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) for continuous integration.
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
@@ -29,10 +37,6 @@ You can use this Ruby Library for basic scripting and microservices. The main fe
 	3. [Update => Patch](#update)
 	4. [Destroy => Delete](#delete)
 
-## Installing Ruby
-[Try this link.](https://bitnami.com/stack/ruby/installer)
-
-If you get SSL Errors (you probably will), follow [this link for instructions on resolving SSL things that I know nothing about](http://guides.rubygems.org/ssl-certificate-update/#installing-using-update-packages).
 
 ## Installation
 
