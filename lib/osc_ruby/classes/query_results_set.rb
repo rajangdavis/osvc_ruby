@@ -4,7 +4,7 @@ require 'ostruct'
 
 module OSCRuby
 
-	class QueryResultsSet < OpenStruct
+	class QueryResultsSet
 
 		include ValidationsModule
 
