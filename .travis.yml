@@ -1,16 +1,15 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=3cf6bec1eab840d45119164e7e2fd517f5e73c9c34a68051cd09eea110a22884
 language: ruby
 rvm:
 - 2.2.0
-addons:
-  code_climate:
-    repo_token:
-      secure: jhiFV5qK92z9GNZNgifvOmzoYmghcTFcuHYn21B5pkcIFmUJRYL03FK4QHqinFQ4BvjHnKlGTEgRPvglivvPBtIwpGMwuDF0oX0JHeTNLXuAXk8Dd6SAap+udSc2fOZYBg7H8PNmhSVpP97fYu23JsLmhRN8lnoO/yYyFUn/xUZIufOhpPj5RBMtR/XmxXiqS1tnsuHpSs7P+Kp/h6sr8QUOw1pJALEAqHGw2WmdxGrI76GQc0bylLFGMITkCbAiTxVQA3QnjLKFYCHq8zo1U0QZiW78+ubbV22oZS1EVATAb4SyqlqFd2bJA9wYjL2J4tYl1I+RvgVSspMsksHs72uIYHDTNSsEuQTnMCxtkq7WJLbYjRW3Tzbqn124ize/NmJqHcJ70Bc8Tzc3CkgEuJNF/cK266r0UkNTu+m65OTElyic14y+wCzeU8r/aDfX9vQKPBpOFpvHuoWMC54iiGIPjLVZb0AYvI2i3weK2dcCh7ZFD+FsFoMAzyaFFFJP4ANH7R08ewVpTjdud4O8WiQBJOW08dXE9inOF+4hqUho2FdrTWQLvMbanVXOmQXsODeEy7zxFUi1I1wVcX1AktEACmcX2ruose8UiScRu7Tr2R6mhgPa4UAf1YhhBClYafeqtCBi1rRrHkgOkaofhKbU3hHHF5cQwDP2v2jUYEI=
 before_install:
   - gem install bundler
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-  - bundle install --deployment
+  - bundle install
 script: bundle exec rake spec
-after_success:
-- bundle exec codeclimate-test-reporter
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
