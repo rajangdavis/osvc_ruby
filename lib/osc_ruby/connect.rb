@@ -1,4 +1,5 @@
 require 'osc_ruby/client'
+require 'osc_ruby/modules/validations_module'
 
 require 'net/http'
 require 'openssl'
@@ -7,9 +8,11 @@ require 'cgi'
 
 module OSCRuby
 	
+	# This class is purely to provide the underlying methods for CRUD functionality using Net::HTTP, URI, and OpenSSL
 	class Connect
-		# This class is purely to provide the underlying methods for CRUD functionality using Net::HTTP, URI, and OpenSSL
 
+		include ValidationsModule
+		
 		def self.get(client,resource_url = nil)
 
 			@final_config = get_check(client,resource_url)
@@ -166,11 +169,7 @@ module OSCRuby
 
 		def self.check_client_config(client)
 
-			if client.nil?
-				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
-			else
-				@config = client.config
-			end
+			@config = ValidationsModule::check_client(client).config
 
 			if @config.nil?
 				raise ArgumentError, "Client configuration cannot be nil or blank"	

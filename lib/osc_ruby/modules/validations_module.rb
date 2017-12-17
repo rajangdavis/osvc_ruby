@@ -97,7 +97,7 @@ module OSCRuby
 					raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
 
 				end
-
+				client
 			end
 
 			def attr_hash_exists_and_is_type_of(obj,key,val,class_of_value)
