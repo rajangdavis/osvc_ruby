@@ -1,6 +1,5 @@
 require_relative 'query_results'
 require 'osc_ruby/modules/validations_module'
-require 'ostruct'
 
 module OSCRuby
 
@@ -18,21 +17,21 @@ module OSCRuby
 
 			args.each do |qh|
 
-				key_map.push(qh[:key])
+				key_map.push(qh[:key].to_sym)
 
 				query_arr.push(qh[:query])	
 			
 			end
 
-			query_results_set = OpenStruct.new
+			query_results_set = Struct.new( *key_map )
 			query_search = OSCRuby::QueryResults.new
 		
 
 			final_query_arr = query_arr.join('; ')
 			final_results = query_search.query(client,final_query_arr)
 
-			key_map.each_with_index {|k,i| query_results_set[k] = final_results[i]}
-			query_results_set
+			final_query_results_set = query_results_set.new( *final_results )
+			final_query_results_set
 		end
 
 	end 

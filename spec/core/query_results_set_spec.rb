@@ -25,7 +25,7 @@ describe OSCRuby::QueryResultsSet do
 
 	let(:table){ "answers" } 
 	let(:nested_attributes){
- 		[ "*",
+ 		[ 
 		  "accessLevels.namedIDList.*",
 		  "answerType.*",
 		  "assignedTo.account.*",
@@ -80,7 +80,7 @@ describe OSCRuby::QueryResultsSet do
 		it 'should return results in set of OSCRuby::QueryResults',:vcr do 
 
 			expect(query_results_set.query_set(client,{key:"answers", query:"select * from answers LIMIT 2"},
-													  {key:"incidents", query:"describe incidents"})).to be_an(OpenStruct)
+													  {key:"incidents", query:"describe incidents"})).to be_a(Struct)
 
 
 		end
