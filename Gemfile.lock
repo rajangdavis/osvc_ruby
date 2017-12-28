@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    osc_ruby (1.4.0)
+    osc_ruby (1.4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -38,17 +38,14 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
     vcr (3.0.3)
-    webmock (3.1.0)
+    webmock (3.1.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    yard (0.9.9)
 
 PLATFORMS
-  ruby
   x64-mingw32
   x86-mingw32
-  x86_64-linux
 
 DEPENDENCIES
   bundler
@@ -59,7 +56,6 @@ DEPENDENCIES
   simplecov
   vcr (~> 3.0, >= 3.0.3)
   webmock
-  yard
 
 BUNDLED WITH
    1.16.0
