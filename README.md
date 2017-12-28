@@ -17,7 +17,7 @@ If you get SSL Errors (you probably will), follow [this link for instructions on
 
 This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
 
-It is now being tested against Oracle Service Cloud May 2017 using Ruby version ruby 2.2.6p396 (2016-11-15 revision 56800) [x64-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) for continuous integration.
+It is now being tested against Oracle Service Cloud May 2017 using Ruby version 2.5.0p0 (2017-12-25 revision 61468) [i386-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) for continuous integration.
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
