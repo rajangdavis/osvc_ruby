@@ -1,6 +1,6 @@
-# OSCRuby
+# OSvCRuby
  
-[![Code Climate](https://codeclimate.com/github/rajangdavis/osc_ruby/badges/gpa.svg)](https://codeclimate.com/github/rajangdavis/osc_ruby) [![Test Coverage](https://api.codeclimate.com/v1/badges/671008ff5a949cc9198c/test_coverage)](https://codeclimate.com/github/rajangdavis/osc_ruby/test_coverage) [![Build Status](https://travis-ci.org/rajangdavis/osc_ruby.svg?branch=master)](https://travis-ci.org/rajangdavis/osc_ruby) [![Gem Version](https://badge.fury.io/rb/osc_ruby.svg)](https://badge.fury.io/rb/osc_ruby) [![Known Vulnerabilities](https://snyk.io/test/github/rajangdavis/osc_ruby/badge.svg)](https://snyk.io/test/github/rajangdavis/osc_ruby)
+[![Code Climate](https://codeclimate.com/github/rajangdavis/osvc_ruby/badges/gpa.svg)](https://codeclimate.com/github/rajangdavis/osvc_ruby) [![Test Coverage](https://api.codeclimate.com/v1/badges/671008ff5a949cc9198c/test_coverage)](https://codeclimate.com/github/rajangdavis/osvc_ruby/test_coverage) [![Build Status](https://travis-ci.org/rajangdavis/osvc_ruby.svg?branch=master)](https://travis-ci.org/rajangdavis/osvc_ruby) [![Gem Version](https://badge.fury.io/rb/osvc_ruby.svg)](https://badge.fury.io/rb/osvc_ruby) [![Known Vulnerabilities](https://snyk.io/test/github/rajangdavis/osvc_ruby/badge.svg)](https://snyk.io/test/github/rajangdavis/osvc_ruby)
 
 An (under development) Ruby library for using the [Oracle Service Cloud REST API](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/) influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
@@ -17,7 +17,7 @@ If you get SSL Errors (you probably will), follow [this link for instructions on
 
 This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
 
-It is now being tested against Oracle Service Cloud May 2017 using Ruby version 2.5.0p0 (2017-12-25 revision 61468) [i386-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osc_ruby) for continuous integration.
+It is now being tested against Oracle Service Cloud May 2017 using Ruby version 2.5.0p0 (2017-12-25 revision 61468) [i386-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osvc_ruby) for continuous integration.
 
 All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
@@ -43,7 +43,7 @@ You can use this Ruby Library for basic scripting and microservices. The main fe
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'osc_ruby'
+gem 'osvc_ruby'
 ```
 
 And then execute:
@@ -52,7 +52,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install osc_ruby
+    $ gem install osvc_ruby
 
 
 
@@ -61,7 +61,7 @@ Or install it yourself as:
 
 ## Client Configuration
 
-An OSCRuby::Client object lets the library know which credentials and interface to use for interacting with the Oracle Service Cloud REST API.
+An OSvCRuby::Client object lets the library know which credentials and interface to use for interacting with the Oracle Service Cloud REST API.
 This is helpful if you need to interact with multiple interfaces or set different headers for different objects.
 
 ```ruby
@@ -69,9 +69,9 @@ This is helpful if you need to interact with multiple interfaces or set differen
 # Configuration is as simple as requiring the gem
 # and writing a Ruby block
 
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']		# => These are interface credentials
 	c.password = ENV['OSC_PASSWORD']	# => store these in environmental
 	c.interface = ENV['OSC_SITE']		# => variables in your .bash_profile
@@ -96,11 +96,11 @@ end
 
 
 
-## OSCRuby::QueryResults example
+## OSvCRuby::QueryResults example
 
 This is for running one ROQL query. Whatever is allowed by the REST API (limits and sorting) is allowed with this library.
 
-OSCRuby::QueryResults only has one function: 'query', which takes an OSCRuby::Client object and string query (example below).
+OSvCRuby::QueryResults only has one function: 'query', which takes an OSvCRuby::Client object and string query (example below).
 
 ```ruby
 # NOTE: Make sure to put your queries WRAPPED in doublequotes("")
@@ -112,15 +112,15 @@ OSCRuby::QueryResults only has one function: 'query', which takes an OSCRuby::Cl
 # 'parent is null and lookupName!="Unsure"' => don't do this
 # it will spit back an error from the REST API!
 
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
 end
 
-q = OSCRuby::QueryResults.new
+q = OSvCRuby::QueryResults.new
 
 query = "select * from answers where ID = 1557"
 
@@ -140,11 +140,11 @@ puts results[0] # => "{'id':1557,'name':...}"
 
 
 
-## OSCRuby::QueryResultsSet example
+## OSvCRuby::QueryResultsSet example
 
 This is for running multiple queries and assigning the results of each query to a key for further manipulation.
 
-OSCRuby::QueryResultsSet only has one function: 'query_set', which takes an OSCRuby::Client object and multiple query hashes (example below).
+OSvCRuby::QueryResultsSet only has one function: 'query_set', which takes an OSvCRuby::Client object and multiple query hashes (example below).
 
 ```ruby
 # NOTE: Make sure to put your queries WRAPPED in doublequotes("")
@@ -152,15 +152,15 @@ OSCRuby::QueryResultsSet only has one function: 'query_set', which takes an OSCR
 	# set query: to the query you want to execute
 	# set key: to the value you want the results to of the query to be referenced to
 
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
 end
 
-mq = OSCRuby::QueryResultsSet.new
+mq = OSvCRuby::QueryResultsSet.new
 r = mq.query_set(rn_client,
 		 	{query:"DESCRIBE ANSWERS", key: "answerSchema"},
 		 	{query:"SELECT * FROM ANSWERS LIMIT 1", key: "answers"},
@@ -300,24 +300,24 @@ puts JSON.pretty_generate(r.products) # => Results for "SELECT * FROM SERVICEPRO
 
 
 
-## OSCRuby::AnalyticsReportsResults
+## OSvCRuby::AnalyticsReportsResults
 
 You can create a new instance either by the report 'id' or 'lookupName'.
 
-OSCRuby::AnalyticsReportsResults only has one function: 'run', which takes an OSCRuby::Client object.
+OSvCRuby::AnalyticsReportsResults only has one function: 'run', which takes an OSvCRuby::Client object.
 
-OSCRuby::AnalyticsReportsResults have the following properties: 'id', 'lookupName', and 'filters'. More on filters and supported datetime methods are below this OSCRuby::AnalyticsReportsResults example script.
+OSvCRuby::AnalyticsReportsResults have the following properties: 'id', 'lookupName', and 'filters'. More on filters and supported datetime methods are below this OSvCRuby::AnalyticsReportsResults example script.
 
 ```ruby
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
 end
 
-last_updated = OSCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
+last_updated = OSvCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
 
 puts last_updated.run(rn_client)
 
@@ -339,7 +339,7 @@ puts last_updated.run(rn_client)
 
 ### 'arrf' => analytics report results filter
 
-'arrf' lets you set filters for an OSCRuby::AnalyticsReportsResults Object.
+'arrf' lets you set filters for an OSvCRuby::AnalyticsReportsResults Object.
 
 You can set the following keys:
 1. name => The filter name
@@ -353,15 +353,15 @@ These are under development, but these should work if you treat them like the th
 6. [values](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/op-services-rest-connect-v1.4-analyticsReportResults-post.html#request-namedIDs-definitions-analyticsReports-filters-values)
 
 ```ruby
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
 end
 
-answers_search = OSCRuby::AnalyticsReportResults.new(id: 176)
+answers_search = OSvCRuby::AnalyticsReportResults.new(id: 176)
 
 keywords = arrf(name: "search_ex", values: "Maestro")
 answers_search.filters << keywords
@@ -369,7 +369,7 @@ answers_search.filters << keywords
 # To add more filters, create another 
 # "arrf" filter structure
 # and "shovel" it into 
-# the OSCRuby::AnalyticsReportResults
+# the OSvCRuby::AnalyticsReportResults
 # "filters" property
 #
 # date_created = arrf(name: "date_created", values: dti("August 7th, 2017"))
@@ -452,15 +452,15 @@ dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM,
 
 ### CREATE
 ```ruby
-#### OSCRuby::Connect.post( <client>, <url>, <json_data> )
+#### OSvCRuby::Connect.post( <client>, <url>, <json_data> )
 #### returns a NetHTTPRequest object
 
 # Here's how you could create a new ServiceProduct object
 # using Ruby variables, hashes(sort of like JSON), and arrays to set field information
 
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
@@ -476,7 +476,7 @@ new_product['adminVisibleInterfaces'][0] = {'id' => 1}
 new_product['endUserVisibleInterfaces'] = []
 new_product['endUserVisibleInterfaces'][0] = {'id' => 1}
 
-res = OSCRuby::Connect.post(rn_client,'/serviceProducts',new_product)
+res = OSvCRuby::Connect.post(rn_client,'/serviceProducts',new_product)
 
 puts res.code # => 201
 
@@ -494,19 +494,19 @@ puts res.body # => JSON body
 
 ### READ
 ```ruby
-#### OSCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
+#### OSvCRuby::Connect.get( <client>, optional (<url>/<id>/...<params>) )
 #### returns a NetHTTPRequest object
 # Here's how you could get a list of ServiceProducts
 
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
 end
 
-res = OSCRuby::Connect.get(rn_client,'/serviceProducts?limit=3')
+res = OSvCRuby::Connect.get(rn_client,'/serviceProducts?limit=3')
 
 puts JSON.pretty_generate(res.body)
 
@@ -557,16 +557,16 @@ puts JSON.pretty_generate(res.body)
 
 ### UPDATE
 ```ruby
-#### OSCRuby::Connect.patch( <client>, <url>, <json_data> )
+#### OSvCRuby::Connect.patch( <client>, <url>, <json_data> )
 #### returns a NetHTTPRequest object
 # Here's how you could update the previously created ServiceProduct object
 # using Ruby variables, arrays, hashes, 
 # and symbols (read only string values, eg :example)
 # to set field information
 
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
@@ -589,7 +589,7 @@ prod_info_to_change[0] = {:names => names,
 			              :adminVisibleInterfaces => admin_user_visible_interfaces,
 			              :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-updated_product = OSCRuby::Connect.patch(rn_client,"serviceProducts/56",prod_info_to_change[0]) 
+updated_product = OSvCRuby::Connect.patch(rn_client,"serviceProducts/56",prod_info_to_change[0]) 
 
 puts updated_product.code # => "200"
 
@@ -604,26 +604,26 @@ puts updated_product.body # => "" if successful...
 
 ### DELETE
 ```ruby
-#### OSCRuby::Connect.delete( <client>, <url> )
+#### OSvCRuby::Connect.delete( <client>, <url> )
 #### returns a NetHTTPRequest object
 # Here's how you could delete the previously updated ServiceProduct object
-# using the OSCRuby::QueryResults 
-# and OSCRuby::Connect classes
+# using the OSvCRuby::QueryResults 
+# and OSvCRuby::Connect classes
 
-require 'osc_ruby'
+require 'osvc_ruby'
 
-rn_client = OSCRuby::Client.new do |c|
+rn_client = OSvCRuby::Client.new do |c|
 	c.username = ENV['OSC_ADMIN']
 	c.password = ENV['OSC_PASSWORD']
 	c.interface = ENV['OSC_SITE']	
 end
 
-q = OSCRuby::QueryResults.new
+q = OSvCRuby::QueryResults.new
 query = "select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';"
 
 product_test_updated = q.query(rn_client,resource) # => returns array of results
 
-test = OSCRuby::Connect.delete(rn_client,"serviceProducts/#{product_test_updated[0]['id']}")
+test = OSvCRuby::Connect.delete(rn_client,"serviceProducts/#{product_test_updated[0]['id']}")
 
 puts updated_product.code # => "200"
 

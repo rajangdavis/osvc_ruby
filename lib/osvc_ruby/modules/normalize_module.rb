@@ -1,6 +1,6 @@
 require 'json'
 
-module OSCRuby
+module OSvCRuby
 
 	module NormalizeModule
 

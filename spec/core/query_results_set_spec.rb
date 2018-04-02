@@ -2,11 +2,11 @@ require 'core/spec_helper'
 require 'json'
 require 'uri'
 
-describe OSCRuby::QueryResultsSet do
+describe OSvCRuby::QueryResultsSet do
 
 	let(:client) { 
 
-		OSCRuby::Client.new do |config|
+		OSvCRuby::Client.new do |config|
 		
 			config.interface = ENV['OSC_SITE']
 		
@@ -20,7 +20,7 @@ describe OSCRuby::QueryResultsSet do
 	}
 
 	let(:query_results_set){
-		OSCRuby::QueryResultsSet.new
+		OSvCRuby::QueryResultsSet.new
 	}
 
 	let(:table){ "answers" } 
@@ -55,13 +55,13 @@ describe OSCRuby::QueryResultsSet do
 
 	context "#query_set" do
 
-		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+		it 'should expect client is an instance of OSvCRuby::Client class and raise an error if does not' do
 
-			expect(client).to be_an(OSCRuby::Client)
+			expect(client).to be_an(OSvCRuby::Client)
 
 			client = nil
 
-			expect{query_results_set.query_set(client,'describe')}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+			expect{query_results_set.query_set(client,'describe')}.to raise_error('Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings')
 
 		end
 
@@ -70,14 +70,14 @@ describe OSCRuby::QueryResultsSet do
 
 		# it 'should expect a hash with a key and query value set' do
 
-		# 	expect(client).to be_an(OSCRuby::Client)
+		# 	expect(client).to be_an(OSvCRuby::Client)
 
 		# 	expect{query_results_set.query_set(client,"")}.to raise_error("A query must be specified when using the 'query' method")
 
 		# end
 
 
-		it 'should return results in set of OSCRuby::QueryResults',:vcr do 
+		it 'should return results in set of OSvCRuby::QueryResults',:vcr do 
 
 			expect(query_results_set.query_set(client,{key:"answers", query:"select * from answers LIMIT 2"},
 													  {key:"incidents", query:"describe incidents"})).to be_a(Struct)

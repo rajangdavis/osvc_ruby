@@ -1,8 +1,8 @@
-require 'osc_ruby/version'
-require 'osc_ruby/configuration'
+require 'osvc_ruby/version'
+require 'osvc_ruby/configuration'
 
 
-module OSCRuby
+module OSvCRuby
 
 	class Client
 		# The top-level class that handles configuration and connection to the Oracle Service Cloud REST API.
@@ -11,7 +11,7 @@ module OSCRuby
 		
 		def initialize
 	        raise ArgumentError, "block not given" unless block_given?
-	        self.config ||= OSCRuby::Configuration.new
+	        self.config ||= OSvCRuby::Configuration.new
 	    	yield(config)
 
 	    	check_config

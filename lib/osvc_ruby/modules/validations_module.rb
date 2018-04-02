@@ -1,7 +1,7 @@
-require 'osc_ruby/connect'
+require 'osvc_ruby/connect'
 require 'json'
 
-module OSCRuby
+module OSvCRuby
 
 	module ValidationsModule
 
@@ -19,9 +19,9 @@ module OSCRuby
 
 			def check_client(client)
 
-				if client.class != OSCRuby::Client || client.nil?
+				if client.class != OSvCRuby::Client || client.nil?
 
-					raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+					raise ArgumentError, "Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings"
 
 				end
 				client

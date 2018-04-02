@@ -1,5 +1,5 @@
 require 'core/spec_helper'
 
-describe OSCRuby::Configuration do
-	subject { OSCRuby::Configuration.new }
+describe OSvCRuby::Configuration do
+	subject { OSvCRuby::Configuration.new }
 end

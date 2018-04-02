@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    osc_ruby (1.4.1)
+    osvc_ruby (1.4.2)
 
 GEM
   remote: https://rubygems.org/
@@ -50,7 +50,7 @@ PLATFORMS
 DEPENDENCIES
   bundler
   codeclimate-test-reporter (~> 1.0, >= 1.0.0)
-  osc_ruby!
+  osvc_ruby!
   rake (~> 10.0)
   rspec (~> 3.2, >= 3.2.0)
   simplecov
@@ -58,4 +58,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

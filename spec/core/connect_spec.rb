@@ -2,13 +2,13 @@ require 'core/spec_helper'
 require 'json'
 require 'uri'
 
-describe OSCRuby::Connect do
+describe OSvCRuby::Connect do
 	
 	subject { connect }
 	
 	let(:client) { 
 
-		OSCRuby::Client.new do |config|
+		OSvCRuby::Client.new do |config|
 		
 			config.interface = ENV['OSC_SITE']
 		
@@ -26,13 +26,13 @@ describe OSCRuby::Connect do
 
 	context '#generate_url_and_config' do
 
-		it 'should take at least a config parameter that is an instance of an OSCRuby::Client' do
+		it 'should take at least a config parameter that is an instance of an OSvCRuby::Client' do
 
-			expect(client).to be_an(OSCRuby::Client)
+			expect(client).to be_an(OSvCRuby::Client)
 
 			expect do
 
-				OSCRuby::Connect.generate_url_and_config(client)
+				OSvCRuby::Connect.generate_url_and_config(client)
 
 			end.not_to raise_error
 		end
@@ -41,14 +41,14 @@ describe OSCRuby::Connect do
 
 			expect do
 
-				OSCRuby::Connect.generate_url_and_config(client, 'serviceProducts')
+				OSvCRuby::Connect.generate_url_and_config(client, 'serviceProducts')
 
 			end.not_to raise_error
 		end
 
 		it 'should change the final configured url if the resource_url parameter is specified' do
 
-			test = OSCRuby::Connect.generate_url_and_config(client, 'serviceProducts')
+			test = OSvCRuby::Connect.generate_url_and_config(client, 'serviceProducts')
 
 			interface = client.config.interface
 			if test['site_url'].to_s.match(/custhelp/)
@@ -67,9 +67,9 @@ describe OSCRuby::Connect do
 				
 				client = nil
 
-				OSCRuby::Connect.generate_url_and_config(client)
+				OSvCRuby::Connect.generate_url_and_config(client)
 
-			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+			end.to raise_error("Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings")
 
 		end
 
@@ -79,7 +79,7 @@ describe OSCRuby::Connect do
 				
 				client.config = nil
 
-				OSCRuby::Connect.generate_url_and_config(client)
+				OSvCRuby::Connect.generate_url_and_config(client)
 
 			end.to raise_error("Client configuration cannot be nil or blank")
 
@@ -91,7 +91,7 @@ describe OSCRuby::Connect do
 				
 				client.config.interface = nil
 				
-				OSCRuby::Connect.generate_url_and_config(client)
+				OSvCRuby::Connect.generate_url_and_config(client)
 			
 			end.to raise_error("The configured client interface cannot be nil or blank")
 
@@ -103,7 +103,7 @@ describe OSCRuby::Connect do
 
 				client.config.username = nil
 
-				OSCRuby::Connect.generate_url_and_config(client)
+				OSvCRuby::Connect.generate_url_and_config(client)
 
 			end.to raise_error("The configured client username cannot be nil or blank")
 
@@ -115,7 +115,7 @@ describe OSCRuby::Connect do
 
 				client.config.password = nil
 
-				OSCRuby::Connect.generate_url_and_config(client)
+				OSvCRuby::Connect.generate_url_and_config(client)
 
 			end.to raise_error("The configured client password cannot be nil or blank")
 
@@ -124,7 +124,7 @@ describe OSCRuby::Connect do
 
 		it 'should create an Hash object with a site_url, username, password properties' do
 
-			final_config = OSCRuby::Connect.generate_url_and_config(client)
+			final_config = OSvCRuby::Connect.generate_url_and_config(client)
 
 			expect(final_config).to be_an(Hash)
 
@@ -144,13 +144,13 @@ describe OSCRuby::Connect do
 
 	context '#post_or_patch' do
 
-		it 'should take at least a config parameter that is an instance of an OSCRuby::Client', :vcr do
+		it 'should take at least a config parameter that is an instance of an OSvCRuby::Client', :vcr do
 
-			expect(client).to be_an(OSCRuby::Client)
+			expect(client).to be_an(OSvCRuby::Client)
 
 			expect do
 
-				OSCRuby::Connect.post_or_patch(client,'serviceProducts',json_content)
+				OSvCRuby::Connect.post_or_patch(client,'serviceProducts',json_content)
 
 			end.not_to raise_error
 		end
@@ -161,9 +161,9 @@ describe OSCRuby::Connect do
 				
 				client = nil
 
-				OSCRuby::Connect.post_or_patch(client,'serviceProducts',json_content)
+				OSvCRuby::Connect.post_or_patch(client,'serviceProducts',json_content)
 
-			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+			end.to raise_error("Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings")
 
 		end
 
@@ -171,7 +171,7 @@ describe OSCRuby::Connect do
 
 			expect do
 
-				OSCRuby::Connect.post_or_patch(client, nil, json_content)
+				OSvCRuby::Connect.post_or_patch(client, nil, json_content)
 
 			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to")
 
@@ -181,7 +181,7 @@ describe OSCRuby::Connect do
 
 			expect do
 
-				OSCRuby::Connect.post_or_patch(client,'serviceProducts')
+				OSvCRuby::Connect.post_or_patch(client,'serviceProducts')
 
 			end.to raise_error("There is no json content provided; please specify json content that you would like to send a POST or PATCH request with")
 
@@ -209,7 +209,7 @@ describe OSCRuby::Connect do
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-		    test = OSCRuby::Connect.post_or_patch(client,'serviceProducts',new_prod[0])
+		    test = OSvCRuby::Connect.post_or_patch(client,'serviceProducts',new_prod[0])
 
 			expect(test).to be_an(Net::HTTPResponse)
 
@@ -247,7 +247,7 @@ describe OSCRuby::Connect do
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-		    test = OSCRuby::Connect.post(client,'serviceProducts',new_prod[0])
+		    test = OSvCRuby::Connect.post(client,'serviceProducts',new_prod[0])
 
 			expect(test).to be_an(Net::HTTPResponse)
 
@@ -267,7 +267,7 @@ describe OSCRuby::Connect do
 
 			resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST';")
 
-			product_test = OSCRuby::Connect.get(client,resource)
+			product_test = OSvCRuby::Connect.get(client,resource)
 
 			prod_json = JSON.parse(product_test.body).to_hash
 
@@ -294,7 +294,7 @@ describe OSCRuby::Connect do
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-		    test = OSCRuby::Connect.patch(client,"serviceProducts/#{product_test_id}",new_prod[0])
+		    test = OSvCRuby::Connect.patch(client,"serviceProducts/#{product_test_id}",new_prod[0])
 
 			expect(test).to be_an(Net::HTTPResponse)
 
@@ -311,13 +311,13 @@ describe OSCRuby::Connect do
 
 	context '#get' do
 
-		it 'should take at least a config parameter that is an instance of an OSCRuby::Client', :vcr do
+		it 'should take at least a config parameter that is an instance of an OSvCRuby::Client', :vcr do
 
-			expect(client).to be_an(OSCRuby::Client)
+			expect(client).to be_an(OSvCRuby::Client)
 
 			expect do
 
-				OSCRuby::Connect.get(client)
+				OSvCRuby::Connect.get(client)
 
 			end.not_to raise_error
 		end
@@ -329,15 +329,15 @@ describe OSCRuby::Connect do
 				
 				client = nil
 
-				OSCRuby::Connect.get(client)
+				OSvCRuby::Connect.get(client)
 
-			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+			end.to raise_error("Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings")
 
 		end
 
 		it 'should produce a Net::HTTPResponse', :vcr do
 
-			test = OSCRuby::Connect.get(client)
+			test = OSvCRuby::Connect.get(client)
 
 			expect(test).to be_an(Net::HTTPResponse)
 				
@@ -345,7 +345,7 @@ describe OSCRuby::Connect do
 
 		it 'should produce a 200 response code', :vcr do
 
-			test = OSCRuby::Connect.get(client)
+			test = OSvCRuby::Connect.get(client)
 
 			expect(test.code).to eq("200")
 				
@@ -353,7 +353,7 @@ describe OSCRuby::Connect do
 
 		it 'should produce a JSON Response from the response body', :vcr do
 
-			test = OSCRuby::Connect.get(client)
+			test = OSvCRuby::Connect.get(client)
 			
 			expect(test.body).to be_an(String)
 
@@ -361,7 +361,7 @@ describe OSCRuby::Connect do
 		end
 
 		it 'should bring back a list of service products when specified',:vcr do
-			res = OSCRuby::Connect.get(client,'/serviceProducts?limit=3')
+			res = OSvCRuby::Connect.get(client,'/serviceProducts?limit=3')
 			
 			expect(res.body).to be_an(String)
 		end
@@ -375,7 +375,7 @@ describe OSCRuby::Connect do
 
 			resource = URI.escape("queryResults/?query=select id from serviceproducts where lookupname = 'PRODUCT-TEST';")
 
-			product_test = OSCRuby::Connect.get(client,resource)
+			product_test = OSvCRuby::Connect.get(client,resource)
 
 			prod_json = JSON.parse(product_test.body).to_hash
 
@@ -402,7 +402,7 @@ describe OSCRuby::Connect do
 			               :adminVisibleInterfaces => admin_user_visible_interfaces,
 			               :endUserVisibleInterfaces => end_user_visible_interfaces}
 
-		    test = OSCRuby::Connect.post_or_patch(client,"serviceProducts/#{product_test_id}",new_prod[0],true)
+		    test = OSvCRuby::Connect.post_or_patch(client,"serviceProducts/#{product_test_id}",new_prod[0],true)
 
 			expect(test).to be_an(Net::HTTPResponse)
 
@@ -423,9 +423,9 @@ describe OSCRuby::Connect do
 				
 				client = nil
 
-				OSCRuby::Connect.delete(client)
+				OSvCRuby::Connect.delete(client)
 
-			end.to raise_error("Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings")
+			end.to raise_error("Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings")
 
 		end
 
@@ -433,7 +433,7 @@ describe OSCRuby::Connect do
 
 			expect do
 
-				OSCRuby::Connect.delete(client)
+				OSvCRuby::Connect.delete(client)
 
 			end.to raise_error("There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to")
 
@@ -441,12 +441,12 @@ describe OSCRuby::Connect do
 
 		it 'it should produce a Net::HTTPResponse, should produce a 200 code', :vcr do
 
-			q = OSCRuby::QueryResults.new
+			q = OSvCRuby::QueryResults.new
 		    query = "select id from serviceproducts where lookupname = 'PRODUCT-TEST-updated';"
 
 			product_test_updated = q.query(client,query)
 
-		    test = OSCRuby::Connect.delete(client,"serviceProducts/#{product_test_updated[0]['id']}")
+		    test = OSvCRuby::Connect.delete(client,"serviceProducts/#{product_test_updated[0]['id']}")
 
 			expect(test).to be_an(Net::HTTPResponse)
 

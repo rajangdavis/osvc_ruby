@@ -1,9 +1,9 @@
-require 'osc_ruby/modules/validations_module'
-require 'osc_ruby/modules/normalize_module'
+require 'osvc_ruby/modules/validations_module'
+require 'osvc_ruby/modules/normalize_module'
 require_relative '../../ext/string.rb'
 require 'json'
 
-module OSCRuby
+module OSvCRuby
 
 	class QueryResults
 
@@ -19,7 +19,7 @@ module OSCRuby
 
 			@query = URI.escape("queryResults/?query=#{query}")
 	    	
-	    	obj_to_find = OSCRuby::Connect.get(client,@query)
+	    	obj_to_find = OSvCRuby::Connect.get(client,@query)
 
 			if obj_to_find.code.to_i == 200 || obj_to_find.code.to_i == 201
 

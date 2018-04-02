@@ -1,12 +1,12 @@
-require 'osc_ruby/client'
-require 'osc_ruby/modules/validations_module'
+require 'osvc_ruby/client'
+require 'osvc_ruby/modules/validations_module'
 
 require 'net/http'
 require 'openssl'
 require 'uri'
 require 'cgi'
 
-module OSCRuby
+module OSvCRuby
 	
 	# This class is purely to provide the underlying methods for CRUD functionality using Net::HTTP, URI, and OpenSSL
 	class Connect
@@ -186,7 +186,7 @@ module OSCRuby
 		def self.get_check(client,resource_url = nil)
 
 			if client.nil?
-				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+				raise ArgumentError, "Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings"
 			elsif !resource_url.nil?
 				@final_config = generate_url_and_config(client,resource_url)
 			else
@@ -198,7 +198,7 @@ module OSCRuby
 		def self.post_and_patch_check(client,resource_url = nil, json_content = nil, patch_request = false)
 
 			if client.nil?
-				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+				raise ArgumentError, "Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings"
 			elsif resource_url.nil?
 				raise ArgumentError, "There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to"
 			elsif json_content.nil?
@@ -213,7 +213,7 @@ module OSCRuby
 
 		def self.delete_check(client,resource_url = nil)
 			if client.nil?
-				raise ArgumentError, "Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings"
+				raise ArgumentError, "Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings"
 			elsif resource_url.nil?
 				raise ArgumentError, "There is no URL resource provided; please specify a URL resource that you would like to send a POST or PATCH request to"
 			else

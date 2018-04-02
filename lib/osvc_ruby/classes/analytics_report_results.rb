@@ -1,8 +1,8 @@
-require 'osc_ruby/modules/validations_module'
-require 'osc_ruby/modules/normalize_module'
+require 'osvc_ruby/modules/validations_module'
+require 'osvc_ruby/modules/normalize_module'
 require 'json'
 
-module OSCRuby
+module OSvCRuby
 
 	class AnalyticsReportResults
 
@@ -25,7 +25,7 @@ module OSCRuby
 
 			ValidationsModule::check_client(client)
 
-	    	response = OSCRuby::Connect.post_or_patch(client,'analyticsReportResults',json_data)
+	    	response = OSvCRuby::Connect.post_or_patch(client,'analyticsReportResults',json_data)
 
 	    	check_and_parse_response(response)
 

@@ -1,17 +1,17 @@
 require 'core/spec_helper'
 
-describe OSCRuby::Client do
+describe OSvCRuby::Client do
 	subject { client }
 
 	context '#initialize' do
 		
 		it 'should require a block' do
-			expect { OSCRuby::Client.new }.to raise_error(ArgumentError)
+			expect { OSvCRuby::Client.new }.to raise_error(ArgumentError)
 		end
 
 		it 'should raise exception if interface is blank' do
 			expect do
-				OSCRuby::Client.new do |config|
+				OSvCRuby::Client.new do |config|
 					config.interface = ''
 				end
 			end.to raise_error("Interface cannot be nil or blank")
@@ -19,7 +19,7 @@ describe OSCRuby::Client do
 
 		it 'should raise exception if username is blank' do
 			expect do
-				OSCRuby::Client.new do |config|
+				OSvCRuby::Client.new do |config|
 					config.interface = 'test'
 					config.username = ''
 				end
@@ -28,7 +28,7 @@ describe OSCRuby::Client do
 
 		it 'should raise exception if password is blank' do
 			expect do
-				OSCRuby::Client.new do |config|
+				OSvCRuby::Client.new do |config|
 					config.interface = 'test'
 					config.username = 'test_username'
 					config.password = ''
@@ -38,7 +38,7 @@ describe OSCRuby::Client do
 
 		it 'should raise exception if no_ssl_verify not a TrueClass nor a FalseClass' do
 			expect do
-				OSCRuby::Client.new do |config|
+				OSvCRuby::Client.new do |config|
 					config.interface = 'test'
 					config.username = 'test_username'
 					config.password = 'password'
@@ -49,7 +49,7 @@ describe OSCRuby::Client do
 
 		it 'should raise exception if Connect Version is null' do
 			expect do
-				OSCRuby::Client.new do |config|
+				OSvCRuby::Client.new do |config|
 					config.interface = 'test'
 					config.username = 'test_username'
 					config.password = 'password'
@@ -59,7 +59,7 @@ describe OSCRuby::Client do
 		end
 
 		let(:client){
-			OSCRuby::Client.new do |config|
+			OSvCRuby::Client.new do |config|
 				config.interface = 'test'
 				config.username = 'test_username'
 				config.password = 'test_password'

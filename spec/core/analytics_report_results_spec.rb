@@ -2,11 +2,11 @@ require 'core/spec_helper'
 require 'json'
 require 'uri'
 
-describe OSCRuby::AnalyticsReportResults do
+describe OSvCRuby::AnalyticsReportResults do
 
 	let(:client) { 
 
-		OSCRuby::Client.new do |config|
+		OSvCRuby::Client.new do |config|
 		
 			config.interface = ENV['OSC_SITE']
 		
@@ -20,15 +20,15 @@ describe OSCRuby::AnalyticsReportResults do
 	}
 
 	let(:last_updated){
-		OSCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
+		OSvCRuby::AnalyticsReportResults.new(lookupName: "Last Updated By Status")
 	}
 
 	let(:answers_search){
-		OSCRuby::AnalyticsReportResults.new(id: 176)
+		OSvCRuby::AnalyticsReportResults.new(id: 176)
 	}
 
 	let(:error_example){
-		OSCRuby::AnalyticsReportResults.new
+		OSvCRuby::AnalyticsReportResults.new
 	}
 
 
@@ -36,11 +36,11 @@ describe OSCRuby::AnalyticsReportResults do
 
 		it "should expect an id or a lookupName for a report" do
 			
-			expect(last_updated).to be_an(OSCRuby::AnalyticsReportResults)
+			expect(last_updated).to be_an(OSvCRuby::AnalyticsReportResults)
 
 			expect(last_updated.lookupName).to eq("Last Updated By Status")
 
-			expect(answers_search).to be_an(OSCRuby::AnalyticsReportResults)
+			expect(answers_search).to be_an(OSvCRuby::AnalyticsReportResults)
 
 			expect(answers_search.id).to eq(176)
 		
@@ -51,13 +51,13 @@ describe OSCRuby::AnalyticsReportResults do
 	end
 
 	context "#run" do
-		it 'should expect client is an instance of OSCRuby::Client class and raise an error if does not' do
+		it 'should expect client is an instance of OSvCRuby::Client class and raise an error if does not' do
 
-			expect(client).to be_an(OSCRuby::Client)
+			expect(client).to be_an(OSvCRuby::Client)
 
 			client = nil
 
-			expect{answers_search.run(client)}.to raise_error('Client must have some configuration set; please create an instance of OSCRuby::Client with configuration settings')
+			expect{answers_search.run(client)}.to raise_error('Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings')
 
 		end
 

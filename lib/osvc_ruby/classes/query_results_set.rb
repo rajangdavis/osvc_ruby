@@ -1,7 +1,7 @@
 require_relative 'query_results'
-require 'osc_ruby/modules/validations_module'
+require 'osvc_ruby/modules/validations_module'
 
-module OSCRuby
+module OSvCRuby
 
 	class QueryResultsSet
 
@@ -24,7 +24,7 @@ module OSCRuby
 			end
 
 			query_results_set = Struct.new( *key_map )
-			query_search = OSCRuby::QueryResults.new
+			query_search = OSvCRuby::QueryResults.new
 		
 
 			final_query_arr = query_arr.join('; ')
