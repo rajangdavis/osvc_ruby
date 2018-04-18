@@ -12,31 +12,6 @@ You will also need to install DevKit Tools which are located underneath the Ruby
 If you are using Windows 10, you can use your Linux Subsystem to work with Ruby; [here's instructions for how to do that.](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-and-set-up-a-local-programming-environment-on-windows-10)
 
 If you get SSL Errors (you probably will), follow [this link for instructions on resolving SSL things that I know nothing about](https://stackoverflow.com/a/16134586/2548452).
-   
-## Compatibility
-
-This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
-
-It is now being tested against Oracle Service Cloud May 2017 using Ruby version 2.5.0p0 (2017-12-25 revision 61468) [i386-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osvc_ruby) for continuous integration.
-
-All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
-
-
-## Use Cases
-You can use this Ruby Library for basic scripting and microservices. The main features that work to date are as follows:
-
-1. [Simple configuration](#client-configuration)
-2. Running ROQL queries [either 1 at a time](#oscrubyqueryresults-example) or [multiple queries in a set](#oscrubyqueryresultsset-example)
-3. [Running Reports with filters](#oscrubyanalyticsreportsresults)
-4. Convenience methods for Analytics filters and setting dates
-	1. ['arrf', an analytics report results filter](#arrf--analytics-report-results-filter)
-	2. ['dti', converts a date string to ISO8601 format](#dti--date-to-iso8601)
-5. Basic CRUD Operations via HTTP Methods
-	1. [Create => Post](#create)
-	2. [Read => Get](#read)
-	3. [Update => Patch](#update)
-	4. [Destroy => Delete](#delete)
-
 
 ## Installation
 
@@ -53,9 +28,30 @@ And then execute:
 Or install it yourself as:
 
     $ gem install osvc_ruby
+   
+## Compatibility
+
+This gem was tested against Oracle Service Cloud November 2016 using Ruby version 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0] between December 2016 and June 2017.
+
+It is now being tested against Oracle Service Cloud May 2017 using Ruby version 2.5.0p0 (2017-12-25 revision 61468) [i386-mingw32] using [TravisCI](https://travis-ci.org/rajangdavis/osvc_ruby) for continuous integration.
+
+All of the HTTP methods should work on any version of Oracle Service Cloud since version May 2015; however, there maybe some issues with querying items on any version before May 2016. This is because ROQL queries were not exposed via the REST API until May 2016.
 
 
+## Use Cases
+You can use this Ruby Library for basic scripting and microservices. The main features that work to date are as follows:
 
+1. [Simple configuration](#client-configuration)
+2. Running ROQL queries [either 1 at a time](#oscrubyqueryresults-example) or [multiple queries in a set](#oscrubyqueryresultsset-example)
+3. [Running Reports with filters](#oscrubyanalyticsreportsresults)
+<!-- 4. Convenience methods for Analytics filters and setting dates
+	1. ['arrf', an analytics report results filter](#arrf--analytics-report-results-filter)
+	2. ['dti', converts a date string to ISO8601 format](#dti--date-to-iso8601) -->
+4. Basic CRUD Operations via HTTP Methods
+	1. [Create => Post](#create)
+	2. [Read => Get](#read)
+	3. [Update => Patch](#update)
+	4. [Destroy => Delete](#delete)
 
 
 
@@ -335,7 +331,7 @@ puts last_updated.run(rn_client)
 
 
 
-## Convenience Methods
+<!-- ## Convenience Methods
 
 ### 'arrf' => analytics report results filter
 
@@ -399,11 +395,11 @@ end
 # ... and so on and so forth
 ```
 
+ -->
 
 
 
-
-
+<!-- 
 
 ### 'dti' => date to iso8601
 
@@ -441,7 +437,7 @@ dti("11:59PM January 1st, 2014 GMT") #=> 2017-08-01T23:59:00-07:00 #=> 11:59 PM,
 ```
 
 
-
+ -->
 
 
 
@@ -485,7 +481,6 @@ puts res.body # => JSON body
 # callback with JSON details
 
 ```
-
 
 
 

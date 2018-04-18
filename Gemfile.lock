@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    osvc_ruby (1.4.2)
+    osvc_ruby (1.6.0)
 
 GEM
   remote: https://rubygems.org/

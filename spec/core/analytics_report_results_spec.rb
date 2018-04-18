@@ -68,7 +68,8 @@ describe OSvCRuby::AnalyticsReportResults do
 		end
 
 		it 'should be able to take filters', :vcr do
-			keywords = arrf(name: "search_ex", values: "Maestro")
+			# keywords = arrf(name: "search_ex", values: "Maestro")
+			keywords = {name: "search_ex", values: "Maestro"}
 			answers_search.filters << keywords
 
 			answers = answers_search.run(client)
