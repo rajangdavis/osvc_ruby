@@ -1,6 +1,7 @@
 # OSvCRuby
  
 [![Code Climate](https://codeclimate.com/github/rajangdavis/osvc_ruby/badges/gpa.svg)](https://codeclimate.com/github/rajangdavis/osvc_ruby) [![Test Coverage](https://api.codeclimate.com/v1/badges/202d9d688d31e18fcee2/test_coverage)](https://codeclimate.com/github/rajangdavis/osvc_ruby/test_coverage) [![Build Status](https://travis-ci.org/rajangdavis/osvc_ruby.svg?branch=master)](https://travis-ci.org/rajangdavis/osvc_ruby) [![Gem Version](https://badge.fury.io/rb/osvc_ruby.svg)](https://badge.fury.io/rb/osvc_ruby) [![Known Vulnerabilities](https://snyk.io/test/github/rajangdavis/osvc_ruby/badge.svg)](https://snyk.io/test/github/rajangdavis/osvc_ruby)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frajangdavis%2Fosvc_ruby.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frajangdavis%2Fosvc_ruby?ref=badge_shield)
 
 An (under development) Ruby library for using the [Oracle Service Cloud REST API](https://docs.oracle.com/cloud/latest/servicecs_gs/CXSVC/) influenced by the [ConnectPHP API](http://documentation.custhelp.com/euf/assets/devdocs/november2016/Connect_PHP/Default.htm) and ActiveRecord Gem
 
@@ -626,3 +627,6 @@ puts updated_product.body # => "" if successful...
 
 
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frajangdavis%2Fosvc_ruby.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frajangdavis%2Fosvc_ruby?ref=badge_large)
