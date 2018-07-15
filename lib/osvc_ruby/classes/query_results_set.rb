@@ -8,8 +8,6 @@ module OSvCRuby
 		include ValidationsModule
 
 		def query_set(client,*args)
-
-			ValidationsModule::check_client(client)
 			
 			query_arr = []
 			

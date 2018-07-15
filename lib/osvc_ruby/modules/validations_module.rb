@@ -1,30 +1,14 @@
-require 'osvc_ruby/connect'
-require 'json'
-
 module OSvCRuby
 
 	module ValidationsModule
 
 		class << self
 
-		    def check_query(query,method_name = "where")
+			def custom_error(err, example)
 
-				if query.empty?
-					
-					raise ArgumentError, "A query must be specified when using the '#{method_name}' method"
-
-				end
-
-		    end
-
-			def check_client(client)
-
-				if client.class != OSvCRuby::Client || client.nil?
-
-					raise ArgumentError, "Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings"
-
-				end
-				client
+				puts "\n\033[31mError: #{err}\033[0m\n\n\033[33mExample:\033[0m#{example}\n\n\n\n"
+				raise err
+			
 			end
 
 		end

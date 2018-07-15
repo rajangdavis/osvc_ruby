@@ -61,7 +61,7 @@ describe OSvCRuby::QueryResultsSet do
 
 			client = nil
 
-			expect{query_results_set.query_set(client,'describe')}.to raise_error('Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings')
+			expect{query_results_set.query_set(client,{key:"answers", query:"select * from answers LIMIT 2"})}.to raise_error('Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings')
 
 		end
 

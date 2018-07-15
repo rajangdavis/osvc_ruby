@@ -169,7 +169,7 @@ module OSvCRuby
 
 		def self.check_client_config(client)
 
-			@config = ValidationsModule::check_client(client).config
+			@config = self.check_client(client).config
 
 			if @config.nil?
 				raise ArgumentError, "Client configuration cannot be nil or blank"	
@@ -219,6 +219,16 @@ module OSvCRuby
 			else
 				@final_config = generate_url_and_config(client,resource_url)
 			end
+		end
+
+		def self.check_client(client)
+
+			if client.class != OSvCRuby::Client || client.nil?
+
+				raise ArgumentError, "Client must have some configuration set; please create an instance of OSvCRuby::Client with configuration settings"
+
+			end
+			client
 		end
 
 	end

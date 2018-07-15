@@ -23,8 +23,6 @@ module OSvCRuby
 
 			json_data = convert_to_json(self)
 
-			ValidationsModule::check_client(client)
-
 	    	response = OSvCRuby::Connect.post_or_patch(client,'analyticsReportResults',json_data)
 
 	    	check_and_parse_response(response)
